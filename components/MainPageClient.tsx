@@ -20,41 +20,59 @@ function MainPageContent({
   allProjects,
   siteSettings,
 }: MainPageClientProps) {
-  const { currentSection, scrollToSection, isAtTop, containerRef } = useScrollContext()
+  const { currentSection, scrollToSection, containerRef } = useScrollContext()
   const [isAboutVisible, setIsAboutVisible] = useState(false)
-  const prevScrollTop = useRef(0)
+  const wheelAccumulator = useRef(0)
+  const lastWheelTime = useRef(0)
 
-  // Show about when scrolling to top (past first project)
+  // Handle wheel events for opening/closing About
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
 
-    const handleScroll = () => {
-      const scrollTop = container.scrollTop
-      const isScrollingUp = scrollTop < prevScrollTop.current
-      
-      // Show about if at the very top and scrolling up
-      if (scrollTop < 50 && isScrollingUp) {
-        setIsAboutVisible(true)
+    const handleWheel = (e: WheelEvent) => {
+      // Reset accumulator if too much time passed
+      const now = Date.now()
+      if (now - lastWheelTime.current > 300) {
+        wheelAccumulator.current = 0
       }
-      
-      prevScrollTop.current = scrollTop
+      lastWheelTime.current = now
+
+      if (isAboutVisible) {
+        // Close About by scrolling down (positive deltaY)
+        if (e.deltaY > 0) {
+          wheelAccumulator.current += Math.abs(e.deltaY)
+          
+          if (wheelAccumulator.current > 50) {
+            setIsAboutVisible(false)
+            wheelAccumulator.current = 0
+          }
+        } else {
+          wheelAccumulator.current = 0
+        }
+      } else {
+        // Open About by scrolling up while at project 1
+        if (currentSection !== 0 || container.scrollTop > 10) {
+          wheelAccumulator.current = 0
+          return
+        }
+
+        if (e.deltaY < 0) {
+          wheelAccumulator.current += Math.abs(e.deltaY)
+          
+          if (wheelAccumulator.current > 100) {
+            setIsAboutVisible(true)
+            wheelAccumulator.current = 0
+          }
+        } else {
+          wheelAccumulator.current = 0
+        }
+      }
     }
 
-    container.addEventListener('scroll', handleScroll, { passive: true })
-    return () => container.removeEventListener('scroll', handleScroll)
-  }, [containerRef])
-
-  // Close about when scrolling down from top
-  useEffect(() => {
-    if (!isAtTop && isAboutVisible) {
-      // Allow some scroll before closing
-      const container = containerRef.current
-      if (container && container.scrollTop > 100) {
-        setIsAboutVisible(false)
-      }
-    }
-  }, [isAtTop, isAboutVisible, containerRef])
+    container.addEventListener('wheel', handleWheel, { passive: true })
+    return () => container.removeEventListener('wheel', handleWheel)
+  }, [containerRef, currentSection, isAboutVisible])
 
   const handleAboutClick = useCallback(() => {
     setIsAboutVisible((prev) => !prev)

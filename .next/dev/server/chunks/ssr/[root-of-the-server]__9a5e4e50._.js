@@ -872,42 +872,57 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ArchiveGrid$2e
 ;
 ;
 function MainPageContent({ featuredProjects, allProjects, siteSettings }) {
-    const { currentSection, scrollToSection, isAtTop, containerRef } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollContainer$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useScrollContext"])();
+    const { currentSection, scrollToSection, containerRef } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollContainer$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useScrollContext"])();
     const [isAboutVisible, setIsAboutVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const prevScrollTop = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(0);
-    // Show about when scrolling to top (past first project)
+    const wheelAccumulator = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(0);
+    const lastWheelTime = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(0);
+    // Handle wheel events for opening/closing About
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const container = containerRef.current;
         if (!container) return;
-        const handleScroll = ()=>{
-            const scrollTop = container.scrollTop;
-            const isScrollingUp = scrollTop < prevScrollTop.current;
-            // Show about if at the very top and scrolling up
-            if (scrollTop < 50 && isScrollingUp) {
-                setIsAboutVisible(true);
+        const handleWheel = (e)=>{
+            // Reset accumulator if too much time passed
+            const now = Date.now();
+            if (now - lastWheelTime.current > 300) {
+                wheelAccumulator.current = 0;
             }
-            prevScrollTop.current = scrollTop;
+            lastWheelTime.current = now;
+            if (isAboutVisible) {
+                // Close About by scrolling down (positive deltaY)
+                if (e.deltaY > 0) {
+                    wheelAccumulator.current += Math.abs(e.deltaY);
+                    if (wheelAccumulator.current > 50) {
+                        setIsAboutVisible(false);
+                        wheelAccumulator.current = 0;
+                    }
+                } else {
+                    wheelAccumulator.current = 0;
+                }
+            } else {
+                // Open About by scrolling up while at project 1
+                if (currentSection !== 0 || container.scrollTop > 10) {
+                    wheelAccumulator.current = 0;
+                    return;
+                }
+                if (e.deltaY < 0) {
+                    wheelAccumulator.current += Math.abs(e.deltaY);
+                    if (wheelAccumulator.current > 100) {
+                        setIsAboutVisible(true);
+                        wheelAccumulator.current = 0;
+                    }
+                } else {
+                    wheelAccumulator.current = 0;
+                }
+            }
         };
-        container.addEventListener('scroll', handleScroll, {
+        container.addEventListener('wheel', handleWheel, {
             passive: true
         });
-        return ()=>container.removeEventListener('scroll', handleScroll);
+        return ()=>container.removeEventListener('wheel', handleWheel);
     }, [
-        containerRef
-    ]);
-    // Close about when scrolling down from top
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if (!isAtTop && isAboutVisible) {
-            // Allow some scroll before closing
-            const container = containerRef.current;
-            if (container && container.scrollTop > 100) {
-                setIsAboutVisible(false);
-            }
-        }
-    }, [
-        isAtTop,
-        isAboutVisible,
-        containerRef
+        containerRef,
+        currentSection,
+        isAboutVisible
     ]);
     const handleAboutClick = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(()=>{
         setIsAboutVisible((prev)=>!prev);
@@ -938,14 +953,14 @@ function MainPageContent({ featuredProjects, allProjects, siteSettings }) {
                     priority: index < 3
                 }, project._id, false, {
                     fileName: "[project]/components/MainPageClient.tsx",
-                    lineNumber: 87,
+                    lineNumber: 105,
                     columnNumber: 9
                 }, this)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ArchiveGrid$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 projects: allProjects
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 96,
+                lineNumber: 114,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$AboutOverlay$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -955,7 +970,7 @@ function MainPageContent({ featuredProjects, allProjects, siteSettings }) {
                 onClose: handleAboutClose
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 99,
+                lineNumber: 117,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollIndicator$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -968,7 +983,7 @@ function MainPageContent({ featuredProjects, allProjects, siteSettings }) {
                 onProjectClick: handleProjectClick
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 107,
+                lineNumber: 125,
                 columnNumber: 7
             }, this)
         ]
@@ -991,7 +1006,7 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
                 minDuration: 3500
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 139,
+                lineNumber: 157,
                 columnNumber: 9
             }, this),
             isReady && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollContainer$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1002,12 +1017,12 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
                     siteSettings: siteSettings
                 }, void 0, false, {
                     fileName: "[project]/components/MainPageClient.tsx",
-                    lineNumber: 148,
+                    lineNumber: 166,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 147,
+                lineNumber: 165,
                 columnNumber: 9
             }, this)
         ]
