@@ -404,7 +404,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 ;
 function ScrollIndicator({ projects, currentSection, isAboutVisible, isArchiveActive, onAboutClick, onArchiveClick, onProjectClick }) {
-    // Get current project info (0-indexed, projects are sections 0-4)
+    // Get current project info
     const currentProject = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
         if (currentSection >= 0 && currentSection < projects.length) {
             return projects[currentSection];
@@ -414,120 +414,139 @@ function ScrollIndicator({ projects, currentSection, isAboutVisible, isArchiveAc
         currentSection,
         projects
     ]);
-    // Calculate marker position for right indicator
-    const markerStyle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
-        const baseGap = 48 // var(--space-8) = 3rem = 48px
+    // Calculate which of the 7 positions we're at (0=about, 1-5=projects, 6=archive)
+    const activePosition = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
+        if (isAboutVisible) return 0;
+        if (isArchiveActive) return 6;
+        return currentSection + 1 // 1-5 for projects
         ;
-        const paddingTop = 48 // Same as numbers padding top
-        ;
-        const numberHeight = 16 // Approximate line height
-        ;
-        let topPosition = paddingTop;
-        if (currentSection >= 0 && currentSection < projects.length) {
-            topPosition += currentSection * (baseGap + numberHeight);
-        }
-        return {
-            top: `${topPosition}px`
-        };
     }, [
-        currentSection,
-        projects.length
+        isAboutVisible,
+        isArchiveActive,
+        currentSection
     ]);
+    // Show project info only for project sections (not About or Archive)
+    const showProjectInfo = !isAboutVisible && !isArchiveActive && currentProject;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "indicator-left",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        className: `indicator-left__about ${isAboutVisible ? 'indicator-left__about--active' : ''}`,
-                        onClick: onAboutClick,
-                        children: "About"
-                    }, void 0, false, {
-                        fileName: "[project]/components/ScrollIndicator.tsx",
-                        lineNumber: 52,
-                        columnNumber: 9
-                    }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "indicator-left__project",
-                        children: currentProject && !isArchiveActive && !isAboutVisible && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "indicator-left__number",
-                                    children: String(currentSection + 1).padStart(2, '0')
-                                }, void 0, false, {
+                        className: "indicator-left__items",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: `indicator-left__item ${isAboutVisible ? 'indicator-left__item--active' : ''}`,
+                                onClick: onAboutClick,
+                                children: "About"
+                            }, void 0, false, {
+                                fileName: "[project]/components/ScrollIndicator.tsx",
+                                lineNumber: 49,
+                                columnNumber: 11
+                            }, this),
+                            projects.map((project, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    className: `indicator-left__item ${currentSection === index && !isArchiveActive && !isAboutVisible ? 'indicator-left__item--active' : ''}`,
+                                    onClick: ()=>onProjectClick(index),
+                                    children: String(index + 1).padStart(2, '0')
+                                }, project._id, false, {
                                     fileName: "[project]/components/ScrollIndicator.tsx",
-                                    lineNumber: 62,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "indicator-left__title",
-                                    children: currentProject.title
-                                }, void 0, false, {
-                                    fileName: "[project]/components/ScrollIndicator.tsx",
-                                    lineNumber: 65,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "indicator-left__client",
-                                    children: currentProject.client
-                                }, void 0, false, {
-                                    fileName: "[project]/components/ScrollIndicator.tsx",
-                                    lineNumber: 68,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true)
-                    }, void 0, false, {
+                                    lineNumber: 58,
+                                    columnNumber: 13
+                                }, this)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: `indicator-left__item ${isArchiveActive ? 'indicator-left__item--active' : ''}`,
+                                onClick: onArchiveClick,
+                                children: "Archive"
+                            }, void 0, false, {
+                                fileName: "[project]/components/ScrollIndicator.tsx",
+                                lineNumber: 72,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/components/ScrollIndicator.tsx",
-                        lineNumber: 59,
+                        lineNumber: 47,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        className: `indicator-left__archive ${isArchiveActive ? 'indicator-left__archive--active' : ''}`,
-                        onClick: onArchiveClick,
-                        children: "Archive"
-                    }, void 0, false, {
+                    showProjectInfo && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "indicator-left__project-info",
+                        style: {
+                            '--marker-position': activePosition
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "indicator-left__title",
+                                children: currentProject.title
+                            }, void 0, false, {
+                                fileName: "[project]/components/ScrollIndicator.tsx",
+                                lineNumber: 86,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "indicator-left__client",
+                                children: currentProject.client
+                            }, void 0, false, {
+                                fileName: "[project]/components/ScrollIndicator.tsx",
+                                lineNumber: 89,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/components/ScrollIndicator.tsx",
-                        lineNumber: 75,
-                        columnNumber: 9
+                        lineNumber: 82,
+                        columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ScrollIndicator.tsx",
-                lineNumber: 51,
+                lineNumber: 46,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "indicator-right",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "indicator-right__numbers",
+                    className: "indicator-right__items",
                     children: [
-                        projects.map((project, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                className: `indicator-right__number ${currentSection === index && !isArchiveActive && !isAboutVisible ? 'indicator-right__number--active' : ''}`,
-                                onClick: ()=>onProjectClick(index),
-                                children: String(index + 1).padStart(2, '0')
-                            }, project._id, false, {
+                        [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6
+                        ].map((position)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: `indicator-right__item ${activePosition === position ? 'indicator-right__item--active' : ''}`,
+                                onClick: ()=>{
+                                    if (position === 0) onAboutClick();
+                                    else if (position === 6) onArchiveClick();
+                                    else onProjectClick(position - 1);
+                                },
+                                children: position >= 1 && position <= 5 && String(position).padStart(2, '0')
+                            }, position, false, {
                                 fileName: "[project]/components/ScrollIndicator.tsx",
-                                lineNumber: 87,
+                                lineNumber: 101,
                                 columnNumber: 13
                             }, this)),
-                        !isArchiveActive && !isAboutVisible && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "indicator-right__marker",
-                            style: markerStyle
+                            style: {
+                                '--marker-position': activePosition
+                            }
                         }, void 0, false, {
                             fileName: "[project]/components/ScrollIndicator.tsx",
-                            lineNumber: 102,
-                            columnNumber: 13
+                            lineNumber: 117,
+                            columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/ScrollIndicator.tsx",
-                    lineNumber: 85,
+                    lineNumber: 98,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/ScrollIndicator.tsx",
-                lineNumber: 84,
+                lineNumber: 97,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
@@ -539,17 +558,17 @@ function ScrollIndicator({ projects, currentSection, isAboutVisible, isArchiveAc
                         children: "Luchi Nóbile"
                     }, void 0, false, {
                         fileName: "[project]/components/ScrollIndicator.tsx",
-                        lineNumber: 113,
+                        lineNumber: 127,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/ScrollIndicator.tsx",
-                    lineNumber: 112,
+                    lineNumber: 126,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/ScrollIndicator.tsx",
-                lineNumber: 111,
+                lineNumber: 125,
                 columnNumber: 7
             }, this)
         ]

@@ -22,7 +22,7 @@ export default function ScrollIndicator({
   onArchiveClick,
   onProjectClick,
 }: ScrollIndicatorProps) {
-  // Get current project info (0-indexed, projects are sections 0-4)
+  // Get current project info
   const currentProject = useMemo(() => {
     if (currentSection >= 0 && currentSection < projects.length) {
       return projects[currentSection]
@@ -30,65 +30,36 @@ export default function ScrollIndicator({
     return null
   }, [currentSection, projects])
 
-  // Calculate marker position for right indicator
-  const markerStyle = useMemo(() => {
-    const baseGap = 48 // var(--space-8) = 3rem = 48px
-    const paddingTop = 48 // Same as numbers padding top
-    const numberHeight = 16 // Approximate line height
+  // Calculate which of the 7 positions we're at (0=about, 1-5=projects, 6=archive)
+  const activePosition = useMemo(() => {
+    if (isAboutVisible) return 0
+    if (isArchiveActive) return 6
+    return currentSection + 1 // 1-5 for projects
+  }, [isAboutVisible, isArchiveActive, currentSection])
 
-    let topPosition = paddingTop
-    
-    if (currentSection >= 0 && currentSection < projects.length) {
-      topPosition += currentSection * (baseGap + numberHeight)
-    }
-
-    return { top: `${topPosition}px` }
-  }, [currentSection, projects.length])
+  // Show project info only for project sections (not About or Archive)
+  const showProjectInfo = !isAboutVisible && !isArchiveActive && currentProject
 
   return (
     <>
       {/* Left Indicator */}
       <div className="indicator-left">
-        <button
-          className={`indicator-left__about ${isAboutVisible ? 'indicator-left__about--active' : ''}`}
-          onClick={onAboutClick}
-        >
-          About
-        </button>
+        <div className="indicator-left__items">
+          {/* About */}
+          <button
+            className={`indicator-left__item ${isAboutVisible ? 'indicator-left__item--active' : ''}`}
+            onClick={onAboutClick}
+          >
+            About
+          </button>
 
-        <div className="indicator-left__project">
-          {currentProject && !isArchiveActive && !isAboutVisible && (
-            <>
-              <span className="indicator-left__number">
-                {String(currentSection + 1).padStart(2, '0')}
-              </span>
-              <span className="indicator-left__title">
-                {currentProject.title}
-              </span>
-              <span className="indicator-left__client">
-                {currentProject.client}
-              </span>
-            </>
-          )}
-        </div>
-
-        <button
-          className={`indicator-left__archive ${isArchiveActive ? 'indicator-left__archive--active' : ''}`}
-          onClick={onArchiveClick}
-        >
-          Archive
-        </button>
-      </div>
-
-      {/* Right Indicator */}
-      <div className="indicator-right">
-        <div className="indicator-right__numbers">
+          {/* Project Numbers 01-05 */}
           {projects.map((project, index) => (
             <button
               key={project._id}
-              className={`indicator-right__number ${
+              className={`indicator-left__item ${
                 currentSection === index && !isArchiveActive && !isAboutVisible
-                  ? 'indicator-right__number--active'
+                  ? 'indicator-left__item--active'
                   : ''
               }`}
               onClick={() => onProjectClick(index)}
@@ -96,14 +67,57 @@ export default function ScrollIndicator({
               {String(index + 1).padStart(2, '0')}
             </button>
           ))}
-          
+
+          {/* Archive */}
+          <button
+            className={`indicator-left__item ${isArchiveActive ? 'indicator-left__item--active' : ''}`}
+            onClick={onArchiveClick}
+          >
+            Archive
+          </button>
+        </div>
+
+        {/* Floating Project Info - positioned dynamically, same as items */}
+        {showProjectInfo && (
+          <div 
+            className="indicator-left__project-info"
+            style={{ '--marker-position': activePosition } as React.CSSProperties}
+          >
+            <span className="indicator-left__title">
+              {currentProject.title}
+            </span>
+            <span className="indicator-left__client">
+              {currentProject.client}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Right Indicator */}
+      <div className="indicator-right">
+        <div className="indicator-right__items">
+          {/* All 7 positions: About (0), Projects 1-5, Archive (6) */}
+          {[0, 1, 2, 3, 4, 5, 6].map((position) => (
+            <button
+              key={position}
+              className={`indicator-right__item ${
+                activePosition === position ? 'indicator-right__item--active' : ''
+              }`}
+              onClick={() => {
+                if (position === 0) onAboutClick()
+                else if (position === 6) onArchiveClick()
+                else onProjectClick(position - 1)
+              }}
+            >
+              {position >= 1 && position <= 5 && String(position).padStart(2, '0')}
+            </button>
+          ))}
+
           {/* Moving square marker */}
-          {!isArchiveActive && !isAboutVisible && (
-            <div
-              className="indicator-right__marker"
-              style={markerStyle}
-            />
-          )}
+          <div
+            className="indicator-right__marker"
+            style={{ '--marker-position': activePosition } as React.CSSProperties}
+          />
         </div>
       </div>
 
@@ -118,4 +132,3 @@ export default function ScrollIndicator({
     </>
   )
 }
-

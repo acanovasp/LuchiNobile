@@ -1,48 +1,82 @@
 /* [project]/styles/indicators.css [app-client] (css) */
 .indicator-left {
+  top: var(--gutter);
+  left: var(--gutter);
+  bottom: var(--gutter);
   z-index: var(--z-indicators);
-  padding: var(--gutter);
   pointer-events: none;
-  flex-direction: column;
-  justify-content: space-between;
-  display: flex;
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
 }
 
-.indicator-left > * {
-  pointer-events: auto;
+.indicator-left__items {
+  height: 100%;
+  position: relative;
 }
 
-.indicator-left__about {
+.indicator-left__item {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-normal);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
-  opacity: .6;
+  opacity: .4;
   transition: opacity var(--duration-fast) var(--ease-out);
   cursor: pointer;
+  pointer-events: auto;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0;
+  position: absolute;
+  left: 0;
 }
 
-.indicator-left__about:hover, .indicator-left__about--active {
+.indicator-left__item:first-child {
+  top: 0%;
+}
+
+.indicator-left__item:nth-child(2) {
+  top: 16.6667%;
+}
+
+.indicator-left__item:nth-child(3) {
+  top: 33.3333%;
+}
+
+.indicator-left__item:nth-child(4) {
+  top: 50%;
+}
+
+.indicator-left__item:nth-child(5) {
+  top: 66.6667%;
+}
+
+.indicator-left__item:nth-child(6) {
+  top: 83.3333%;
+}
+
+.indicator-left__item:nth-child(7) {
+  top: 100%;
+  transform: translateY(-100%);
+}
+
+.indicator-left__item:hover {
+  opacity: .8;
+}
+
+.indicator-left__item--active {
   opacity: 1;
 }
 
-.indicator-left__project {
+.indicator-left__project-info {
   gap: var(--space-1);
+  pointer-events: none;
+  left: 2.5em;
+  top: calc((var(--marker-position) / 6) * 100%);
+  transition: top var(--duration-normal) var(--ease-out);
   flex-direction: column;
   display: flex;
-}
-
-.indicator-left__number {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: var(--letter-spacing-wide);
-  color: var(--color-text);
-  opacity: .6;
+  position: absolute;
 }
 
 .indicator-left__title {
@@ -51,6 +85,7 @@
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
+  white-space: nowrap;
 }
 
 .indicator-left__client {
@@ -60,50 +95,24 @@
   letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
   opacity: .6;
-}
-
-.indicator-left__archive {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
-  color: var(--color-text);
-  opacity: .6;
-  transition: opacity var(--duration-fast) var(--ease-out);
-  cursor: pointer;
-}
-
-.indicator-left__archive:hover, .indicator-left__archive--active {
-  opacity: 1;
+  white-space: nowrap;
 }
 
 .indicator-right {
+  top: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--gutter);
   z-index: var(--z-indicators);
-  padding: var(--gutter);
   pointer-events: none;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-  display: flex;
   position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
 }
 
-.indicator-right > * {
-  pointer-events: auto;
+.indicator-right__items {
+  height: 100%;
+  position: relative;
 }
 
-.indicator-right__numbers {
-  align-items: flex-end;
-  gap: var(--space-8);
-  padding-top: var(--space-8);
-  flex-direction: column;
-  display: flex;
-}
-
-.indicator-right__number {
+.indicator-right__item {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-normal);
   letter-spacing: var(--letter-spacing-wide);
@@ -111,24 +120,64 @@
   opacity: .4;
   transition: opacity var(--duration-fast) var(--ease-out);
   cursor: pointer;
-  position: relative;
+  pointer-events: auto;
+  text-align: right;
+  background: none;
+  border: none;
+  padding: 0;
+  position: absolute;
+  right: 0;
 }
 
-.indicator-right__number:hover {
+.indicator-right__item:first-child {
+  top: 0%;
+}
+
+.indicator-right__item:nth-child(2) {
+  top: 16.6667%;
+}
+
+.indicator-right__item:nth-child(3) {
+  top: 33.3333%;
+}
+
+.indicator-right__item:nth-child(4) {
+  top: 50%;
+}
+
+.indicator-right__item:nth-child(5) {
+  top: 66.6667%;
+}
+
+.indicator-right__item:nth-child(6) {
+  top: 83.3333%;
+}
+
+.indicator-right__item:nth-child(7) {
+  top: 100%;
+  transform: translateY(-100%);
+}
+
+.indicator-right__item:hover {
   opacity: .8;
 }
 
-.indicator-right__number--active {
-  opacity: 1;
+.indicator-right__item--active {
+  opacity: 0;
 }
 
 .indicator-right__marker {
   background-color: var(--color-white);
   width: 8px;
   height: 8px;
+  right: 0;
+  top: calc((var(--marker-position) / 6) * 100%);
   transition: top var(--duration-normal) var(--ease-out);
   position: absolute;
-  right: 0;
+}
+
+.indicator-right__marker[style*="--marker-position: 6"] {
+  transform: translateY(-100%);
 }
 
 .header {
@@ -148,7 +197,15 @@
   color: var(--color-text);
   text-align: center;
   pointer-events: auto;
+}
+
+.header__logo button {
   cursor: pointer;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  background: none;
+  border: none;
 }
 
 .header__logo a {
@@ -158,31 +215,30 @@
 
 @media (max-width: 768px) {
   .indicator-left {
-    padding: var(--space-3);
+    top: var(--space-3);
+    left: var(--space-3);
+    bottom: var(--space-3);
   }
 
-  .indicator-left__about, .indicator-left__archive {
+  .indicator-left__item {
     font-size: .5rem;
   }
 
-  .indicator-left__project {
-    gap: var(--space-1);
+  .indicator-left__project-info {
+    left: 2em;
   }
 
-  .indicator-left__number, .indicator-left__title, .indicator-left__client {
+  .indicator-left__title, .indicator-left__client {
     font-size: .5rem;
   }
 
   .indicator-right {
-    padding: var(--space-3);
+    top: var(--space-3);
+    right: var(--space-3);
+    bottom: var(--space-3);
   }
 
-  .indicator-right__numbers {
-    gap: var(--space-5);
-    padding-top: var(--space-5);
-  }
-
-  .indicator-right__number {
+  .indicator-right__item {
     font-size: .5rem;
   }
 
@@ -201,12 +257,8 @@
 }
 
 @media (max-width: 480px) {
-  .indicator-left__project {
+  .indicator-left__project-info {
     display: none;
-  }
-
-  .indicator-right__numbers {
-    gap: var(--space-4);
   }
 }
 

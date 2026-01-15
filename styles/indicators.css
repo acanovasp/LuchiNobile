@@ -3,49 +3,65 @@
 /* Left Indicator */
 .indicator-left {
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  top: var(--gutter);
+  left: var(--gutter);
+  bottom: var(--gutter);
   z-index: var(--z-indicators);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: var(--gutter);
   pointer-events: none;
 }
 
-.indicator-left > * {
-  pointer-events: auto;
+.indicator-left__items {
+  position: relative;
+  height: 100%;
 }
 
-.indicator-left__about {
+.indicator-left__item {
+  position: absolute;
+  left: 0;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-normal);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
-  opacity: 0.6;
+  opacity: 0.4;
   transition: opacity var(--duration-fast) var(--ease-out);
   cursor: pointer;
+  pointer-events: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
 }
 
-.indicator-left__about:hover,
-.indicator-left__about--active {
+/* Position each item at i/6 of container height */
+.indicator-left__item:nth-child(1) { top: calc((0 / 6) * 100%); }
+.indicator-left__item:nth-child(2) { top: calc((1 / 6) * 100%); }
+.indicator-left__item:nth-child(3) { top: calc((2 / 6) * 100%); }
+.indicator-left__item:nth-child(4) { top: calc((3 / 6) * 100%); }
+.indicator-left__item:nth-child(5) { top: calc((4 / 6) * 100%); }
+.indicator-left__item:nth-child(6) { top: calc((5 / 6) * 100%); }
+.indicator-left__item:nth-child(7) { top: calc((6 / 6) * 100%); transform: translateY(-100%); }
+
+.indicator-left__item:hover {
+  opacity: 0.8;
+}
+
+.indicator-left__item--active {
   opacity: 1;
 }
 
-.indicator-left__project {
+/* Project info that floats next to the active number */
+.indicator-left__project-info {
+  position: absolute;
+  left: 2.5em;
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-}
-
-.indicator-left__number {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: var(--letter-spacing-wide);
-  color: var(--color-text);
-  opacity: 0.6;
+  pointer-events: none;
+  
+  /* Same positioning formula as items */
+  top: calc((var(--marker-position) / 6) * 100%);
+  transition: top var(--duration-normal) var(--ease-out);
 }
 
 .indicator-left__title {
@@ -54,6 +70,7 @@
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
+  white-space: nowrap;
 }
 
 .indicator-left__client {
@@ -63,53 +80,27 @@
   letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
   opacity: 0.6;
-}
-
-.indicator-left__archive {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
-  color: var(--color-text);
-  opacity: 0.6;
-  transition: opacity var(--duration-fast) var(--ease-out);
-  cursor: pointer;
-}
-
-.indicator-left__archive:hover,
-.indicator-left__archive--active {
-  opacity: 1;
+  white-space: nowrap;
 }
 
 /* Right Indicator */
 .indicator-right {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  top: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--gutter);
   z-index: var(--z-indicators);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: var(--gutter);
   pointer-events: none;
 }
 
-.indicator-right > * {
-  pointer-events: auto;
-}
-
-.indicator-right__numbers {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--space-8);
-  padding-top: var(--space-8);
-}
-
-.indicator-right__number {
+.indicator-right__items {
   position: relative;
+  height: 100%;
+}
+
+.indicator-right__item {
+  position: absolute;
+  right: 0;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-normal);
   letter-spacing: var(--letter-spacing-wide);
@@ -117,24 +108,46 @@
   opacity: 0.4;
   transition: opacity var(--duration-fast) var(--ease-out);
   cursor: pointer;
+  pointer-events: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: right;
 }
 
-.indicator-right__number:hover {
+/* Position each item at i/6 of container height */
+.indicator-right__item:nth-child(1) { top: calc((0 / 6) * 100%); }
+.indicator-right__item:nth-child(2) { top: calc((1 / 6) * 100%); }
+.indicator-right__item:nth-child(3) { top: calc((2 / 6) * 100%); }
+.indicator-right__item:nth-child(4) { top: calc((3 / 6) * 100%); }
+.indicator-right__item:nth-child(5) { top: calc((4 / 6) * 100%); }
+.indicator-right__item:nth-child(6) { top: calc((5 / 6) * 100%); }
+.indicator-right__item:nth-child(7) { top: calc((6 / 6) * 100%); transform: translateY(-100%); }
+
+.indicator-right__item:hover {
   opacity: 0.8;
 }
 
-.indicator-right__number--active {
-  opacity: 1;
+.indicator-right__item--active {
+  opacity: 0;
 }
 
-/* Moving square indicator */
+/* Moving square indicator - sits on top of numbers */
 .indicator-right__marker {
   position: absolute;
   right: 0;
   width: 8px;
   height: 8px;
   background-color: var(--color-white);
+  
+  /* Same positioning as items: (position / 6) * 100% */
+  top: calc((var(--marker-position) / 6) * 100%);
   transition: top var(--duration-normal) var(--ease-out);
+}
+
+/* Last position needs offset to not go below container */
+.indicator-right__marker[style*="--marker-position: 6"] {
+  transform: translateY(-100%);
 }
 
 /* Header (Logo) */
@@ -155,7 +168,15 @@
   color: var(--color-text);
   text-align: center;
   pointer-events: auto;
+}
+
+.header__logo button {
   cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
 }
 
 .header__logo a {
@@ -166,34 +187,31 @@
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .indicator-left {
-    padding: var(--space-3);
+    top: var(--space-3);
+    left: var(--space-3);
+    bottom: var(--space-3);
   }
 
-  .indicator-left__about,
-  .indicator-left__archive {
+  .indicator-left__item {
     font-size: 0.5rem;
   }
 
-  .indicator-left__project {
-    gap: var(--space-1);
+  .indicator-left__project-info {
+    left: 2em;
   }
 
-  .indicator-left__number,
   .indicator-left__title,
   .indicator-left__client {
     font-size: 0.5rem;
   }
 
   .indicator-right {
-    padding: var(--space-3);
+    top: var(--space-3);
+    right: var(--space-3);
+    bottom: var(--space-3);
   }
 
-  .indicator-right__numbers {
-    gap: var(--space-5);
-    padding-top: var(--space-5);
-  }
-
-  .indicator-right__number {
+  .indicator-right__item {
     font-size: 0.5rem;
   }
 
@@ -212,12 +230,7 @@
 }
 
 @media (max-width: 480px) {
-  .indicator-left__project {
+  .indicator-left__project-info {
     display: none;
   }
-
-  .indicator-right__numbers {
-    gap: var(--space-4);
-  }
 }
-

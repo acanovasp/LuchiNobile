@@ -1,4 +1,5 @@
-[00:00:00.570] Server  LOG     ✓ Ready in 423ms
-[00:00:04.460] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:52.181] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
-[00:00:52.181] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[00:00:00.609] Server  LOG     ✓ Ready in 504ms
+[00:00:01.348] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:34.087] Server  LOG     ✓ Compiled in 28ms
+[00:10:40.193] Server  LOG     ✓ Compiled in 13ms
+[00:10:45.812] Server  LOG     ✓ Compiled in 2ms
