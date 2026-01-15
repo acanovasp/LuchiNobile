@@ -1,0 +1,104 @@
+/* [project]/styles/archive.css [app-client] (css) */
+.archive {
+  min-height: 100dvh;
+  padding: var(--space-10) calc(var(--gutter)  + var(--indicator-width));
+  padding-bottom: var(--space-12);
+  background-color: var(--color-white);
+}
+
+.archive__grid {
+  gap: var(--space-5);
+  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+}
+
+.archive__item {
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.archive__item--large {
+  grid-area: span 2 / span 2;
+}
+
+.archive__thumbnail {
+  transition: transform var(--duration-slow) var(--ease-out);
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.archive__item:hover .archive__thumbnail {
+  transform: scale(1.03);
+}
+
+.archive__item-overlay {
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+  background: linear-gradient(to top, #00000080 0%, #0000 50%);
+  position: absolute;
+  inset: 0;
+}
+
+.archive__item:hover .archive__item-overlay {
+  opacity: 1;
+}
+
+.archive__item-info {
+  padding: var(--space-4);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out), transform var(--duration-normal) var(--ease-out);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(10px);
+}
+
+.archive__item:hover .archive__item-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.archive__item-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-white);
+  margin-bottom: var(--space-1);
+}
+
+.archive__item-client {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: #ffffffb3;
+}
+
+@media (max-width: 1024px) {
+  .archive {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+
+  .archive__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .archive__item--large {
+    grid-area: span 1 / span 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .archive__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*# sourceMappingURL=styles_archive_css_bad6b30c._.single.css.map*/

@@ -1,0 +1,94 @@
+/* About Overlay Styles */
+.about-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-slow) var(--ease-out),
+              visibility var(--duration-slow) var(--ease-out);
+}
+
+.about-overlay--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.about-overlay__content {
+  max-width: 800px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--duration-slow) var(--ease-out) 100ms,
+              transform var(--duration-slow) var(--ease-out) 100ms;
+}
+
+.about-overlay--visible .about-overlay__content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-overlay__text {
+  font-size: clamp(var(--font-size-sm), 1.5vw, var(--font-size-base));
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text);
+}
+
+.about-overlay__text p {
+  margin-bottom: var(--space-6);
+}
+
+.about-overlay__text p:last-child {
+  margin-bottom: 0;
+}
+
+.about-overlay__email {
+  margin-top: var(--space-10);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.about-overlay__email:hover {
+  color: var(--color-text);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .about-overlay {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .about-overlay__content {
+    max-width: 100%;
+  }
+
+  .about-overlay__text {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .about-overlay__text p {
+    margin-bottom: var(--space-4);
+  }
+
+  .about-overlay__email {
+    margin-top: var(--space-6);
+    font-size: var(--font-size-xs);
+  }
+}
+

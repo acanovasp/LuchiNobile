@@ -1,0 +1,20 @@
+import { defineConfig } from 'sanity'
+import { structureTool } from 'sanity/structure'
+import { schemaTypes } from './sanity/schema'
+
+export default defineConfig({
+  name: 'luchi-nobile',
+  title: 'Luchi Nóbile Portfolio',
+  
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  
+  basePath: '/studio',
+  
+  plugins: [structureTool()],
+  
+  schema: {
+    types: schemaTypes,
+  },
+})
+

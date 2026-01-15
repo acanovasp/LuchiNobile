@@ -1,0 +1,111 @@
+/* Archive Grid Styles */
+.archive {
+  min-height: 100dvh;
+  padding: var(--space-10) calc(var(--gutter) + var(--indicator-width));
+  padding-bottom: var(--space-12);
+  background-color: var(--color-white);
+}
+
+.archive__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.archive__item {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.archive__item--large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.archive__thumbnail {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.archive__item:hover .archive__thumbnail {
+  transform: scale(1.03);
+}
+
+.archive__item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.5) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.archive__item:hover .archive__item-overlay {
+  opacity: 1;
+}
+
+.archive__item-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-4);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+}
+
+.archive__item:hover .archive__item-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.archive__item-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-white);
+  margin-bottom: var(--space-1);
+}
+
+.archive__item-client {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive grid */
+@media (max-width: 1024px) {
+  .archive {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+  
+  .archive__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .archive__item--large {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .archive__grid {
+    grid-template-columns: 1fr;
+  }
+}
+

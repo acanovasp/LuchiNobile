@@ -1,0 +1,91 @@
+/* [project]/styles/about.css [app-client] (css) */
+.about-overlay {
+  z-index: var(--z-overlay);
+  padding: var(--gutter);
+  -webkit-backdrop-filter: blur(40px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-slow) var(--ease-out), visibility var(--duration-slow) var(--ease-out);
+  background-color: #0000004d;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: fixed;
+  inset: 0;
+}
+
+.about-overlay--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.about-overlay__content {
+  text-align: center;
+  opacity: 0;
+  max-width: 800px;
+  transition: opacity var(--duration-slow) var(--ease-out) .1s, transform var(--duration-slow) var(--ease-out) .1s;
+  transform: translateY(20px);
+}
+
+.about-overlay--visible .about-overlay__content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-overlay__text {
+  font-size: clamp(var(--font-size-sm), 1.5vw, var(--font-size-base));
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text);
+}
+
+.about-overlay__text p {
+  margin-bottom: var(--space-6);
+}
+
+.about-overlay__text p:last-child {
+  margin-bottom: 0;
+}
+
+.about-overlay__email {
+  margin-top: var(--space-10);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.about-overlay__email:hover {
+  color: var(--color-text);
+}
+
+@media (max-width: 768px) {
+  .about-overlay {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .about-overlay__content {
+    max-width: 100%;
+  }
+
+  .about-overlay__text {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .about-overlay__text p {
+    margin-bottom: var(--space-4);
+  }
+
+  .about-overlay__email {
+    margin-top: var(--space-6);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/*# sourceMappingURL=styles_about_css_bad6b30c._.single.css.map*/

@@ -1,0 +1,56 @@
+/* Splash Screen Styles */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-splash);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--duration-slower) var(--ease-out),
+              visibility var(--duration-slower) var(--ease-out);
+}
+
+.splash--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash__logo {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text);
+  opacity: 0;
+  animation: splash-fade-in var(--duration-slow) var(--ease-out) forwards;
+}
+
+.splash__logo--fading {
+  animation: splash-fade-out var(--duration-normal) var(--ease-out) forwards;
+}
+
+@keyframes splash-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes splash-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+

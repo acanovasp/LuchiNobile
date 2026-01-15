@@ -1,0 +1,213 @@
+/* [project]/styles/indicators.css [app-client] (css) */
+.indicator-left {
+  z-index: var(--z-indicators);
+  padding: var(--gutter);
+  pointer-events: none;
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.indicator-left > * {
+  pointer-events: auto;
+}
+
+.indicator-left__about {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-text);
+  opacity: .6;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+.indicator-left__about:hover, .indicator-left__about--active {
+  opacity: 1;
+}
+
+.indicator-left__project {
+  gap: var(--space-1);
+  flex-direction: column;
+  display: flex;
+}
+
+.indicator-left__number {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text);
+  opacity: .6;
+}
+
+.indicator-left__title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-text);
+}
+
+.indicator-left__client {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-text);
+  opacity: .6;
+}
+
+.indicator-left__archive {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-text);
+  opacity: .6;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+.indicator-left__archive:hover, .indicator-left__archive--active {
+  opacity: 1;
+}
+
+.indicator-right {
+  z-index: var(--z-indicators);
+  padding: var(--gutter);
+  pointer-events: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  display: flex;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.indicator-right > * {
+  pointer-events: auto;
+}
+
+.indicator-right__numbers {
+  align-items: flex-end;
+  gap: var(--space-8);
+  padding-top: var(--space-8);
+  flex-direction: column;
+  display: flex;
+}
+
+.indicator-right__number {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text);
+  opacity: .4;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+  position: relative;
+}
+
+.indicator-right__number:hover {
+  opacity: .8;
+}
+
+.indicator-right__number--active {
+  opacity: 1;
+}
+
+.indicator-right__marker {
+  background-color: var(--color-white);
+  width: 8px;
+  height: 8px;
+  transition: top var(--duration-normal) var(--ease-out);
+  position: absolute;
+  right: 0;
+}
+
+.header {
+  z-index: var(--z-header);
+  padding: var(--gutter);
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header__logo {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text);
+  text-align: center;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.header__logo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .indicator-left {
+    padding: var(--space-3);
+  }
+
+  .indicator-left__about, .indicator-left__archive {
+    font-size: .5rem;
+  }
+
+  .indicator-left__project {
+    gap: var(--space-1);
+  }
+
+  .indicator-left__number, .indicator-left__title, .indicator-left__client {
+    font-size: .5rem;
+  }
+
+  .indicator-right {
+    padding: var(--space-3);
+  }
+
+  .indicator-right__numbers {
+    gap: var(--space-5);
+    padding-top: var(--space-5);
+  }
+
+  .indicator-right__number {
+    font-size: .5rem;
+  }
+
+  .indicator-right__marker {
+    width: 6px;
+    height: 6px;
+  }
+
+  .header {
+    padding: var(--space-3);
+  }
+
+  .header__logo {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .indicator-left__project {
+    display: none;
+  }
+
+  .indicator-right__numbers {
+    gap: var(--space-4);
+  }
+}
+
+/*# sourceMappingURL=styles_indicators_css_bad6b30c._.single.css.map*/

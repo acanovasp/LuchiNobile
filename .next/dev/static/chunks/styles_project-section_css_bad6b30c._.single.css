@@ -1,0 +1,68 @@
+/* [project]/styles/project-section.css [app-client] (css) */
+.project-section {
+  cursor: pointer;
+  width: 100%;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-section__video-container {
+  z-index: var(--z-video);
+  position: absolute;
+  inset: 0;
+}
+
+.project-section__video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.project-section__iframe-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.project-section__iframe-wrapper iframe {
+  pointer-events: none;
+  border: none;
+  width: 177.78vh;
+  min-width: 100vw;
+  height: 100vh;
+  min-height: 56.25vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.project-section__poster {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.project-section__poster--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.project-section__overlay {
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(#0003 0%, #0000 30% 70%, #0000004d 100%);
+  position: absolute;
+  inset: 0;
+}
+
+/*# sourceMappingURL=styles_project-section_css_bad6b30c._.single.css.map*/
