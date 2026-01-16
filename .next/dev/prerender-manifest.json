@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "fca821f281d2f6392aacecfc72c9caa7",
-    "previewModeSigningKey": "ababf68f06b0ed10e722c6ec775920c01d67338417025f1d4a08df68ab98914f",
-    "previewModeEncryptionKey": "689e385e9d34ef95aa8ad0af6fd4ce4cf8c672ac7ea908d4dd69e2c606ab565a"
-  }
-}
+{"version":4,"routes":{"/project/hands-that-make-champions":{},"/project/el-mon-ens-mira":{},"/project/a-new-way-to-win":{},"/project/i-embrace-who-i-am":{},"/project/dani-is-calling":{}},"dynamicRoutes":{"/project/[slug]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/project/[slug]","routeRegex":"^\\/project\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"7595add1e1e512a27d8487130c224d54","previewModeSigningKey":"edf8ac197959558c8c3c445c73a8c5f966a4b9f8d2831806e449cc3847e36b1a","previewModeEncryptionKey":"3451abb6c9d0141b69d4784004a8ff98153e626d64927279b0532c9d4583da2d"}}

@@ -1,8 +1,45 @@
-[00:00:00.609] Server  LOG     ✓ Ready in 504ms
-[00:00:01.348] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:10:34.087] Server  LOG     ✓ Compiled in 28ms
-[00:10:40.193] Server  LOG     ✓ Compiled in 13ms
-[00:10:45.812] Server  LOG     ✓ Compiled in 2ms
-[00:15:42.963] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:22:44.808] Server  LOG     ✓ Compiled in 42ms
-[00:30:41.749] Server  LOG     ✓ Compiled in 21ms
+[00:00:00.819] Server  LOG     ✓ Ready in 619ms
+[00:00:02.547] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:15.423] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[00:06:15.423] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[00:06:26.917] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[00:06:26.917] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[00:06:38.981] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:44.656] Server  LOG     ✓ Compiled in 45ms
+[00:09:55.310] Server  LOG     ✓ Compiled in 19ms
+[00:10:08.771] Server  LOG     ✓ Compiled in 6ms
+[00:11:34.925] Server  LOG     ✓ Compiled in 7ms
+[00:11:46.641] Server  LOG     ✓ Compiled in 8ms
+[00:11:53.391] Server  LOG     ✓ Compiled in 10ms
+[00:12:24.156] Server  LOG     ✓ Compiled in 10ms
+[00:12:34.648] Server  LOG     ✓ Compiled in 6ms
+[00:12:43.098] Server  LOG     ✓ Compiled in 5ms
+[00:13:52.162] Server  LOG     ✓ Compiled in 7ms
+[00:14:10.383] Server  LOG     ✓ Compiled in 11ms
+[00:14:29.191] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:14:59.127] Server  LOG     ✓ Compiled in 8ms
+[00:15:09.797] Server  LOG     ✓ Compiled in 8ms
+[00:16:13.217] Server  LOG     ✓ Compiled in 9ms
+[00:16:22.521] Server  LOG     ✓ Compiled in 10ms
+[00:19:05.481] Server  LOG     ✓ Compiled in 11ms
+[00:19:19.315] Server  LOG     ✓ Compiled in 4ms
+[00:19:49.289] Server  LOG     ✓ Compiled in 8ms
+[00:20:01.178] Server  LOG     ✓ Compiled in 8ms
+[00:20:09.956] Server  LOG     ✓ Compiled in 4ms
+[00:20:34.216] Server  LOG     ✓ Compiled in 10ms
+[00:22:19.700] Server  LOG     ✓ Compiled in 7ms
+[00:22:39.087] Server  LOG     ✓ Compiled in 9ms
+[00:22:50.730] Server  LOG     ✓ Compiled in 6ms
+[00:24:31.221] Server  LOG     ✓ Compiled in 16ms
+[00:26:57.791] Server  LOG     ✓ Compiled in 15ms
+[00:27:27.787] Server  LOG     ✓ Compiled in 9ms
+[00:27:58.085] Server  LOG     ✓ Compiled in 8ms
+[00:28:18.532] Server  LOG     ✓ Compiled in 9ms
+[00:28:23.736] Server  LOG     ✓ Compiled in 7ms
+[00:29:36.632] Server  LOG     ✓ Compiled in 8ms
+[00:29:51.727] Server  LOG     ✓ Compiled in 7ms
+[00:30:18.036] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:50:31.271] Server  LOG     ✓ Compiled in 13ms
+[00:50:38.908] Server  LOG     ✓ Compiled in 13ms
+[00:50:45.580] Server  LOG     ✓ Compiled in 41ms
+[00:50:56.491] Server  LOG     ✓ Compiled in 8ms

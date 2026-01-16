@@ -42,15 +42,28 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
     player.on('play', () => setIsPlaying(true))
     player.on('pause', () => setIsPlaying(false))
     player.on('ended', () => setIsPlaying(false))
-    
-    player.on('timeupdate', (data) => {
-      setProgress(data.percent * 100)
-      setDuration(data.duration)
-    })
+    player.on('volumechange', (data) => setIsMuted(data.volume === 0))
 
     player.getDuration().then(setDuration)
+    player.getMuted().then(setIsMuted)
+
+    // Smooth progress updates using requestAnimationFrame
+    let rafId: number
+    const updateProgress = () => {
+      player.getCurrentTime().then((currentTime) => {
+        player.getDuration().then((dur) => {
+          if (dur > 0) {
+            setProgress((currentTime / dur) * 100)
+          }
+        })
+      })
+      rafId = requestAnimationFrame(updateProgress)
+    }
+    
+    rafId = requestAnimationFrame(updateProgress)
 
     return () => {
+      cancelAnimationFrame(rafId)
       player.destroy()
     }
   }, [project.fullVimeoId])
@@ -80,24 +93,34 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
     }
   }, [])
 
-  const handlePlayPause = useCallback(() => {
+  const handlePlayPause = useCallback(async () => {
     const player = playerRef.current
     if (!player) return
 
-    if (isPlaying) {
-      player.pause()
-    } else {
-      player.play()
+    try {
+      const paused = await player.getPaused()
+      if (paused) {
+        await player.play()
+      } else {
+        await player.pause()
+      }
+    } catch (error) {
+      console.error('Play/pause error:', error)
     }
-  }, [isPlaying])
+  }, [])
 
-  const handleMuteToggle = useCallback(() => {
+  const handleMuteToggle = useCallback(async () => {
     const player = playerRef.current
     if (!player) return
 
-    player.setMuted(!isMuted)
-    setIsMuted(!isMuted)
-  }, [isMuted])
+    try {
+      const muted = await player.getMuted()
+      await player.setMuted(!muted)
+      setIsMuted(!muted)
+    } catch (error) {
+      console.error('Mute toggle error:', error)
+    }
+  }, [])
 
   const handleProgressClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -124,6 +147,13 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
       >
         {/* Video Container */}
         <div ref={playerContainerRef} className="video-player__container" />
+        
+        {/* Clickable overlay for play/pause */}
+        <div 
+          className="video-player__click-area"
+          onClick={handlePlayPause}
+          aria-label={isPlaying ? 'Pause video' : 'Play video'}
+        />
 
         {/* Header */}
         <div className="video-player__header">
@@ -135,33 +165,44 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
         {/* Controls */}
         <div className="video-player__controls">
           <div className="video-player__controls-inner">
-            {/* Project Info */}
-            <div className="video-player__info">
-              <span className="video-player__number">
-                {String(project.order || 1).padStart(2, '0')}
-              </span>
-              <span className="video-player__title">{project.title}</span>
-              <span className="video-player__client">{project.client}</span>
-            </div>
+            <div className="video-player__controls-inner-left">
+              {/* Project Info */}
+              <div className="video-player__info">
+                
+                <span className="video-player__number">
+                  {String(project.order || 1).padStart(2, '0')}
+                </span>
+                <div className="video-player__info-project">
+                  <span className="video-player__title">{project.title}</span>
+                  <span className="video-player__client">{project.client}</span>
+                </div>
+              </div>
 
-            {/* Buttons */}
-            <div className="video-player__buttons">
-              <button
-                className="video-player__button"
-                onClick={handlePlayPause}
-              >
-                {isPlaying ? 'Pause' : 'Play'}
-              </button>
-              <button
-                className="video-player__button"
-                onClick={handleMuteToggle}
-              >
-                {isMuted ? 'Unmute' : 'Mute'}
-              </button>
+              {/* Buttons */}
+              <div className="video-player__buttons">
+                <button
+                  className="video-player__button"
+                  onClick={handlePlayPause}
+                >
+                  {isPlaying ? 'Pause' : 'Play'}
+                </button>
+                <button
+                  className="video-player__button"
+                  onClick={handleMuteToggle}
+                >
+                  {isMuted ? 'Unmute' : 'Mute'}
+                </button>
+              </div>
             </div>
+            {/* Close Button */}
+            <button className="video-player__close" onClick={handleClose}>
+              Close
+            </button>
+          </div>
+        </div>
 
-            {/* Progress Bar */}
-            <div className="video-player__progress">
+        {/* Progress Bar */}
+        <div className="video-player__progress">
               <div
                 className="video-player__progress-bar"
                 onClick={handleProgressClick}
@@ -172,13 +213,6 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
                 />
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Close Button */}
-        <button className="video-player__close" onClick={handleClose}>
-          Close
-        </button>
       </div>
     </div>
   )

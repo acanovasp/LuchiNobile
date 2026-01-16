@@ -203,8 +203,8 @@ const defaultProjects = [
         },
         order: 2,
         isFeatured: true,
-        previewVimeoId: '824804225',
-        fullVimeoId: '824804225',
+        previewVimeoId: '1086761824',
+        fullVimeoId: '1086761824',
         thumbnail: null
     },
     {

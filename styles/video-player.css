@@ -17,6 +17,14 @@
   inset: 0;
 }
 
+/* Clickable overlay for play/pause */
+.video-player__click-area {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  cursor: pointer;
+}
+
 .video-player__iframe {
   position: absolute;
   top: 50%;
@@ -49,16 +57,29 @@
 
 .video-player__controls-inner {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.video-player__controls-inner-left {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   gap: var(--space-5);
 }
 
 /* Project Info */
 .video-player__info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--space-1);
   min-width: 200px;
+}
+
+.video-player__info-project {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
 .video-player__number {
@@ -114,6 +135,11 @@
 /* Progress Bar */
 .video-player__progress {
   flex: 1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -121,7 +147,7 @@
 
 .video-player__progress-bar {
   flex: 1;
-  height: 2px;
+  height: 8px;
   background-color: rgba(255, 255, 255, 0.3);
   cursor: pointer;
   position: relative;
@@ -133,20 +159,13 @@
   left: 0;
   height: 100%;
   background-color: var(--color-white);
-  transition: width 100ms linear;
+  transition: width 300ms ease-in-out;
 }
 
-.video-player__progress-bar:hover .video-player__progress-fill {
-  height: 4px;
-  top: -1px;
-}
+
 
 /* Close Button */
 .video-player__close {
-  position: absolute;
-  bottom: var(--space-6);
-  right: var(--gutter);
-  z-index: 20;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-normal);
   text-transform: uppercase;
