@@ -725,6 +725,61 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$sanity$2e$ts__$5b$app
 ;
 ;
 ;
+// Placeholder data - videos are large, images are small
+const placeholderMedia = [
+    // Row 1-2: Large video on left, 2 small images stacked on right
+    {
+        type: 'video',
+        src: 'https://videos.pexels.com/video-files/5752729/5752729-uhd_2560_1440_30fps.mp4'
+    },
+    {
+        type: 'image',
+        src: 'https://images.pexels.com/photos/3062541/pexels-photo-3062541.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    {
+        type: 'image',
+        src: 'https://images.pexels.com/photos/2608517/pexels-photo-2608517.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    // Row 3-4: 2 small images, then large video
+    {
+        type: 'image',
+        src: 'https://images.pexels.com/photos/3379934/pexels-photo-3379934.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    {
+        type: 'video',
+        src: 'https://videos.pexels.com/video-files/5752574/5752574-uhd_2560_1440_30fps.mp4'
+    },
+    {
+        type: 'image',
+        src: 'https://images.pexels.com/photos/1983037/pexels-photo-1983037.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    // Row 5-6: Large video, 2 small images
+    {
+        type: 'video',
+        src: 'https://videos.pexels.com/video-files/4065924/4065924-uhd_2560_1440_30fps.mp4'
+    },
+    {
+        type: 'image',
+        src: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    {
+        type: 'image',
+        src: 'https://images.pexels.com/photos/3571551/pexels-photo-3571551.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    // More items
+    {
+        type: 'image',
+        src: 'https://images.pexels.com/photos/2531237/pexels-photo-2531237.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    {
+        type: 'image',
+        src: 'https://images.pexels.com/photos/3184398/pexels-photo-3184398.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    {
+        type: 'video',
+        src: 'https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4'
+    }
+];
 function ArchiveGrid({ projects }) {
     const gridRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const [visibleItems, setVisibleItems] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(new Set());
@@ -747,7 +802,7 @@ function ArchiveGrid({ projects }) {
             });
         }, {
             root: null,
-            rootMargin: '100px',
+            rootMargin: '200px',
             threshold: 0
         });
         const items = grid.querySelectorAll('.archive__item');
@@ -756,29 +811,43 @@ function ArchiveGrid({ projects }) {
     }, [
         projects
     ]);
-    // Determine which item should be large (first featured item)
-    const getLargeItemIndex = ()=>{
-        const featuredIndex = projects.findIndex((p)=>p.isFeatured);
-        return featuredIndex >= 0 ? featuredIndex : 0;
-    };
-    const largeItemIndex = getLargeItemIndex();
+    // Generate items - use projects data with placeholder media
+    const items = projects.map((project, index)=>{
+        const placeholder = placeholderMedia[index % placeholderMedia.length];
+        return {
+            project,
+            media: placeholder,
+            isLarge: placeholder.type === 'video'
+        };
+    });
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "section section--archive archive",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             ref: gridRef,
             className: "archive__grid",
-            children: projects.map((project, index)=>{
-                const isLarge = index === largeItemIndex;
+            children: items.map(({ project, media, isLarge }, index)=>{
                 const isVisible = visibleItems.has(project._id);
+                // Try to get Sanity thumbnail, fall back to placeholder
                 const thumbnailUrl = project.thumbnail ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$sanity$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["urlFor"])(project.thumbnail).width(800).height(450).url() : null;
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                     href: `/project/${project.slug.current}`,
                     className: `archive__item ${isLarge ? 'archive__item--large' : ''}`,
                     "data-project-id": project._id,
                     children: [
-                        thumbnailUrl && isVisible && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        isVisible && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "archive__thumbnail",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                            children: media.type === 'video' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("video", {
+                                src: media.src,
+                                autoPlay: true,
+                                loop: true,
+                                muted: true,
+                                playsInline: true,
+                                className: "archive__video"
+                            }, void 0, false, {
+                                fileName: "[project]/components/ArchiveGrid.tsx",
+                                lineNumber: 111,
+                                columnNumber: 21
+                            }, this) : thumbnailUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                 src: thumbnailUrl,
                                 alt: project.title,
                                 fill: true,
@@ -788,19 +857,32 @@ function ArchiveGrid({ projects }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 77,
-                                columnNumber: 19
+                                lineNumber: 120,
+                                columnNumber: 21
+                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                src: media.src,
+                                alt: project.title,
+                                fill: true,
+                                sizes: "33vw",
+                                style: {
+                                    objectFit: 'cover'
+                                },
+                                unoptimized: true
+                            }, void 0, false, {
+                                fileName: "[project]/components/ArchiveGrid.tsx",
+                                lineNumber: 128,
+                                columnNumber: 21
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 76,
+                            lineNumber: 109,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "archive__item-overlay"
                         }, void 0, false, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 86,
+                            lineNumber: 139,
                             columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -811,7 +893,7 @@ function ArchiveGrid({ projects }) {
                                     children: project.title
                                 }, void 0, false, {
                                     fileName: "[project]/components/ArchiveGrid.tsx",
-                                    lineNumber: 88,
+                                    lineNumber: 141,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -819,30 +901,30 @@ function ArchiveGrid({ projects }) {
                                     children: project.client
                                 }, void 0, false, {
                                     fileName: "[project]/components/ArchiveGrid.tsx",
-                                    lineNumber: 89,
+                                    lineNumber: 142,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 87,
+                            lineNumber: 140,
                             columnNumber: 15
                         }, this)
                     ]
                 }, project._id, true, {
                     fileName: "[project]/components/ArchiveGrid.tsx",
-                    lineNumber: 69,
+                    lineNumber: 102,
                     columnNumber: 13
                 }, this);
             })
         }, void 0, false, {
             fileName: "[project]/components/ArchiveGrid.tsx",
-            lineNumber: 60,
+            lineNumber: 92,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ArchiveGrid.tsx",
-        lineNumber: 59,
+        lineNumber: 91,
         columnNumber: 5
     }, this);
 }

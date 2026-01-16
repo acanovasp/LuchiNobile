@@ -242,6 +242,101 @@ const defaultFeaturedProjects = [
         thumbnail: null
     }
 ];
+// All projects for the archive (featured + additional)
+const defaultAllProjects = [
+    ...defaultFeaturedProjects,
+    {
+        _id: '6',
+        title: 'Summer Dreams',
+        client: 'Mango',
+        slug: {
+            current: 'summer-dreams'
+        },
+        order: 6,
+        isFeatured: false,
+        previewVimeoId: '824804225',
+        fullVimeoId: '824804225',
+        thumbnail: null
+    },
+    {
+        _id: '7',
+        title: 'The Journey',
+        client: 'Nike',
+        slug: {
+            current: 'the-journey'
+        },
+        order: 7,
+        isFeatured: false,
+        previewVimeoId: '824804225',
+        fullVimeoId: '824804225',
+        thumbnail: null
+    },
+    {
+        _id: '8',
+        title: 'Urban Stories',
+        client: 'Adidas',
+        slug: {
+            current: 'urban-stories'
+        },
+        order: 8,
+        isFeatured: false,
+        previewVimeoId: '824804225',
+        fullVimeoId: '824804225',
+        thumbnail: null
+    },
+    {
+        _id: '9',
+        title: 'Moments',
+        client: 'Apple',
+        slug: {
+            current: 'moments'
+        },
+        order: 9,
+        isFeatured: false,
+        previewVimeoId: '824804225',
+        fullVimeoId: '824804225',
+        thumbnail: null
+    },
+    {
+        _id: '10',
+        title: 'Breaking Limits',
+        client: 'Red Bull',
+        slug: {
+            current: 'breaking-limits'
+        },
+        order: 10,
+        isFeatured: false,
+        previewVimeoId: '824804225',
+        fullVimeoId: '824804225',
+        thumbnail: null
+    },
+    {
+        _id: '11',
+        title: 'Taste of Home',
+        client: 'Coca-Cola',
+        slug: {
+            current: 'taste-of-home'
+        },
+        order: 11,
+        isFeatured: false,
+        previewVimeoId: '824804225',
+        fullVimeoId: '824804225',
+        thumbnail: null
+    },
+    {
+        _id: '12',
+        title: 'New Horizons',
+        client: 'Samsung',
+        slug: {
+            current: 'new-horizons'
+        },
+        order: 12,
+        isFeatured: false,
+        previewVimeoId: '824804225',
+        fullVimeoId: '824804225',
+        thumbnail: null
+    }
+];
 const defaultSiteSettings = {
     _id: 'settings',
     aboutText: `Director, creativo y guionista argentino con base en Barcelona. Se formó en la Escuelita y Guionarte (Buenos Aires). Su obra ofrece una mirada sensible, cuidada y honesta sobre la experiencia humana, construida a través de composiciones minimalistas, un uso consciente del movimiento y la creación de universos realistas.
@@ -251,7 +346,7 @@ Confía profundamente en la práctica como escuela. En las ejecuciones simples p
 };
 async function HomePage() {
     let featuredProjects = defaultFeaturedProjects;
-    let allProjects = defaultFeaturedProjects;
+    let allProjects = defaultAllProjects;
     let siteSettings = defaultSiteSettings;
     // Try to fetch from Sanity if configured
     if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
@@ -280,7 +375,7 @@ async function HomePage() {
         siteSettings: siteSettings
     }, void 0, false, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 100,
+        lineNumber: 182,
         columnNumber: 5
     }, this);
 }

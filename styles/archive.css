@@ -7,18 +7,34 @@
 }
 
 .archive__grid {
+  --columns: 3;
+  --gap: var(--space-5);
+  --padding: calc(var(--gutter) + var(--indicator-width));
+  
+  /* Calculate column width based on viewport */
+  --container-width: calc(100vw - 2 * var(--padding));
+  --col-width: calc((var(--container-width) - (var(--columns) - 1) * var(--gap)) / var(--columns));
+  
+  /* Row height for 16:9 aspect ratio */
+  --row-height: calc(var(--col-width) * 9 / 16);
+  
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-5);
+  grid-template-columns: repeat(var(--columns), 1fr);
+  grid-auto-rows: var(--row-height);
+  grid-auto-flow: dense;
+  gap: var(--gap);
 }
 
 .archive__item {
   position: relative;
-  aspect-ratio: 16 / 9;
   overflow: hidden;
   cursor: pointer;
+  /* Small items: 1 column × 1 row */
+  grid-column: span 1;
+  grid-row: span 1;
 }
 
+/* Large items: 2 columns × 2 rows */
 .archive__item--large {
   grid-column: span 2;
   grid-row: span 2;
@@ -30,6 +46,21 @@
   background-size: cover;
   background-position: center;
   transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.archive__thumbnail img,
+.archive__thumbnail video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.archive__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .archive__item:hover .archive__thumbnail {
@@ -94,18 +125,35 @@
   }
   
   .archive__grid {
+    --columns: 2;
+    --padding: var(--gutter);
+    --container-width: calc(100vw - 2 * var(--padding));
+    --col-width: calc((var(--container-width) - var(--gap)) / 2);
+    --row-height: calc(var(--col-width) * 9 / 16);
+    
     grid-template-columns: repeat(2, 1fr);
   }
   
+  /* Large items take full width on tablet */
   .archive__item--large {
-    grid-column: span 1;
-    grid-row: span 1;
+    grid-column: span 2;
+    grid-row: span 2;
   }
 }
 
 @media (max-width: 640px) {
   .archive__grid {
+    --columns: 1;
+    --col-width: calc(100vw - 2 * var(--gutter));
+    --row-height: calc(var(--col-width) * 9 / 16);
+    
     grid-template-columns: 1fr;
   }
+  
+  /* All items become single column/row on mobile */
+  .archive__item,
+  .archive__item--large {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
 }
-
