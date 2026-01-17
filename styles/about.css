@@ -8,13 +8,25 @@
   align-items: center;
   justify-content: center;
   padding: var(--gutter);
-  background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(40px);
+  
+  /* Fallback for browsers without backdrop-filter support */
+  background-color: rgba(0, 0, 0, 0.7);
+  
+  /* Backdrop filter - direct on element */
   -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+  
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--duration-slow) var(--ease-out),
               visibility var(--duration-slow) var(--ease-out);
+}
+
+/* When backdrop-filter is supported, use lighter background */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .about-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
 }
 
 .about-overlay--visible {

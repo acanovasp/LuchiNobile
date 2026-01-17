@@ -17,11 +17,18 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 'use client';
 ;
 ;
+const LOGO_TEXT = 'Luchi Nóbile';
+const TYPING_DURATION = 1200 // 1.2s for typing (faster)
+;
+const HOLD_DURATION = 1500 // 1.5s hold after typing
+;
+const FADE_DURATION = 600 // 0.6s fade out
+;
 function SplashScreen({ vimeoIds, onComplete, minDuration = 3500 }) {
-    const [isHidden, setIsHidden] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [displayedText, setDisplayedText] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const [isFading, setIsFading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isHidden, setIsHidden] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const preloadVimeoVideos = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (ids)=>{
-        // Preload Vimeo video iframes by creating them off-screen
         const preloadPromises = ids.slice(0, 3).map((id)=>{
             return new Promise((resolve)=>{
                 const iframe = document.createElement('iframe');
@@ -34,37 +41,47 @@ function SplashScreen({ vimeoIds, onComplete, minDuration = 3500 }) {
                 iframe.style.pointerEvents = 'none';
                 iframe.src = `https://player.vimeo.com/video/${id}?background=1&autoplay=0&loop=1&muted=1&quality=1080p`;
                 iframe.setAttribute('loading', 'eager');
-                iframe.onload = ()=>{
-                    // Keep iframe loaded but hidden for cache benefit
-                    resolve();
-                };
-                iframe.onerror = ()=>{
-                    resolve(); // Resolve anyway to not block
-                };
+                iframe.onload = ()=>resolve();
+                iframe.onerror = ()=>resolve();
                 document.body.appendChild(iframe);
-                // Timeout fallback
                 setTimeout(resolve, 5000);
             });
         });
         await Promise.all(preloadPromises);
     }, []);
+    // Typing animation
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        let currentIndex = 0;
+        const charDelay = TYPING_DURATION / LOGO_TEXT.length;
+        const typeInterval = setInterval(()=>{
+            currentIndex++;
+            setDisplayedText(LOGO_TEXT.slice(0, currentIndex));
+            if (currentIndex >= LOGO_TEXT.length) {
+                clearInterval(typeInterval);
+            }
+        }, charDelay);
+        return ()=>clearInterval(typeInterval);
+    }, []);
+    // Main sequence
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const startTime = Date.now();
-        const runPreload = async ()=>{
-            // Start preloading videos
+        const runSequence = async ()=>{
+            // Preload videos in parallel with animation
             await preloadVimeoVideos(vimeoIds);
-            // Ensure minimum duration has passed
+            // Wait for minimum duration (typing + hold)
             const elapsed = Date.now() - startTime;
-            const remaining = Math.max(0, minDuration - elapsed);
+            const totalAnimationTime = TYPING_DURATION + HOLD_DURATION;
+            const remaining = Math.max(0, Math.max(minDuration, totalAnimationTime) - elapsed);
+            await new Promise((resolve)=>setTimeout(resolve, remaining));
+            // Start fade out
+            setIsFading(true);
+            // Wait for fade animation to complete
             setTimeout(()=>{
-                setIsFading(true);
-                setTimeout(()=>{
-                    setIsHidden(true);
-                    onComplete();
-                }, 500);
-            }, remaining);
+                setIsHidden(true);
+                onComplete();
+            }, FADE_DURATION);
         };
-        runPreload();
+        runSequence();
     }, [
         vimeoIds,
         minDuration,
@@ -73,18 +90,18 @@ function SplashScreen({ vimeoIds, onComplete, minDuration = 3500 }) {
     ]);
     if (isHidden) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: `splash ${isHidden ? 'splash--hidden' : ''}`,
+        className: `splash ${isFading ? 'splash--fading' : ''}`,
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-            className: `splash__logo ${isFading ? 'splash__logo--fading' : ''}`,
-            children: "Luchi Nóbile"
+            className: "splash__logo",
+            children: displayedText
         }, void 0, false, {
             fileName: "[project]/components/SplashScreen.tsx",
-            lineNumber: 80,
+            lineNumber: 99,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/SplashScreen.tsx",
-        lineNumber: 79,
+        lineNumber: 98,
         columnNumber: 5
     }, this);
 }
@@ -142,32 +159,39 @@ function ScrollContainer({ children, initialSection = 0, onSectionChange }) {
     }, [
         initialSection
     ]);
-    // Setup intersection observer for section detection
+    // Detect current section based on scroll position
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const container = containerRef.current;
         if (!container) return;
-        const sections = container.querySelectorAll('.section');
-        const observer = new IntersectionObserver((entries)=>{
-            entries.forEach((entry)=>{
-                if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                    const index = Array.from(sections).indexOf(entry.target);
-                    if (index !== -1) {
-                        setCurrentSection(index);
-                        onSectionChange?.(index);
-                    }
+        const handleScroll = ()=>{
+            const sections = container.querySelectorAll('.section');
+            const scrollTop = container.scrollTop;
+            const viewportHeight = container.clientHeight;
+            // Find which section the middle of the viewport is in
+            const viewportMiddle = scrollTop + viewportHeight / 2;
+            let activeIndex = 0;
+            sections.forEach((section, index)=>{
+                const sectionElement = section;
+                const sectionTop = sectionElement.offsetTop;
+                const sectionBottom = sectionTop + sectionElement.offsetHeight;
+                if (viewportMiddle >= sectionTop && viewportMiddle < sectionBottom) {
+                    activeIndex = index;
                 }
             });
-        }, {
-            root: container,
-            threshold: [
-                0.5
-            ]
+            if (activeIndex !== currentSection) {
+                setCurrentSection(activeIndex);
+                onSectionChange?.(activeIndex);
+            }
+        };
+        container.addEventListener('scroll', handleScroll, {
+            passive: true
         });
-        sections.forEach((section)=>observer.observe(section));
-        return ()=>observer.disconnect();
+        handleScroll(); // Initial check
+        return ()=>container.removeEventListener('scroll', handleScroll);
     }, [
         children,
-        onSectionChange
+        onSectionChange,
+        currentSection
     ]);
     // Track if at top of scroll
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
@@ -209,12 +233,12 @@ function ScrollContainer({ children, initialSection = 0, onSectionChange }) {
             children: children
         }, void 0, false, {
             fileName: "[project]/components/ScrollContainer.tsx",
-            lineNumber: 141,
+            lineNumber: 147,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ScrollContainer.tsx",
-        lineNumber: 140,
+        lineNumber: 146,
         columnNumber: 5
     }, this);
 }
@@ -340,14 +364,42 @@ __turbopack_context__.s([
     ()=>AboutOverlay
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 'use client';
+;
 ;
 function AboutOverlay({ isVisible, aboutText, contactEmail, onClose }) {
     // Split text into paragraphs
     const paragraphs = aboutText.split('\n\n').filter(Boolean);
+    // Track wheel events for scroll-down-to-close
+    const wheelAccumulator = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(0);
+    const lastWheelTime = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(0);
+    const handleWheel = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((e)=>{
+        if (!isVisible) return;
+        const now = Date.now();
+        // Reset accumulator if too much time passed
+        if (now - lastWheelTime.current > 300) {
+            wheelAccumulator.current = 0;
+        }
+        lastWheelTime.current = now;
+        // Close on scroll down (positive deltaY)
+        if (e.deltaY > 0) {
+            wheelAccumulator.current += Math.abs(e.deltaY);
+            if (wheelAccumulator.current > 50) {
+                onClose();
+                wheelAccumulator.current = 0;
+            }
+        } else {
+            wheelAccumulator.current = 0;
+        }
+    }, [
+        isVisible,
+        onClose
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: `about-overlay ${isVisible ? 'about-overlay--visible' : ''}`,
         onClick: onClose,
+        onWheel: handleWheel,
         role: "dialog",
         "aria-modal": "true",
         "aria-label": "About",
@@ -361,12 +413,12 @@ function AboutOverlay({ isVisible, aboutText, contactEmail, onClose }) {
                             children: paragraph
                         }, index, false, {
                             fileName: "[project]/components/AboutOverlay.tsx",
-                            lineNumber: 33,
+                            lineNumber: 63,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/AboutOverlay.tsx",
-                    lineNumber: 31,
+                    lineNumber: 61,
                     columnNumber: 9
                 }, this),
                 contactEmail && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -375,18 +427,18 @@ function AboutOverlay({ isVisible, aboutText, contactEmail, onClose }) {
                     children: contactEmail
                 }, void 0, false, {
                     fileName: "[project]/components/AboutOverlay.tsx",
-                    lineNumber: 37,
+                    lineNumber: 67,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/AboutOverlay.tsx",
-            lineNumber: 27,
+            lineNumber: 57,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/AboutOverlay.tsx",
-        lineNumber: 20,
+        lineNumber: 49,
         columnNumber: 5
     }, this);
 }
@@ -430,7 +482,7 @@ function ScrollIndicator({ projects, currentSection, isAboutVisible, isArchiveAc
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "indicator-left",
+                className: `indicator-left ${isArchiveActive ? 'indicator--dark' : ''}`,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "indicator-left__items",
@@ -503,7 +555,7 @@ function ScrollIndicator({ projects, currentSection, isAboutVisible, isArchiveAc
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "indicator-right",
+                className: `indicator-right ${isArchiveActive ? 'indicator--dark' : ''}`,
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "indicator-right__items",
                     children: [
@@ -550,7 +602,7 @@ function ScrollIndicator({ projects, currentSection, isAboutVisible, isArchiveAc
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
-                className: "header",
+                className: `header ${isArchiveActive ? 'indicator--dark' : ''}`,
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "header__logo",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -953,9 +1005,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ArchiveGrid$2e
 ;
 ;
 ;
-function MainPageContent({ featuredProjects, allProjects, siteSettings }) {
+function MainPageContent({ featuredProjects, allProjects, siteSettings, isAboutVisible, setIsAboutVisible }) {
     const { currentSection, scrollToSection, containerRef } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollContainer$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useScrollContext"])();
-    const [isAboutVisible, setIsAboutVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const wheelAccumulator = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(0);
     const lastWheelTime = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(0);
     // Handle wheel events for opening/closing About
@@ -1009,9 +1060,6 @@ function MainPageContent({ featuredProjects, allProjects, siteSettings }) {
     const handleAboutClick = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(()=>{
         setIsAboutVisible((prev)=>!prev);
     }, []);
-    const handleAboutClose = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(()=>{
-        setIsAboutVisible(false);
-    }, []);
     const handleArchiveClick = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(()=>{
         // Scroll to archive section (last section, index = featuredProjects.length)
         scrollToSection(featuredProjects.length);
@@ -1035,24 +1083,14 @@ function MainPageContent({ featuredProjects, allProjects, siteSettings }) {
                     priority: index < 3
                 }, project._id, false, {
                     fileName: "[project]/components/MainPageClient.tsx",
-                    lineNumber: 105,
+                    lineNumber: 107,
                     columnNumber: 9
                 }, this)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ArchiveGrid$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 projects: allProjects
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 114,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$AboutOverlay$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                isVisible: isAboutVisible,
-                aboutText: siteSettings.aboutText,
-                contactEmail: siteSettings.contactEmail,
-                onClose: handleAboutClose
-            }, void 0, false, {
-                fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 117,
+                lineNumber: 116,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollIndicator$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1065,7 +1103,7 @@ function MainPageContent({ featuredProjects, allProjects, siteSettings }) {
                 onProjectClick: handleProjectClick
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 125,
+                lineNumber: 119,
                 columnNumber: 7
             }, this)
         ]
@@ -1074,9 +1112,13 @@ function MainPageContent({ featuredProjects, allProjects, siteSettings }) {
 function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
     const [showSplash, setShowSplash] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
     const [isReady, setIsReady] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isAboutVisible, setIsAboutVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const handleSplashComplete = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(()=>{
         setShowSplash(false);
         setIsReady(true);
+    }, []);
+    const handleAboutClose = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(()=>{
+        setIsAboutVisible(false);
     }, []);
     // Get Vimeo IDs for preloading
     const vimeoIds = featuredProjects.map((p)=>p.previewVimeoId);
@@ -1088,25 +1130,41 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
                 minDuration: 3500
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 157,
+                lineNumber: 156,
                 columnNumber: 9
             }, this),
-            isReady && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollContainer$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                initialSection: 0,
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(MainPageContent, {
-                    featuredProjects: featuredProjects,
-                    allProjects: allProjects,
-                    siteSettings: siteSettings
-                }, void 0, false, {
-                    fileName: "[project]/components/MainPageClient.tsx",
-                    lineNumber: 166,
-                    columnNumber: 11
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 165,
-                columnNumber: 9
-            }, this)
+            isReady && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollContainer$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                        initialSection: 0,
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(MainPageContent, {
+                            featuredProjects: featuredProjects,
+                            allProjects: allProjects,
+                            siteSettings: siteSettings,
+                            isAboutVisible: isAboutVisible,
+                            setIsAboutVisible: setIsAboutVisible
+                        }, void 0, false, {
+                            fileName: "[project]/components/MainPageClient.tsx",
+                            lineNumber: 166,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/components/MainPageClient.tsx",
+                        lineNumber: 165,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$AboutOverlay$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                        isVisible: isAboutVisible,
+                        aboutText: siteSettings.aboutText,
+                        contactEmail: siteSettings.contactEmail,
+                        onClose: handleAboutClose
+                    }, void 0, false, {
+                        fileName: "[project]/components/MainPageClient.tsx",
+                        lineNumber: 176,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true)
         ]
     }, void 0, true);
 }

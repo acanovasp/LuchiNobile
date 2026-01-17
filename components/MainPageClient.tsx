@@ -15,13 +15,19 @@ interface MainPageClientProps {
   siteSettings: SiteSettings
 }
 
+interface MainPageContentProps extends MainPageClientProps {
+  isAboutVisible: boolean
+  setIsAboutVisible: (visible: boolean) => void
+}
+
 function MainPageContent({
   featuredProjects,
   allProjects,
   siteSettings,
-}: MainPageClientProps) {
+  isAboutVisible,
+  setIsAboutVisible,
+}: MainPageContentProps) {
   const { currentSection, scrollToSection, containerRef } = useScrollContext()
-  const [isAboutVisible, setIsAboutVisible] = useState(false)
   const wheelAccumulator = useRef(0)
   const lastWheelTime = useRef(0)
 
@@ -78,10 +84,6 @@ function MainPageContent({
     setIsAboutVisible((prev) => !prev)
   }, [])
 
-  const handleAboutClose = useCallback(() => {
-    setIsAboutVisible(false)
-  }, [])
-
   const handleArchiveClick = useCallback(() => {
     // Scroll to archive section (last section, index = featuredProjects.length)
     scrollToSection(featuredProjects.length)
@@ -113,14 +115,6 @@ function MainPageContent({
       {/* Archive Section */}
       <ArchiveGrid projects={allProjects} />
 
-      {/* About Overlay */}
-      <AboutOverlay
-        isVisible={isAboutVisible}
-        aboutText={siteSettings.aboutText}
-        contactEmail={siteSettings.contactEmail}
-        onClose={handleAboutClose}
-      />
-
       {/* Scroll Indicators */}
       <ScrollIndicator
         projects={featuredProjects}
@@ -142,10 +136,15 @@ export default function MainPageClient({
 }: MainPageClientProps) {
   const [showSplash, setShowSplash] = useState(true)
   const [isReady, setIsReady] = useState(false)
+  const [isAboutVisible, setIsAboutVisible] = useState(false)
 
   const handleSplashComplete = useCallback(() => {
     setShowSplash(false)
     setIsReady(true)
+  }, [])
+
+  const handleAboutClose = useCallback(() => {
+    setIsAboutVisible(false)
   }, [])
 
   // Get Vimeo IDs for preloading
@@ -162,13 +161,25 @@ export default function MainPageClient({
       )}
 
       {isReady && (
-        <ScrollContainer initialSection={0}>
-          <MainPageContent
-            featuredProjects={featuredProjects}
-            allProjects={allProjects}
-            siteSettings={siteSettings}
+        <>
+          <ScrollContainer initialSection={0}>
+            <MainPageContent
+              featuredProjects={featuredProjects}
+              allProjects={allProjects}
+              siteSettings={siteSettings}
+              isAboutVisible={isAboutVisible}
+              setIsAboutVisible={setIsAboutVisible}
+            />
+          </ScrollContainer>
+
+          {/* About Overlay - outside ScrollContainer for better backdrop-filter support */}
+          <AboutOverlay
+            isVisible={isAboutVisible}
+            aboutText={siteSettings.aboutText}
+            contactEmail={siteSettings.contactEmail}
+            onClose={handleAboutClose}
           />
-        </ScrollContainer>
+        </>
       )}
     </>
   )

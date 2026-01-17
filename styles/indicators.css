@@ -24,7 +24,8 @@
   letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
   opacity: 0.4;
-  transition: opacity var(--duration-fast) var(--ease-out);
+  transition: opacity var(--duration-fast) var(--ease-out),
+              color var(--duration-normal) var(--ease-out);
   cursor: pointer;
   pointer-events: auto;
   background: none;
@@ -71,6 +72,7 @@
   letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
   white-space: nowrap;
+  transition: color var(--duration-normal) var(--ease-out);
 }
 
 .indicator-left__client {
@@ -81,6 +83,7 @@
   color: var(--color-text);
   opacity: 0.6;
   white-space: nowrap;
+  transition: color var(--duration-normal) var(--ease-out);
 }
 
 /* Right Indicator */
@@ -106,7 +109,8 @@
   letter-spacing: var(--letter-spacing-wide);
   color: var(--color-text);
   opacity: 0.4;
-  transition: opacity var(--duration-fast) var(--ease-out);
+  transition: opacity var(--duration-fast) var(--ease-out),
+              color var(--duration-normal) var(--ease-out);
   cursor: pointer;
   pointer-events: auto;
   background: none;
@@ -142,7 +146,8 @@
   
   /* Same positioning as items: (position / 6) * 100% */
   top: calc((var(--marker-position) / 6) * 100%);
-  transition: top var(--duration-normal) var(--ease-out);
+  transition: top var(--duration-normal) var(--ease-out),
+              background-color var(--duration-normal) var(--ease-out);
 }
 
 /* Last position needs offset to not go below container */
@@ -168,6 +173,7 @@
   color: var(--color-text);
   text-align: center;
   pointer-events: auto;
+  transition: color var(--duration-normal) var(--ease-out);
 }
 
 .header__logo button {
@@ -177,11 +183,33 @@
   color: inherit;
   font: inherit;
   letter-spacing: inherit;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .header__logo a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Dark mode for archive section */
+.indicator--dark .indicator-left__item,
+.indicator--dark .indicator-left__title,
+.indicator--dark .indicator-left__client {
+  color: var(--color-black);
+}
+
+.indicator--dark .indicator-right__item {
+  color: var(--color-black);
+}
+
+.indicator--dark .indicator-right__marker {
+  background-color: var(--color-black);
+}
+
+.indicator--dark.header .header__logo,
+.indicator--dark.header .header__logo button {
+  color: var(--color-black);
 }
 
 /* Mobile Responsiveness */

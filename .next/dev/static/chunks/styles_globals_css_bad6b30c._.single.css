@@ -44,9 +44,9 @@
   --ease-in-out: cubic-bezier(.65, 0, .35, 1);
   --z-video: 0;
   --z-content: 10;
-  --z-indicators: 100;
-  --z-header: 200;
-  --z-overlay: 500;
+  --z-overlay: 100;
+  --z-indicators: 200;
+  --z-header: 300;
   --z-splash: 1000;
 }
 

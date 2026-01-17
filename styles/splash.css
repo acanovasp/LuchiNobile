@@ -6,17 +6,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-bg);
+  
+  /* 10% black background so blur effect is visible */
+  background-color: rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  
+  /* Transition for fade out */
   opacity: 1;
-  visibility: visible;
-  transition: opacity var(--duration-slower) var(--ease-out),
-              visibility var(--duration-slower) var(--ease-out);
+  transition: opacity 600ms var(--ease-out),
+              backdrop-filter 600ms var(--ease-out),
+              -webkit-backdrop-filter 600ms var(--ease-out);
 }
 
-.splash--hidden {
+.splash--fading {
   opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
 }
 
 .splash__logo {
@@ -24,33 +30,8 @@
   font-weight: var(--font-weight-light);
   letter-spacing: var(--letter-spacing-wide);
   color: var(--color-text);
-  opacity: 0;
-  animation: splash-fade-in var(--duration-slow) var(--ease-out) forwards;
-}
-
-.splash__logo--fading {
-  animation: splash-fade-out var(--duration-normal) var(--ease-out) forwards;
-}
-
-@keyframes splash-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes splash-fade-out {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
+  text-transform: uppercase;
+  white-space: nowrap;
+  min-height: 1.2em;
 }
 

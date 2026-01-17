@@ -69,35 +69,41 @@ export default function ScrollContainer({
     }
   }, [initialSection])
 
-  // Setup intersection observer for section detection
+  // Detect current section based on scroll position
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
 
-    const sections = container.querySelectorAll('.section')
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-            const index = Array.from(sections).indexOf(entry.target)
-            if (index !== -1) {
-              setCurrentSection(index)
-              onSectionChange?.(index)
-            }
-          }
-        })
-      },
-      {
-        root: container,
-        threshold: [0.5],
+    const handleScroll = () => {
+      const sections = container.querySelectorAll('.section')
+      const scrollTop = container.scrollTop
+      const viewportHeight = container.clientHeight
+      
+      // Find which section the middle of the viewport is in
+      const viewportMiddle = scrollTop + viewportHeight / 2
+      
+      let activeIndex = 0
+      sections.forEach((section, index) => {
+        const sectionElement = section as HTMLElement
+        const sectionTop = sectionElement.offsetTop
+        const sectionBottom = sectionTop + sectionElement.offsetHeight
+        
+        if (viewportMiddle >= sectionTop && viewportMiddle < sectionBottom) {
+          activeIndex = index
+        }
+      })
+      
+      if (activeIndex !== currentSection) {
+        setCurrentSection(activeIndex)
+        onSectionChange?.(activeIndex)
       }
-    )
+    }
 
-    sections.forEach((section) => observer.observe(section))
-
-    return () => observer.disconnect()
-  }, [children, onSectionChange])
+    container.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // Initial check
+    
+    return () => container.removeEventListener('scroll', handleScroll)
+  }, [children, onSectionChange, currentSection])
 
   // Track if at top of scroll
   useEffect(() => {
