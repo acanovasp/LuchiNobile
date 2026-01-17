@@ -4,7 +4,7 @@
   -webkit-backdrop-filter: blur(30px);
   backdrop-filter: blur(30px);
   opacity: 1;
-  transition: opacity .6s var(--ease-out), backdrop-filter .6s var(--ease-out), -webkit-backdrop-filter .6s var(--ease-out);
+  transition: opacity 1.2s var(--ease-out), backdrop-filter 1.2s var(--ease-out), -webkit-backdrop-filter 1.2s var(--ease-out);
   background-color: #0000001a;
   justify-content: center;
   align-items: center;
@@ -25,7 +25,13 @@
   color: var(--color-text);
   text-transform: uppercase;
   white-space: nowrap;
+  opacity: 1;
   min-height: 1.2em;
+  transition: opacity .8s var(--ease-out);
+}
+
+.splash__logo--fading {
+  opacity: 0;
 }
 
 /*# sourceMappingURL=styles_splash_css_bad6b30c._.single.css.map*/

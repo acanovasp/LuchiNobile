@@ -28,14 +28,14 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$image$2d$url$2f$lib$2f$index$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@sanity/image-url/lib/index.js [app-rsc] (ecmascript) <locals>");
 ;
 ;
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
-const client = projectId ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$client$2f$dist$2f$index$2e$browser$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createClient"])({
+const projectId = ("TURBOPACK compile-time value", "sxz4wjzb");
+const dataset = ("TURBOPACK compile-time value", "production") || 'production';
+const client = ("TURBOPACK compile-time truthy", 1) ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$client$2f$dist$2f$index$2e$browser$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createClient"])({
     projectId,
     dataset,
     apiVersion: '2024-01-01',
     useCdn: true
-}) : null;
+}) : "TURBOPACK unreachable";
 function urlFor(source) {
     if (!client) {
         // Return a mock builder that returns empty URL
@@ -81,6 +81,7 @@ async function getFeaturedProjects() {
       slug,
       order,
       isFeatured,
+      "localPreviewVideoUrl": localPreviewVideo.asset->url,
       previewVimeoId,
       fullVimeoId,
       thumbnail
@@ -349,7 +350,7 @@ async function HomePage() {
     let allProjects = defaultAllProjects;
     let siteSettings = defaultSiteSettings;
     // Try to fetch from Sanity if configured
-    if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+    if ("TURBOPACK compile-time truthy", 1) {
         try {
             const [featured, all, settings] = await Promise.all([
                 (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$queries$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getFeaturedProjects"])(),

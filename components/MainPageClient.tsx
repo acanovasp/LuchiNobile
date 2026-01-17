@@ -135,12 +135,10 @@ export default function MainPageClient({
   siteSettings,
 }: MainPageClientProps) {
   const [showSplash, setShowSplash] = useState(true)
-  const [isReady, setIsReady] = useState(false)
   const [isAboutVisible, setIsAboutVisible] = useState(false)
 
   const handleSplashComplete = useCallback(() => {
     setShowSplash(false)
-    setIsReady(true)
   }, [])
 
   const handleAboutClose = useCallback(() => {
@@ -152,34 +150,32 @@ export default function MainPageClient({
 
   return (
     <>
+      {/* Main content renders immediately so videos start loading */}
+      <ScrollContainer initialSection={0}>
+        <MainPageContent
+          featuredProjects={featuredProjects}
+          allProjects={allProjects}
+          siteSettings={siteSettings}
+          isAboutVisible={isAboutVisible}
+          setIsAboutVisible={setIsAboutVisible}
+        />
+      </ScrollContainer>
+
+      {/* About Overlay - outside ScrollContainer for better backdrop-filter support */}
+      <AboutOverlay
+        isVisible={isAboutVisible}
+        aboutText={siteSettings.aboutText}
+        contactEmail={siteSettings.contactEmail}
+        onClose={handleAboutClose}
+      />
+
+      {/* Splash screen on top with blur - videos load behind it */}
       {showSplash && (
         <SplashScreen
           vimeoIds={vimeoIds}
           onComplete={handleSplashComplete}
           minDuration={3500}
         />
-      )}
-
-      {isReady && (
-        <>
-          <ScrollContainer initialSection={0}>
-            <MainPageContent
-              featuredProjects={featuredProjects}
-              allProjects={allProjects}
-              siteSettings={siteSettings}
-              isAboutVisible={isAboutVisible}
-              setIsAboutVisible={setIsAboutVisible}
-            />
-          </ScrollContainer>
-
-          {/* About Overlay - outside ScrollContainer for better backdrop-filter support */}
-          <AboutOverlay
-            isVisible={isAboutVisible}
-            aboutText={siteSettings.aboutText}
-            contactEmail={siteSettings.contactEmail}
-            onClose={handleAboutClose}
-          />
-        </>
       )}
     </>
   )

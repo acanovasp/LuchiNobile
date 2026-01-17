@@ -1,57 +1,22 @@
-[00:00:00.863] Server  LOG     ✓ Ready in 666ms
-[00:00:02.573] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:07.021] Server  LOG     ✓ Compiled in 104ms
-[00:03:16.965] Server  LOG     ✓ Compiled in 7ms
-[00:03:27.221] Server  LOG     ✓ Compiled in 16ms
-[00:03:45.654] Server  LOG     ✓ Compiled in 54ms
-[00:03:54.872] Server  LOG     ✓ Compiled in 7ms
-[00:04:04.034] Server  LOG     ✓ Compiled in 4ms
-[00:04:12.667] Server  LOG     ✓ Compiled in 30ms
-[00:04:20.788] Server  LOG     ✓ Compiled in 20ms
-[00:04:28.201] Server  LOG     ✓ Compiled in 8ms
-[00:06:51.329] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:09:44.195] Server  LOG     ✓ Compiled in 20ms
-[00:09:57.466] Server  LOG     ✓ Compiled in 10ms
-[00:09:57.554] Browser ERROR   The final argument passed to %s changed size between renders. The order and size of this array must remain constant.
-
-Previous: %s
-Incoming: %s useEffect [[object Object], ] [[object Object], , 0]
-[00:10:36.227] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:13:53.104] Server  LOG     ✓ Compiled in 34ms
-[00:14:04.984] Server  LOG     ✓ Compiled in 6ms
-[00:15:18.889] Server  LOG     ✓ Compiled in 9ms
-[00:18:08.048] Server  LOG     ✓ Compiled in 11ms
-[00:18:24.645] Server  LOG     ✓ Compiled in 6ms
-[00:18:42.869] Server  LOG     ✓ Compiled in 5ms
-[00:24:02.905] Server  LOG     ✓ Compiled in 8ms
-[03:28:14.257] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:31:34.011] Browser WARN    Image with src "https://images.pexels.com/photos/2608517/pexels-photo-2608517.jpeg?auto=compress&cs=tinysrgb&w=800" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[03:31:34.011] Browser WARN    Image with src "https://images.pexels.com/photos/3062541/pexels-photo-3062541.jpeg?auto=compress&cs=tinysrgb&w=800" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[03:32:24.243] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:34:10.208] Server  LOG     ✓ Compiled in 26ms
-[03:34:35.146] Server  LOG     ✓ Compiled in 7ms
-[03:34:57.890] Server  LOG     ✓ Compiled in 94ms
-[03:35:02.959] Server  LOG     ✓ Compiled in 83ms
-[03:35:11.404] Server  LOG     ✓ Compiled in 32ms
-[03:35:24.474] Server  LOG     ✓ Compiled in 14ms
-[03:38:33.640] Server  LOG     ✓ Compiled in 10ms
-[03:38:47.781] Server  LOG     ✓ Compiled in 34ms
-[03:42:30.335] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
-[03:42:30.335] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
-[04:13:25.934] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[04:30:06.153] Server  LOG     ✓ Compiled in 73ms
-[04:30:20.396] Server  LOG     ✓ Compiled in 18ms
-[04:30:26.911] Server  LOG     ✓ Compiled in 33ms
-[04:30:36.733] Server  LOG     ✓ Compiled in 12ms
-[04:31:12.072] Server  LOG     ✓ Compiled in 83ms
-[04:31:36.589] Server  LOG     ✓ Compiled in 41ms
-[04:35:36.038] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[04:35:50.478] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[04:36:09.746] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[04:38:21.082] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[04:41:34.673] Server  LOG     ✓ Compiled in 47ms
-[04:41:50.001] Server  LOG     ✓ Compiled in 7ms
-[04:41:55.917] Server  LOG     ✓ Compiled in 3ms
-[04:46:17.996] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:00.675] Server  LOG     ✓ Ready in 506ms
+[00:00:02.018] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:02.560] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:04.572] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:11.275] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:16.163] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:02.913] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:12.494] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:06.644] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:12.481] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:13.409] Browser WARN    Because you set `withCredentials` to true, we will override your `useCdn` setting to be false since (cookie-based) credentials are never set on the CDN
+[00:04:12.601] Browser WARN    `configContext.client` is deprecated and will be removed in the next release! Use `context.getClient({apiVersion: "2021-06-07"})` instead
+[00:04:12.795] Browser WARN    `configContext.client` is deprecated and will be removed in the next release! Use `context.getClient({apiVersion: "2021-06-07"})` instead
+[00:05:33.748] Browser WARN    `configContext.client` is deprecated and will be removed in the next release! Use `context.getClient({apiVersion: "2021-06-07"})` instead
+[00:05:33.871] Browser WARN    `configContext.client` is deprecated and will be removed in the next release! Use `context.getClient({apiVersion: "2021-06-07"})` instead
+[00:05:48.280] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[00:05:48.432] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:48.540] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[00:06:09.465] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:09.574] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[00:06:19.297] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:19.406] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.

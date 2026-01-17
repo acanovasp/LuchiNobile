@@ -3,7 +3,7 @@
   position: relative;
   height: 100dvh;
   width: 100%;
-  overflow: hidden;
+  overflow: hidden; /* Clips video to section bounds */
   cursor: pointer;
 }
 
@@ -11,6 +11,7 @@
   position: absolute;
   inset: 0;
   z-index: var(--z-video);
+  overflow: hidden; /* Extra clipping layer */
 }
 
 .project-section__video {
@@ -27,20 +28,39 @@
 .project-section__iframe-wrapper {
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  overflow: hidden; /* Clips the oversized iframe */
 }
 
 .project-section__iframe-wrapper iframe {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 177.78vh; /* 16:9 ratio */
-  height: 100vh;
-  min-width: 100vw;
-  min-height: 56.25vw; /* 16:9 ratio */
+  /* 
+   * Cover viewport for ANY video aspect ratio (1:1, 16:9, 9:16, etc.)
+   * Using max(100vw, 100vh) ensures full coverage regardless of video ratio
+   */
+  width: max(100vw, 100vh);
+  height: max(100vw, 100vh);
   transform: translate(-50%, -50%);
   border: none;
   pointer-events: none;
+}
+
+/* Local video wrapper (self-hosted WebM/MP4) */
+.project-section__local-video-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.project-section__local-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
 }
 
 /* Poster/thumbnail shown while video loads */

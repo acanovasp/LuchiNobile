@@ -11,7 +11,9 @@ interface SplashScreenProps {
 const LOGO_TEXT = 'Luchi Nóbile'
 const TYPING_DURATION = 1200 // 1.2s for typing (faster)
 const HOLD_DURATION = 1500 // 1.5s hold after typing
-const FADE_DURATION = 600 // 0.6s fade out
+const LOGO_FADE_DURATION = 800 // logo fades in 0.8s
+const LOGO_HEAD_START = 1000 // logo starts fading 1s before background
+const BG_FADE_DURATION = 1200 // background fades in 1.2s
 
 export default function SplashScreen({
   vimeoIds,
@@ -19,7 +21,8 @@ export default function SplashScreen({
   minDuration = 3500,
 }: SplashScreenProps) {
   const [displayedText, setDisplayedText] = useState('')
-  const [isFading, setIsFading] = useState(false)
+  const [isLogoFading, setIsLogoFading] = useState(false)
+  const [isBgFading, setIsBgFading] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
 
   const preloadVimeoVideos = useCallback(async (ids: string[]) => {
@@ -79,14 +82,19 @@ export default function SplashScreen({
 
       await new Promise(resolve => setTimeout(resolve, remaining))
 
-      // Start fade out
-      setIsFading(true)
+      // Start logo fade first
+      setIsLogoFading(true)
 
-      // Wait for fade animation to complete
+      // Start background fade 1 second later
+      setTimeout(() => {
+        setIsBgFading(true)
+      }, LOGO_HEAD_START)
+
+      // Hide and complete after background fade finishes
       setTimeout(() => {
         setIsHidden(true)
         onComplete()
-      }, FADE_DURATION)
+      }, LOGO_HEAD_START + BG_FADE_DURATION)
     }
 
     runSequence()
@@ -95,8 +103,8 @@ export default function SplashScreen({
   if (isHidden) return null
 
   return (
-    <div className={`splash ${isFading ? 'splash--fading' : ''}`}>
-      <h1 className="splash__logo">
+    <div className={`splash ${isBgFading ? 'splash--fading' : ''}`}>
+      <h1 className={`splash__logo ${isLogoFading ? 'splash__logo--fading' : ''}`}>
         {displayedText}
       </h1>
     </div>

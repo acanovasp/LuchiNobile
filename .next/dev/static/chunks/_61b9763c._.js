@@ -17,12 +17,17 @@ const TYPING_DURATION = 1200 // 1.2s for typing (faster)
 ;
 const HOLD_DURATION = 1500 // 1.5s hold after typing
 ;
-const FADE_DURATION = 600 // 0.6s fade out
+const LOGO_FADE_DURATION = 800 // logo fades in 0.8s
+;
+const LOGO_HEAD_START = 1000 // logo starts fading 1s before background
+;
+const BG_FADE_DURATION = 1200 // background fades in 1.2s
 ;
 function SplashScreen({ vimeoIds, onComplete, minDuration = 3500 }) {
     _s();
     const [displayedText, setDisplayedText] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
-    const [isFading, setIsFading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isLogoFading, setIsLogoFading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isBgFading, setIsBgFading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isHidden, setIsHidden] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const preloadVimeoVideos = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "SplashScreen.useCallback[preloadVimeoVideos]": async (ids)=>{
@@ -89,15 +94,21 @@ function SplashScreen({ vimeoIds, onComplete, minDuration = 3500 }) {
                     await new Promise({
                         "SplashScreen.useEffect.runSequence": (resolve)=>setTimeout(resolve, remaining)
                     }["SplashScreen.useEffect.runSequence"]);
-                    // Start fade out
-                    setIsFading(true);
-                    // Wait for fade animation to complete
+                    // Start logo fade first
+                    setIsLogoFading(true);
+                    // Start background fade 1 second later
+                    setTimeout({
+                        "SplashScreen.useEffect.runSequence": ()=>{
+                            setIsBgFading(true);
+                        }
+                    }["SplashScreen.useEffect.runSequence"], LOGO_HEAD_START);
+                    // Hide and complete after background fade finishes
                     setTimeout({
                         "SplashScreen.useEffect.runSequence": ()=>{
                             setIsHidden(true);
                             onComplete();
                         }
-                    }["SplashScreen.useEffect.runSequence"], FADE_DURATION);
+                    }["SplashScreen.useEffect.runSequence"], LOGO_HEAD_START + BG_FADE_DURATION);
                 }
             }["SplashScreen.useEffect.runSequence"];
             runSequence();
@@ -110,22 +121,22 @@ function SplashScreen({ vimeoIds, onComplete, minDuration = 3500 }) {
     ]);
     if (isHidden) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: `splash ${isFading ? 'splash--fading' : ''}`,
+        className: `splash ${isBgFading ? 'splash--fading' : ''}`,
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-            className: "splash__logo",
+            className: `splash__logo ${isLogoFading ? 'splash__logo--fading' : ''}`,
             children: displayedText
         }, void 0, false, {
             fileName: "[project]/components/SplashScreen.tsx",
-            lineNumber: 99,
+            lineNumber: 107,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/SplashScreen.tsx",
-        lineNumber: 98,
+        lineNumber: 106,
         columnNumber: 5
     }, this);
 }
-_s(SplashScreen, "/6Hs7nfYGejSy6Zz8Uu5a90sDg8=");
+_s(SplashScreen, "m6gCsCCHt0tL87oy3jeH/Dy1nU4=");
 _c = SplashScreen;
 var _c;
 __turbopack_context__.k.register(_c, "SplashScreen");
@@ -1176,12 +1187,10 @@ _c = MainPageContent;
 function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
     _s1();
     const [showSplash, setShowSplash] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
-    const [isReady, setIsReady] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isAboutVisible, setIsAboutVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const handleSplashComplete = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "MainPageClient.useCallback[handleSplashComplete]": ()=>{
             setShowSplash(false);
-            setIsReady(true);
         }
     }["MainPageClient.useCallback[handleSplashComplete]"], []);
     const handleAboutClose = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
@@ -1193,51 +1202,47 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
     const vimeoIds = featuredProjects.map((p)=>p.previewVimeoId);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollContainer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                initialSection: 0,
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MainPageContent, {
+                    featuredProjects: featuredProjects,
+                    allProjects: allProjects,
+                    siteSettings: siteSettings,
+                    isAboutVisible: isAboutVisible,
+                    setIsAboutVisible: setIsAboutVisible
+                }, void 0, false, {
+                    fileName: "[project]/components/MainPageClient.tsx",
+                    lineNumber: 155,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/MainPageClient.tsx",
+                lineNumber: 154,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$AboutOverlay$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                isVisible: isAboutVisible,
+                aboutText: siteSettings.aboutText,
+                contactEmail: siteSettings.contactEmail,
+                onClose: handleAboutClose
+            }, void 0, false, {
+                fileName: "[project]/components/MainPageClient.tsx",
+                lineNumber: 165,
+                columnNumber: 7
+            }, this),
             showSplash && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$SplashScreen$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                 vimeoIds: vimeoIds,
                 onComplete: handleSplashComplete,
                 minDuration: 3500
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 156,
+                lineNumber: 174,
                 columnNumber: 9
-            }, this),
-            isReady && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollContainer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                        initialSection: 0,
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MainPageContent, {
-                            featuredProjects: featuredProjects,
-                            allProjects: allProjects,
-                            siteSettings: siteSettings,
-                            isAboutVisible: isAboutVisible,
-                            setIsAboutVisible: setIsAboutVisible
-                        }, void 0, false, {
-                            fileName: "[project]/components/MainPageClient.tsx",
-                            lineNumber: 166,
-                            columnNumber: 13
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/components/MainPageClient.tsx",
-                        lineNumber: 165,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$AboutOverlay$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                        isVisible: isAboutVisible,
-                        aboutText: siteSettings.aboutText,
-                        contactEmail: siteSettings.contactEmail,
-                        onClose: handleAboutClose
-                    }, void 0, false, {
-                        fileName: "[project]/components/MainPageClient.tsx",
-                        lineNumber: 176,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, void 0, true)
+            }, this)
         ]
     }, void 0, true);
 }
-_s1(MainPageClient, "BZXHFBrpg8vxJmPPOEX/P0TJVkI=");
+_s1(MainPageClient, "sRLDXplZKqmgPWpanB3cl2zmg4o=");
 _c1 = MainPageClient;
 var _c, _c1;
 __turbopack_context__.k.register(_c, "MainPageContent");

@@ -50,10 +50,19 @@ const __TURBOPACK__default__export__ = (0, __TURBOPACK__imported__module__$5b$pr
             initialValue: false
         }),
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$types$2f$lib$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["defineField"])({
+            name: 'localPreviewVideo',
+            title: 'Local Preview Video (Optional)',
+            type: 'file',
+            description: 'Self-hosted WebM/MP4 for instant loading. Recommended for the first featured project. Upload a short loop (5-15s) at 1080p.',
+            options: {
+                accept: 'video/webm,video/mp4'
+            }
+        }),
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$types$2f$lib$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["defineField"])({
             name: 'previewVimeoId',
             title: 'Preview Vimeo ID',
             type: 'string',
-            description: 'Vimeo video ID for the short preview loop (e.g., 123456789)',
+            description: 'Vimeo video ID for the short preview loop (e.g., 123456789). Used as fallback if no local video.',
             validation: (Rule)=>Rule.required()
         }),
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$types$2f$lib$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["defineField"])({
@@ -172,8 +181,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$sanity$2f$schema$2e$ts__$5b$
 const __TURBOPACK__default__export__ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sanity$2f$lib$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["defineConfig"])({
     name: 'luchi-nobile',
     title: 'Luchi Nóbile Portfolio',
-    projectId: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
-    dataset: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+    projectId: ("TURBOPACK compile-time value", "sxz4wjzb") || '',
+    dataset: ("TURBOPACK compile-time value", "production") || 'production',
     basePath: '/studio',
     plugins: [
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sanity$2f$lib$2f$_chunks$2d$es$2f$pane$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["structureTool"])()

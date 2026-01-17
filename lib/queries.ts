@@ -7,6 +7,7 @@ export interface Project {
   slug: { current: string }
   order: number
   isFeatured: boolean
+  localPreviewVideoUrl?: string
   previewVimeoId: string
   fullVimeoId: string
   thumbnail: {
@@ -32,6 +33,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       slug,
       order,
       isFeatured,
+      "localPreviewVideoUrl": localPreviewVideo.asset->url,
       previewVimeoId,
       fullVimeoId,
       thumbnail

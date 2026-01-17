@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import VimeoBackground from './VimeoBackground'
+import LocalVideoBackground from './LocalVideoBackground'
 import type { Project } from '@/lib/queries'
 
 interface ProjectSectionProps {
@@ -15,6 +16,9 @@ export default function ProjectSection({
   index,
   priority = false,
 }: ProjectSectionProps) {
+  // Use local video if available (for instant loading), otherwise Vimeo
+  const useLocalVideo = !!project.localPreviewVideoUrl
+
   return (
     <section
       className="section project-section"
@@ -22,10 +26,14 @@ export default function ProjectSection({
       data-project-slug={project.slug.current}
     >
       <Link href={`/project/${project.slug.current}`}>
-        <VimeoBackground
-          vimeoId={project.previewVimeoId}
-          priority={priority}
-        />
+        {useLocalVideo ? (
+          <LocalVideoBackground videoUrl={project.localPreviewVideoUrl!} />
+        ) : (
+          <VimeoBackground
+            vimeoId={project.previewVimeoId}
+            priority={priority}
+          />
+        )}
       </Link>
     </section>
   )
