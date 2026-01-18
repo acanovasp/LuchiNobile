@@ -50,20 +50,34 @@ const __TURBOPACK__default__export__ = (0, __TURBOPACK__imported__module__$5b$pr
             initialValue: false
         }),
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$types$2f$lib$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["defineField"])({
-            name: 'localPreviewVideo',
-            title: 'Local Preview Video (Optional)',
+            name: 'previewVideo',
+            title: 'Preview Video (WebM/MP4)',
             type: 'file',
-            description: 'Self-hosted WebM/MP4 for instant loading. Recommended for the first featured project. Upload a short loop (5-15s) at 1080p.',
+            description: 'Self-hosted video for instant loading. Upload a short loop (5-15s) at 1080p. Used on homepage and archive grid (if large).',
             options: {
                 accept: 'video/webm,video/mp4'
-            }
+            },
+            validation: (Rule)=>Rule.required()
         }),
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$types$2f$lib$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["defineField"])({
-            name: 'previewVimeoId',
-            title: 'Preview Vimeo ID',
+            name: 'archiveSize',
+            title: 'Archive Grid Size',
             type: 'string',
-            description: 'Vimeo video ID for the short preview loop (e.g., 123456789). Used as fallback if no local video.',
-            validation: (Rule)=>Rule.required()
+            description: 'Size in the archive grid. Large items show video, small items show thumbnail.',
+            options: {
+                list: [
+                    {
+                        title: 'Small (1x1) - Shows thumbnail',
+                        value: 'small'
+                    },
+                    {
+                        title: 'Large (2x2) - Shows preview video',
+                        value: 'large'
+                    }
+                ],
+                layout: 'radio'
+            },
+            initialValue: 'small'
         }),
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$types$2f$lib$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["defineField"])({
             name: 'fullVimeoId',

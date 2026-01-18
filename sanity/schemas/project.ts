@@ -42,20 +42,28 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
-      name: 'localPreviewVideo',
-      title: 'Local Preview Video (Optional)',
+      name: 'previewVideo',
+      title: 'Preview Video (WebM/MP4)',
       type: 'file',
-      description: 'Self-hosted WebM/MP4 for instant loading. Recommended for the first featured project. Upload a short loop (5-15s) at 1080p.',
+      description: 'Self-hosted video for instant loading. Upload a short loop (5-15s) at 1080p. Used on homepage and archive grid (if large).',
       options: {
         accept: 'video/webm,video/mp4',
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'previewVimeoId',
-      title: 'Preview Vimeo ID',
+      name: 'archiveSize',
+      title: 'Archive Grid Size',
       type: 'string',
-      description: 'Vimeo video ID for the short preview loop (e.g., 123456789). Used as fallback if no local video.',
-      validation: (Rule) => Rule.required(),
+      description: 'Size in the archive grid. Large items show video, small items show thumbnail.',
+      options: {
+        list: [
+          { title: 'Small (1x1) - Shows thumbnail', value: 'small' },
+          { title: 'Large (2x2) - Shows preview video', value: 'large' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'small',
     }),
     defineField({
       name: 'fullVimeoId',

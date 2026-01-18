@@ -81,8 +81,8 @@ async function getFeaturedProjects() {
       slug,
       order,
       isFeatured,
-      "localPreviewVideoUrl": localPreviewVideo.asset->url,
-      previewVimeoId,
+      "previewVideoUrl": previewVideo.asset->url,
+      archiveSize,
       fullVimeoId,
       thumbnail
     }`);
@@ -96,7 +96,8 @@ async function getAllProjects() {
       slug,
       order,
       isFeatured,
-      previewVimeoId,
+      "previewVideoUrl": previewVideo.asset->url,
+      archiveSize,
       fullVimeoId,
       thumbnail
     }`);
@@ -110,7 +111,8 @@ async function getProjectBySlug(slug) {
       slug,
       order,
       isFeatured,
-      previewVimeoId,
+      "previewVideoUrl": previewVideo.asset->url,
+      archiveSize,
       fullVimeoId,
       thumbnail
     }`, {
@@ -175,6 +177,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$MainPageClient
 ;
 ;
 ;
+// Sample WebM video URL for testing (short loop)
+const sampleVideoUrl = 'https://videos.pexels.com/video-files/5752729/5752729-hd_1920_1080_30fps.mp4';
 // Default data for when Sanity is not configured
 const defaultFeaturedProjects = [
     {
@@ -186,7 +190,8 @@ const defaultFeaturedProjects = [
         },
         order: 1,
         isFeatured: true,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'large',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -199,7 +204,8 @@ const defaultFeaturedProjects = [
         },
         order: 2,
         isFeatured: true,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'small',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -212,7 +218,8 @@ const defaultFeaturedProjects = [
         },
         order: 3,
         isFeatured: true,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'small',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -225,7 +232,8 @@ const defaultFeaturedProjects = [
         },
         order: 4,
         isFeatured: true,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'large',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -238,7 +246,8 @@ const defaultFeaturedProjects = [
         },
         order: 5,
         isFeatured: true,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'small',
         fullVimeoId: '824804225',
         thumbnail: null
     }
@@ -255,7 +264,8 @@ const defaultAllProjects = [
         },
         order: 6,
         isFeatured: false,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'small',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -268,7 +278,8 @@ const defaultAllProjects = [
         },
         order: 7,
         isFeatured: false,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'large',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -281,7 +292,8 @@ const defaultAllProjects = [
         },
         order: 8,
         isFeatured: false,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'small',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -294,7 +306,8 @@ const defaultAllProjects = [
         },
         order: 9,
         isFeatured: false,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'small',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -307,7 +320,8 @@ const defaultAllProjects = [
         },
         order: 10,
         isFeatured: false,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'large',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -320,7 +334,8 @@ const defaultAllProjects = [
         },
         order: 11,
         isFeatured: false,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'small',
         fullVimeoId: '824804225',
         thumbnail: null
     },
@@ -333,7 +348,8 @@ const defaultAllProjects = [
         },
         order: 12,
         isFeatured: false,
-        previewVimeoId: '824804225',
+        previewVideoUrl: sampleVideoUrl,
+        archiveSize: 'small',
         fullVimeoId: '824804225',
         thumbnail: null
     }
@@ -376,7 +392,7 @@ async function HomePage() {
         siteSettings: siteSettings
     }, void 0, false, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 182,
+        lineNumber: 197,
         columnNumber: 5
     }, this);
 }

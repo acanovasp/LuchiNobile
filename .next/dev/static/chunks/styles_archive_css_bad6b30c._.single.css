@@ -39,6 +39,12 @@
   inset: 0;
 }
 
+.archive__placeholder {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  position: absolute;
+  inset: 0;
+}
+
 .archive__thumbnail img, .archive__thumbnail video {
   object-fit: cover;
   width: 100%;

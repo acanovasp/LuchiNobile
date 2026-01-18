@@ -108,7 +108,6 @@ function MainPageContent({
           key={project._id}
           project={project}
           index={index}
-          priority={index < 3}
         />
       ))}
 
@@ -145,9 +144,6 @@ export default function MainPageClient({
     setIsAboutVisible(false)
   }, [])
 
-  // Get Vimeo IDs for preloading
-  const vimeoIds = featuredProjects.map((p) => p.previewVimeoId)
-
   return (
     <>
       {/* Main content renders immediately so videos start loading */}
@@ -172,7 +168,6 @@ export default function MainPageClient({
       {/* Splash screen on top with blur - videos load behind it */}
       {showSplash && (
         <SplashScreen
-          vimeoIds={vimeoIds}
           onComplete={handleSplashComplete}
           minDuration={3500}
         />

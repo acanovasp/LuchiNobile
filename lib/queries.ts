@@ -7,8 +7,8 @@ export interface Project {
   slug: { current: string }
   order: number
   isFeatured: boolean
-  localPreviewVideoUrl?: string
-  previewVimeoId: string
+  previewVideoUrl: string
+  archiveSize: 'small' | 'large'
   fullVimeoId: string
   thumbnail: {
     asset: {
@@ -33,8 +33,8 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       slug,
       order,
       isFeatured,
-      "localPreviewVideoUrl": localPreviewVideo.asset->url,
-      previewVimeoId,
+      "previewVideoUrl": previewVideo.asset->url,
+      archiveSize,
       fullVimeoId,
       thumbnail
     }`
@@ -51,7 +51,8 @@ export async function getAllProjects(): Promise<Project[]> {
       slug,
       order,
       isFeatured,
-      previewVimeoId,
+      "previewVideoUrl": previewVideo.asset->url,
+      archiveSize,
       fullVimeoId,
       thumbnail
     }`
@@ -68,7 +69,8 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
       slug,
       order,
       isFeatured,
-      previewVimeoId,
+      "previewVideoUrl": previewVideo.asset->url,
+      archiveSize,
       fullVimeoId,
       thumbnail
     }`,

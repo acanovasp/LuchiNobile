@@ -101,8 +101,10 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
       const paused = await player.getPaused()
       if (paused) {
         await player.play()
+        setIsPlaying(true) // Explicitly update state
       } else {
         await player.pause()
+        setIsPlaying(false) // Explicitly update state
       }
     } catch (error) {
       console.error('Play/pause error:', error)
