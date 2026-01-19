@@ -128,25 +128,41 @@ function MainPageContent({
   )
 }
 
+// Compute initial values outside component to avoid flash
+function getInitialState(featuredProjectsLength: number) {
+  if (typeof window === 'undefined') {
+    return { showSplash: true, initialSection: 0 }
+  }
+  
+  const skipSplash = sessionStorage.getItem('skipSplash')
+  const returnSection = sessionStorage.getItem('returnSection')
+  
+  if (skipSplash) {
+    sessionStorage.removeItem('skipSplash')
+    sessionStorage.removeItem('returnSection')
+    
+    let section = 0
+    if (returnSection === 'archive') {
+      section = featuredProjectsLength
+    } else if (returnSection) {
+      section = parseInt(returnSection, 10)
+    }
+    
+    return { showSplash: false, initialSection: section }
+  }
+  
+  sessionStorage.removeItem('returnSection')
+  return { showSplash: true, initialSection: 0 }
+}
+
 export default function MainPageClient({
   featuredProjects,
   allProjects,
   siteSettings,
 }: MainPageClientProps) {
-  const [showSplash, setShowSplash] = useState(() => {
-    // Check if we're in browser
-    if (typeof window === 'undefined') return true
-    
-    // Check if coming from video player (should skip splash)
-    const skipSplash = sessionStorage.getItem('skipSplash')
-    if (skipSplash) {
-      sessionStorage.removeItem('skipSplash')
-      return false
-    }
-    
-    // Show splash for initial load, reload, or any other navigation
-    return true
-  })
+  // Compute initial state once on mount
+  const [initialState] = useState(() => getInitialState(featuredProjects.length))
+  const [showSplash, setShowSplash] = useState(initialState.showSplash)
   const [isAboutVisible, setIsAboutVisible] = useState(false)
 
   const handleSplashComplete = useCallback(() => {
@@ -160,7 +176,7 @@ export default function MainPageClient({
   return (
     <>
       {/* Main content renders immediately so videos start loading */}
-      <ScrollContainer initialSection={0}>
+      <ScrollContainer initialSection={initialState.initialSection}>
         <MainPageContent
           featuredProjects={featuredProjects}
           allProjects={allProjects}

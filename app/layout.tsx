@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import '@/styles/fonts.css'
 import '@/styles/globals.css'
 import '@/styles/splash.css'
 import '@/styles/scroll-container.css'

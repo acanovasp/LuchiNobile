@@ -45,11 +45,27 @@ export default defineType({
       name: 'previewVideo',
       title: 'Preview Video (WebM/MP4)',
       type: 'file',
-      description: 'Self-hosted video for instant loading. Upload a short loop (5-15s) at 1080p. Used on homepage and archive grid (if large).',
+      description: 'Self-hosted video for instant loading. Upload a short loop (5-15s) at 1080p. Required for featured projects and large archive items.',
       options: {
         accept: 'video/webm,video/mp4',
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const doc = context.document as { isFeatured?: boolean; archiveSize?: string } | undefined
+          const isFeatured = doc?.isFeatured
+          const isLarge = doc?.archiveSize === 'large'
+          
+          if ((isFeatured || isLarge) && !value) {
+            if (isFeatured && isLarge) {
+              return 'Preview video is required for featured projects and large archive items'
+            }
+            if (isFeatured) {
+              return 'Preview video is required for featured projects'
+            }
+            return 'Preview video is required for large archive items'
+          }
+          return true
+        }),
     }),
     defineField({
       name: 'archiveSize',

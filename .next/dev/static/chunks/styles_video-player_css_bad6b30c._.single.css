@@ -79,26 +79,15 @@
 }
 
 .video-player__number {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: var(--letter-spacing-wide);
   color: var(--color-text);
   opacity: .6;
 }
 
 .video-player__title {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
 }
 
 .video-player__client {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
   opacity: .6;
 }
@@ -110,10 +99,6 @@
 }
 
 .video-player__button {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
   opacity: .8;
   transition: opacity var(--duration-fast) var(--ease-out);
@@ -157,10 +142,6 @@
 }
 
 .video-player__close {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
   color: var(--color-text);
   opacity: 0;
   transition: opacity var(--duration-normal) var(--ease-out);
@@ -194,10 +175,8 @@
 }
 
 .video-player__logo {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-light);
-  letter-spacing: var(--letter-spacing-wide);
   color: var(--color-text);
+  font-size: 1.125rem;
 }
 
 @media (max-width: 768px) {
@@ -254,7 +233,7 @@
   }
 
   .video-player__logo {
-    font-size: var(--font-size-base);
+    font-size: .875rem;
   }
 }
 

@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Neue Vektor';
+    src: url('/fonts/neueVektor-B-Light.woff2') format('woff2'),
+         url('/fonts/neueVektor-B-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: light;
+    font-display: swap;
+  }
+
+@font-face {
+  font-family: 'Andret';
+  src: url('/fonts/Andret-Regular.woff2') format('woff2'),
+       url('/fonts/Andret-Regular.woff2') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+
+  --font-primary: 'Neue Vektor', system-ui, -apple-system, sans-serif;
+  --font-secondary: 'Andret', system-ui, -apple-system, sans-serif;
+  
+  /* Font sizes */
+  --font-size-primary: 0.625rem;  /* 10px */
+  --font-size-secondary: 2rem;    /* 32px */
+  
+  /* Line heights */
+  --line-height-secondary: 1.2;
+  
+  /* Letter spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.05em;
+  --letter-spacing-wider: 0.1em;
+}

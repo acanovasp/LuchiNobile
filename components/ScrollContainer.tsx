@@ -3,6 +3,7 @@
 import {
   useRef,
   useEffect,
+  useLayoutEffect,
   useState,
   useCallback,
   createContext,
@@ -52,20 +53,15 @@ export default function ScrollContainer({
     setTotalSections(sections.length)
   }, [children])
 
-  // Scroll to initial section on mount
-  useEffect(() => {
+  // Scroll to initial section on mount - use useLayoutEffect to prevent flash
+  useLayoutEffect(() => {
     const container = containerRef.current
-    if (!container) return
+    if (!container || initialSection === 0) return
 
     const sections = container.querySelectorAll('.section')
     if (sections[initialSection]) {
-      setTimeout(() => {
-        const section = sections[initialSection] as HTMLElement
-        container.scrollTo({
-          top: section.offsetTop,
-          behavior: 'instant',
-        })
-      }, 100)
+      const section = sections[initialSection] as HTMLElement
+      container.scrollTop = section.offsetTop
     }
   }, [initialSection])
 

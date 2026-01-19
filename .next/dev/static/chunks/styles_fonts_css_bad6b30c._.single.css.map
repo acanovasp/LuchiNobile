@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/styles/fonts.css"],"sourcesContent":["@font-face {\n    font-family: 'Neue Vektor';\n    src: url('/fonts/neueVektor-B-Light.woff2') format('woff2'),\n         url('/fonts/neueVektor-B-Light.woff') format('woff');\n    font-weight: 300;\n    font-style: light;\n    font-display: swap;\n  }\n\n@font-face {\n  font-family: 'Andret';\n  src: url('/fonts/Andret-Regular.woff2') format('woff2'),\n       url('/fonts/Andret-Regular.woff2') format('woff');\n  font-weight: 400;\n  font-style: normal;\n  font-display: swap;\n}\n\n:root {\n\n  --font-primary: 'Neue Vektor', system-ui, -apple-system, sans-serif;\n  --font-secondary: 'Andret', system-ui, -apple-system, sans-serif;\n  \n  /* Font sizes */\n  --font-size-primary: 0.625rem;  /* 10px */\n  --font-size-secondary: 2rem;    /* 32px */\n  \n  /* Line heights */\n  --line-height-secondary: 1.2;\n  \n  /* Letter spacing */\n  --letter-spacing-tight: -0.02em;\n  --letter-spacing-normal: 0;\n  --letter-spacing-wide: 0.05em;\n  --letter-spacing-wider: 0.1em;\n}\n"],"names":[],"mappings":"AAAA;;;;;;;;AASA;;;;;;;;AASA"}}]
+}

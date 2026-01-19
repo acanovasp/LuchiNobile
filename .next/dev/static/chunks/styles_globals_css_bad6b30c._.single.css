@@ -6,25 +6,6 @@
   --color-text-muted: #fff9;
   --color-bg: #0a0a0a;
   --color-overlay-bg: #000000b3;
-  --font-primary: "Neue Haas Grotesk Display Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Code", monospace;
-  --font-size-xs: .625rem;
-  --font-size-sm: .75rem;
-  --font-size-base: .875rem;
-  --font-size-lg: 1rem;
-  --font-size-xl: 1.125rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --line-height-tight: 1.1;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.7;
-  --letter-spacing-tight: -.02em;
-  --letter-spacing-normal: 0;
-  --letter-spacing-wide: .1em;
-  --letter-spacing-wider: .2em;
   --space-1: .25rem;
   --space-2: .5rem;
   --space-3: .75rem;
@@ -69,26 +50,32 @@ html, body {
 
 body {
   font-family: var(--font-primary);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
+  font-size: var(--font-size-primary);
   color: var(--color-text);
   background-color: var(--color-bg);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 300;
+  line-height: 1.5;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-tight);
+  font-weight: 300;
+  line-height: 1.1;
 }
 
 a {
   color: inherit;
+  text-transform: inherit;
   text-decoration: none;
 }
 
 button {
   font-family: inherit;
   font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
   color: inherit;
   cursor: pointer;
   background: none;
@@ -112,33 +99,6 @@ img, video, iframe {
   overflow: hidden;
 }
 
-.uppercase {
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
-}
-
-.text-label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
-}
-
-.text-title {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide);
-}
-
-.text-body {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-light);
-  line-height: var(--line-height-relaxed);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide);
-}
-
 :focus-visible {
   outline: 1px solid var(--color-white);
   outline-offset: 2px;
@@ -153,8 +113,6 @@ img, video, iframe {
   :root {
     --gutter: 1rem;
     --indicator-width: 60px;
-    --font-size-xs: .5rem;
-    --font-size-sm: .625rem;
   }
 }
 

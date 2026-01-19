@@ -123,19 +123,14 @@ function ScrollContainer({ children, initialSection = 0, onSectionChange }) {
     }, [
         children
     ]);
-    // Scroll to initial section on mount
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+    // Scroll to initial section on mount - use useLayoutEffect to prevent flash
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useLayoutEffect"])(()=>{
         const container = containerRef.current;
-        if (!container) return;
+        if (!container || initialSection === 0) return;
         const sections = container.querySelectorAll('.section');
         if (sections[initialSection]) {
-            setTimeout(()=>{
-                const section = sections[initialSection];
-                container.scrollTo({
-                    top: section.offsetTop,
-                    behavior: 'instant'
-                });
-            }, 100);
+            const section = sections[initialSection];
+            container.scrollTop = section.offsetTop;
         }
     }, [
         initialSection
@@ -214,12 +209,12 @@ function ScrollContainer({ children, initialSection = 0, onSectionChange }) {
             children: children
         }, void 0, false, {
             fileName: "[project]/components/ScrollContainer.tsx",
-            lineNumber: 147,
+            lineNumber: 143,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ScrollContainer.tsx",
-        lineNumber: 146,
+        lineNumber: 142,
         columnNumber: 5
     }, this);
 }
@@ -300,27 +295,32 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$LocalVideoBack
 ;
 ;
 function ProjectSection({ project, index }) {
+    const handleClick = ()=>{
+        // Store the section index to return to after closing video player
+        sessionStorage.setItem('returnSection', String(index));
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "section project-section",
         "data-section-index": index,
         "data-project-slug": project.slug.current,
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
             href: `/project/${project.slug.current}`,
+            onClick: handleClick,
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$LocalVideoBackground$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 videoUrl: project.previewVideoUrl
             }, void 0, false, {
                 fileName: "[project]/components/ProjectSection.tsx",
-                lineNumber: 23,
+                lineNumber: 28,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/ProjectSection.tsx",
-            lineNumber: 22,
+            lineNumber: 27,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ProjectSection.tsx",
-        lineNumber: 17,
+        lineNumber: 22,
         columnNumber: 5
     }, this);
 }
@@ -787,10 +787,15 @@ function ArchiveGrid({ projects }) {
                 const isLarge = project.archiveSize === 'large';
                 // Get thumbnail URL from Sanity
                 const thumbnailUrl = project.thumbnail ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$sanity$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["urlFor"])(project.thumbnail).width(800).height(450).url() : null;
+                const handleClick = ()=>{
+                    // Store 'archive' to return to archive section after closing video player
+                    sessionStorage.setItem('returnSection', 'archive');
+                };
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                     href: `/project/${project.slug.current}`,
                     className: `archive__item ${isLarge ? 'archive__item--large' : ''}`,
                     "data-project-id": project._id,
+                    onClick: handleClick,
                     children: [
                         isVisible && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "archive__thumbnail",
@@ -804,7 +809,7 @@ function ArchiveGrid({ projects }) {
                                 className: "archive__video"
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 73,
+                                lineNumber: 79,
                                 columnNumber: 21
                             }, this) : thumbnailUrl ? // Small items show thumbnail image
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -817,26 +822,26 @@ function ArchiveGrid({ projects }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 83,
+                                lineNumber: 89,
                                 columnNumber: 21
                             }, this) : // Fallback placeholder
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "archive__placeholder"
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 92,
+                                lineNumber: 98,
                                 columnNumber: 21
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 70,
+                            lineNumber: 76,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "archive__item-overlay"
                         }, void 0, false, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 96,
+                            lineNumber: 102,
                             columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -847,7 +852,7 @@ function ArchiveGrid({ projects }) {
                                     children: project.title
                                 }, void 0, false, {
                                     fileName: "[project]/components/ArchiveGrid.tsx",
-                                    lineNumber: 98,
+                                    lineNumber: 104,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -855,19 +860,19 @@ function ArchiveGrid({ projects }) {
                                     children: project.client
                                 }, void 0, false, {
                                     fileName: "[project]/components/ArchiveGrid.tsx",
-                                    lineNumber: 99,
+                                    lineNumber: 105,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 97,
+                            lineNumber: 103,
                             columnNumber: 15
                         }, this)
                     ]
                 }, project._id, true, {
                     fileName: "[project]/components/ArchiveGrid.tsx",
-                    lineNumber: 63,
+                    lineNumber: 68,
                     columnNumber: 13
                 }, this);
             })
@@ -1010,15 +1015,23 @@ function MainPageContent({ featuredProjects, allProjects, siteSettings, isAboutV
         ]
     }, void 0, true);
 }
+// Compute initial values outside component to avoid flash
+function getInitialState(featuredProjectsLength) {
+    if ("TURBOPACK compile-time truthy", 1) {
+        return {
+            showSplash: true,
+            initialSection: 0
+        };
+    }
+    //TURBOPACK unreachable
+    ;
+    const skipSplash = undefined;
+    const returnSection = undefined;
+}
 function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
-    const [showSplash, setShowSplash] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(()=>{
-        // Check if we're in browser
-        if ("TURBOPACK compile-time truthy", 1) return true;
-        //TURBOPACK unreachable
-        ;
-        // Check if coming from video player (should skip splash)
-        const skipSplash = undefined;
-    });
+    // Compute initial state once on mount
+    const [initialState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(()=>getInitialState(featuredProjects.length));
+    const [showSplash, setShowSplash] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(initialState.showSplash);
     const [isAboutVisible, setIsAboutVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const handleSplashComplete = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(()=>{
         setShowSplash(false);
@@ -1029,7 +1042,7 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollContainer$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                initialSection: 0,
+                initialSection: initialState.initialSection,
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(MainPageContent, {
                     featuredProjects: featuredProjects,
                     allProjects: allProjects,
@@ -1038,12 +1051,12 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
                     setIsAboutVisible: setIsAboutVisible
                 }, void 0, false, {
                     fileName: "[project]/components/MainPageClient.tsx",
-                    lineNumber: 164,
+                    lineNumber: 180,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 163,
+                lineNumber: 179,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$AboutOverlay$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1053,7 +1066,7 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
                 onClose: handleAboutClose
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 174,
+                lineNumber: 190,
                 columnNumber: 7
             }, this),
             showSplash && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$SplashScreen$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1061,7 +1074,7 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
                 minDuration: 3500
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 183,
+                lineNumber: 199,
                 columnNumber: 9
             }, this)
         ]

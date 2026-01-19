@@ -22,6 +22,7 @@
 
 .archive__item {
   cursor: pointer;
+  border-radius: .375rem;
   grid-area: span 1 / span 1;
   position: relative;
   overflow: hidden;
@@ -92,19 +93,11 @@
 }
 
 .archive__item-title {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide);
   color: var(--color-white);
   margin-bottom: var(--space-1);
 }
 
 .archive__item-client {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wider);
   color: #ffffffb3;
 }
 

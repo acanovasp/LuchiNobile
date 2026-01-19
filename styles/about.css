@@ -49,11 +49,12 @@
 }
 
 .about-overlay__text {
-  font-size: clamp(var(--font-size-sm), 1.5vw, var(--font-size-base));
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-relaxed);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-secondary);
+  font-weight: 400;
+  line-height: var(--line-height-secondary);
+  text-transform: none;
+  letter-spacing: normal;
   color: var(--color-text);
 }
 
@@ -67,10 +68,11 @@
 
 .about-overlay__email {
   margin-top: var(--space-10);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-primary);
+  font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide);
+  letter-spacing: 0.1em;
   color: var(--color-text-muted);
   transition: color var(--duration-fast) var(--ease-out);
 }
@@ -90,8 +92,7 @@
   }
 
   .about-overlay__text {
-    font-size: var(--font-size-xs);
-    line-height: var(--line-height-relaxed);
+    font-size: 1.5rem;
   }
 
   .about-overlay__text p {
@@ -100,7 +101,6 @@
 
   .about-overlay__email {
     margin-top: var(--space-6);
-    font-size: var(--font-size-xs);
   }
 }
 

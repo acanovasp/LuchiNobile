@@ -53,11 +53,25 @@ const __TURBOPACK__default__export__ = (0, __TURBOPACK__imported__module__$5b$pr
             name: 'previewVideo',
             title: 'Preview Video (WebM/MP4)',
             type: 'file',
-            description: 'Self-hosted video for instant loading. Upload a short loop (5-15s) at 1080p. Used on homepage and archive grid (if large).',
+            description: 'Self-hosted video for instant loading. Upload a short loop (5-15s) at 1080p. Required for featured projects and large archive items.',
             options: {
                 accept: 'video/webm,video/mp4'
             },
-            validation: (Rule)=>Rule.required()
+            validation: (Rule)=>Rule.custom((value, context)=>{
+                    const doc = context.document;
+                    const isFeatured = doc?.isFeatured;
+                    const isLarge = doc?.archiveSize === 'large';
+                    if ((isFeatured || isLarge) && !value) {
+                        if (isFeatured && isLarge) {
+                            return 'Preview video is required for featured projects and large archive items';
+                        }
+                        if (isFeatured) {
+                            return 'Preview video is required for featured projects';
+                        }
+                        return 'Preview video is required for large archive items';
+                    }
+                    return true;
+                })
         }),
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$sanity$2f$types$2f$lib$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["defineField"])({
             name: 'archiveSize',

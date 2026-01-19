@@ -19,15 +19,12 @@
 }
 
 .splash__logo {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: var(--font-weight-light);
-  letter-spacing: var(--letter-spacing-wide);
   color: var(--color-text);
-  text-transform: uppercase;
   white-space: nowrap;
   opacity: 1;
   min-height: 1.2em;
   transition: opacity .8s var(--ease-out);
+  font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
 .splash__logo--fading {

@@ -13,13 +13,18 @@ export default function ProjectSection({
   project,
   index,
 }: ProjectSectionProps) {
+  const handleClick = () => {
+    // Store the section index to return to after closing video player
+    sessionStorage.setItem('returnSection', String(index))
+  }
+
   return (
     <section
       className="section project-section"
       data-section-index={index}
       data-project-slug={project.slug.current}
     >
-      <Link href={`/project/${project.slug.current}`}>
+      <Link href={`/project/${project.slug.current}`} onClick={handleClick}>
         <LocalVideoBackground videoUrl={project.previewVideoUrl} />
       </Link>
     </section>

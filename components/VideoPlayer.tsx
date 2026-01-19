@@ -14,6 +14,7 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
   const router = useRouter()
   const playerContainerRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<Player | null>(null)
+  const isMountedRef = useRef(true)
   
   const [isPlaying, setIsPlaying] = useState(true)
   const [isMuted, setIsMuted] = useState(false)
@@ -26,45 +27,89 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
     const container = playerContainerRef.current
     if (!container) return
 
-    const player = new Player(container, {
-      id: parseInt(project.fullVimeoId, 10),
-      width: window.innerWidth,
-      height: window.innerHeight,
-      autoplay: true,
-      muted: false,
-      loop: false,
-      controls: false,
-      responsive: true,
-    })
-
-    playerRef.current = player
-
-    player.on('play', () => setIsPlaying(true))
-    player.on('pause', () => setIsPlaying(false))
-    player.on('ended', () => setIsPlaying(false))
-    player.on('volumechange', (data) => setIsMuted(data.volume === 0))
-
-    player.getDuration().then(setDuration)
-    player.getMuted().then(setIsMuted)
-
-    // Smooth progress updates using requestAnimationFrame
+    isMountedRef.current = true
     let rafId: number
-    const updateProgress = () => {
-      player.getCurrentTime().then((currentTime) => {
-        player.getDuration().then((dur) => {
-          if (dur > 0) {
-            setProgress((currentTime / dur) * 100)
-          }
+    let player: Player | null = null
+
+    const initPlayer = async () => {
+      try {
+        player = new Player(container, {
+          id: parseInt(project.fullVimeoId, 10),
+          width: window.innerWidth,
+          height: window.innerHeight,
+          autoplay: true,
+          muted: false,
+          loop: false,
+          controls: false,
+          responsive: true,
         })
-      })
-      rafId = requestAnimationFrame(updateProgress)
+
+        // Wait for player to be ready
+        await player.ready()
+        
+        if (!isMountedRef.current) {
+          player.destroy().catch(() => {})
+          return
+        }
+
+        playerRef.current = player
+
+        player.on('play', () => {
+          if (isMountedRef.current) setIsPlaying(true)
+        })
+        player.on('pause', () => {
+          if (isMountedRef.current) setIsPlaying(false)
+        })
+        player.on('ended', () => {
+          if (isMountedRef.current) setIsPlaying(false)
+        })
+        player.on('volumechange', (data) => {
+          if (isMountedRef.current) setIsMuted(data.volume === 0)
+        })
+
+        const dur = await player.getDuration()
+        if (isMountedRef.current) setDuration(dur)
+        
+        const muted = await player.getMuted()
+        if (isMountedRef.current) setIsMuted(muted)
+
+        // Smooth progress updates using requestAnimationFrame
+        const updateProgress = async () => {
+          if (!isMountedRef.current || !playerRef.current) return
+          
+          try {
+            const currentTime = await playerRef.current.getCurrentTime()
+            const currentDur = await playerRef.current.getDuration()
+            if (isMountedRef.current && currentDur > 0) {
+              setProgress((currentTime / currentDur) * 100)
+            }
+          } catch {
+            // Player was destroyed, stop the loop
+            return
+          }
+          
+          if (isMountedRef.current) {
+            rafId = requestAnimationFrame(updateProgress)
+          }
+        }
+        
+        rafId = requestAnimationFrame(updateProgress)
+      } catch {
+        // Player initialization failed (component unmounted during init)
+      }
     }
-    
-    rafId = requestAnimationFrame(updateProgress)
+
+    initPlayer()
 
     return () => {
+      isMountedRef.current = false
       cancelAnimationFrame(rafId)
-      player.destroy()
+      if (playerRef.current) {
+        playerRef.current.destroy().catch(() => {})
+        playerRef.current = null
+      } else if (player) {
+        player.destroy().catch(() => {})
+      }
     }
   }, [project.fullVimeoId])
 
@@ -95,45 +140,49 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
 
   const handlePlayPause = useCallback(async () => {
     const player = playerRef.current
-    if (!player) return
+    if (!player || !isMountedRef.current) return
 
     try {
       const paused = await player.getPaused()
+      if (!isMountedRef.current) return
+      
       if (paused) {
         await player.play()
-        setIsPlaying(true) // Explicitly update state
+        if (isMountedRef.current) setIsPlaying(true)
       } else {
         await player.pause()
-        setIsPlaying(false) // Explicitly update state
+        if (isMountedRef.current) setIsPlaying(false)
       }
-    } catch (error) {
-      console.error('Play/pause error:', error)
+    } catch {
+      // Player was destroyed, ignore
     }
   }, [])
 
   const handleMuteToggle = useCallback(async () => {
     const player = playerRef.current
-    if (!player) return
+    if (!player || !isMountedRef.current) return
 
     try {
       const muted = await player.getMuted()
+      if (!isMountedRef.current) return
+      
       await player.setMuted(!muted)
-      setIsMuted(!muted)
-    } catch (error) {
-      console.error('Mute toggle error:', error)
+      if (isMountedRef.current) setIsMuted(!muted)
+    } catch {
+      // Player was destroyed, ignore
     }
   }, [])
 
   const handleProgressClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       const player = playerRef.current
-      if (!player || !duration) return
+      if (!player || !duration || !isMountedRef.current) return
 
       const rect = e.currentTarget.getBoundingClientRect()
       const percent = (e.clientX - rect.left) / rect.width
       const time = percent * duration
 
-      player.setCurrentTime(time)
+      player.setCurrentTime(time).catch(() => {})
     },
     [duration]
   )

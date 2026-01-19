@@ -59,12 +59,18 @@ export default function ArchiveGrid({ projects }: ArchiveGridProps) {
             ? urlFor(project.thumbnail).width(800).height(450).url()
             : null
 
+          const handleClick = () => {
+            // Store 'archive' to return to archive section after closing video player
+            sessionStorage.setItem('returnSection', 'archive')
+          }
+
           return (
             <Link
               key={project._id}
               href={`/project/${project.slug.current}`}
               className={`archive__item ${isLarge ? 'archive__item--large' : ''}`}
               data-project-id={project._id}
+              onClick={handleClick}
             >
               {isVisible && (
                 <div className="archive__thumbnail">
