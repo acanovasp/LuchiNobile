@@ -139,6 +139,8 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
   )
 
   const handleClose = useCallback(() => {
+    // Set flag to skip splash screen when returning to homepage
+    sessionStorage.setItem('skipSplash', 'true')
     router.push('/')
   }, [router])
 
@@ -159,7 +161,11 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
 
         {/* Header */}
         <div className="video-player__header">
-          <Link href="/" className="video-player__logo">
+          <Link 
+            href="/" 
+            className="video-player__logo"
+            onClick={() => sessionStorage.setItem('skipSplash', 'true')}
+          >
             Luchi Nóbile
           </Link>
         </div>

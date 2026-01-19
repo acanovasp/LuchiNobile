@@ -133,7 +133,20 @@ export default function MainPageClient({
   allProjects,
   siteSettings,
 }: MainPageClientProps) {
-  const [showSplash, setShowSplash] = useState(true)
+  const [showSplash, setShowSplash] = useState(() => {
+    // Check if we're in browser
+    if (typeof window === 'undefined') return true
+    
+    // Check if coming from video player (should skip splash)
+    const skipSplash = sessionStorage.getItem('skipSplash')
+    if (skipSplash) {
+      sessionStorage.removeItem('skipSplash')
+      return false
+    }
+    
+    // Show splash for initial load, reload, or any other navigation
+    return true
+  })
   const [isAboutVisible, setIsAboutVisible] = useState(false)
 
   const handleSplashComplete = useCallback(() => {

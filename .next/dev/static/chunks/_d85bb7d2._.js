@@ -1064,7 +1064,21 @@ _s(MainPageContent, "mmAsoqCPCiMukmuWl1Y2cGbjQXs=", false, function() {
 _c = MainPageContent;
 function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
     _s1();
-    const [showSplash, setShowSplash] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [showSplash, setShowSplash] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
+        "MainPageClient.useState": ()=>{
+            // Check if we're in browser
+            if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+            ;
+            // Check if coming from video player (should skip splash)
+            const skipSplash = sessionStorage.getItem('skipSplash');
+            if (skipSplash) {
+                sessionStorage.removeItem('skipSplash');
+                return false;
+            }
+            // Show splash for initial load, reload, or any other navigation
+            return true;
+        }
+    }["MainPageClient.useState"]);
     const [isAboutVisible, setIsAboutVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const handleSplashComplete = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "MainPageClient.useCallback[handleSplashComplete]": ()=>{
@@ -1088,12 +1102,12 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
                     setIsAboutVisible: setIsAboutVisible
                 }, void 0, false, {
                     fileName: "[project]/components/MainPageClient.tsx",
-                    lineNumber: 151,
+                    lineNumber: 164,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 150,
+                lineNumber: 163,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$AboutOverlay$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1103,7 +1117,7 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
                 onClose: handleAboutClose
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 161,
+                lineNumber: 174,
                 columnNumber: 7
             }, this),
             showSplash && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$SplashScreen$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1111,13 +1125,13 @@ function MainPageClient({ featuredProjects, allProjects, siteSettings }) {
                 minDuration: 3500
             }, void 0, false, {
                 fileName: "[project]/components/MainPageClient.tsx",
-                lineNumber: 170,
+                lineNumber: 183,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true);
 }
-_s1(MainPageClient, "sRLDXplZKqmgPWpanB3cl2zmg4o=");
+_s1(MainPageClient, "cOete/8UCNEycB4svoxNHM3Wlsc=");
 _c1 = MainPageClient;
 var _c, _c1;
 __turbopack_context__.k.register(_c, "MainPageContent");
