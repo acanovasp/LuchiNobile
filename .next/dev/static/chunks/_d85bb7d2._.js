@@ -449,28 +449,28 @@ function AboutOverlay({ isVisible, aboutText, contactEmail, onClose }) {
             className: "about-overlay__content",
             onClick: (e)=>e.stopPropagation(),
             children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "about-overlay__text",
-                    children: paragraphs.map((paragraph, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            children: paragraph
-                        }, index, false, {
-                            fileName: "[project]/components/AboutOverlay.tsx",
-                            lineNumber: 63,
-                            columnNumber: 13
-                        }, this))
-                }, void 0, false, {
-                    fileName: "[project]/components/AboutOverlay.tsx",
-                    lineNumber: 61,
-                    columnNumber: 9
-                }, this),
                 contactEmail && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                     href: `mailto:${contactEmail}`,
                     className: "about-overlay__email",
                     children: contactEmail
                 }, void 0, false, {
                     fileName: "[project]/components/AboutOverlay.tsx",
-                    lineNumber: 67,
+                    lineNumber: 62,
                     columnNumber: 11
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "about-overlay__text",
+                    children: paragraphs.map((paragraph, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            children: paragraph
+                        }, index, false, {
+                            fileName: "[project]/components/AboutOverlay.tsx",
+                            lineNumber: 71,
+                            columnNumber: 13
+                        }, this))
+                }, void 0, false, {
+                    fileName: "[project]/components/AboutOverlay.tsx",
+                    lineNumber: 69,
+                    columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {

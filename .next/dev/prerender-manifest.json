@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/project/the-hands-that-make-champions":{},"/project/el-mon-ens-mira":{},"/project/a-new-way-to-win":{},"/project/i-embrace-who-i-am":{},"/project/dani-is-calling":{},"/project/30th-anniversary":{},"/project/fc26-icons-marcelo":{},"/project/scotia-room":{},"/project/kick-off-ep-01":{},"/project/just-cooking-crowds":{},"/project/the-call-nessa":{}},"dynamicRoutes":{"/project/[slug]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/project/[slug]","routeRegex":"^\\/project\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"5bcc5a4083b76ecc2488a63bf9d8b24d","previewModeSigningKey":"a17e926112f12b4f80e17260ddff300648e4a4139ff77854e4ee6652c88031e1","previewModeEncryptionKey":"e195851f6d77cb4675bbbc0f862011460d7d277b17e3a25ba742cf71aee3477e"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "f73bc24f921336753d7397ce17a06363",
+    "previewModeSigningKey": "19d2d7915daeae3dfb8a49dc2455710261e0f234380e31166b01afa079fd1877",
+    "previewModeEncryptionKey": "f81b914e1d85bc0759723945824d77848355d34f1ec3e1e4f3daf3df0596ad9d"
+  }
+}

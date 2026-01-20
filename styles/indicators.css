@@ -152,7 +152,7 @@
 }
 
 .header__logo {
-  font-size: 1.125rem;
+  font-size: var(--font-size-primary);
   color: var(--color-text);
   text-align: center;
   pointer-events: auto;

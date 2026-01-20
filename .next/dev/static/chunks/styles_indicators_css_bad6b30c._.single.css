@@ -178,11 +178,11 @@
 }
 
 .header__logo {
+  font-size: var(--font-size-primary);
   color: var(--color-text);
   text-align: center;
   pointer-events: auto;
   transition: color var(--duration-normal) var(--ease-out);
-  font-size: 1.125rem;
 }
 
 .header__logo button {
