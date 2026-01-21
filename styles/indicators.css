@@ -50,7 +50,7 @@
 /* Project info that floats next to the active number */
 .indicator-left__project-info {
   position: absolute;
-  left: 2.5em;
+  left: calc(var(--gutter) + 13.5px);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);

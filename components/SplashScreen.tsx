@@ -8,9 +8,9 @@ interface SplashScreenProps {
 }
 
 const LOGO_TEXT = 'Luchi Nóbile'
-const TYPING_DURATION = 1200 // 1.2s for typing (faster)
-const HOLD_DURATION = 1500 // 1.5s hold after typing
-const LOGO_HEAD_START = 1000 // logo starts fading 1s before background
+const TYPING_DURATION = 1200 // 1.2s for typing
+const HOLD_DURATION = 1500 // 2.5s hold after typing (increased by 1s)
+const LOGO_HEAD_START = 250 // background starts fading 1s after logo starts
 const BG_FADE_DURATION = 1200 // background fades in 1.2s
 
 export default function SplashScreen({

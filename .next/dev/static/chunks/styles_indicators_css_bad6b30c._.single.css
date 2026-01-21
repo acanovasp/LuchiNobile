@@ -65,9 +65,9 @@
 }
 
 .indicator-left__project-info {
+  left: calc(var(--gutter)  + 13.5px);
   gap: var(--space-1);
   pointer-events: none;
-  left: 2.5em;
   top: calc((var(--marker-position) / 6) * 100%);
   transition: top var(--duration-normal) var(--ease-out);
   flex-direction: column;

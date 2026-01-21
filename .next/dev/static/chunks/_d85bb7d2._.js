@@ -13,11 +13,11 @@ var _s = __turbopack_context__.k.signature();
 'use client';
 ;
 const LOGO_TEXT = 'Luchi Nóbile';
-const TYPING_DURATION = 1200 // 1.2s for typing (faster)
+const TYPING_DURATION = 1200 // 1.2s for typing
 ;
-const HOLD_DURATION = 1500 // 1.5s hold after typing
+const HOLD_DURATION = 1500 // 2.5s hold after typing (increased by 1s)
 ;
-const LOGO_HEAD_START = 1000 // logo starts fading 1s before background
+const LOGO_HEAD_START = 250 // background starts fading 1s after logo starts
 ;
 const BG_FADE_DURATION = 1200 // background fades in 1.2s
 ;
@@ -445,40 +445,41 @@ function AboutOverlay({ isVisible, aboutText, contactEmail, onClose }) {
         role: "dialog",
         "aria-modal": "true",
         "aria-label": "About",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "about-overlay__content",
-            onClick: (e)=>e.stopPropagation(),
-            children: [
-                contactEmail && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                    href: `mailto:${contactEmail}`,
-                    className: "about-overlay__email",
-                    children: contactEmail
-                }, void 0, false, {
-                    fileName: "[project]/components/AboutOverlay.tsx",
-                    lineNumber: 62,
-                    columnNumber: 11
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        children: [
+            contactEmail && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                href: `mailto:${contactEmail}`,
+                className: "about-overlay__email",
+                onClick: (e)=>e.stopPropagation(),
+                children: contactEmail
+            }, void 0, false, {
+                fileName: "[project]/components/AboutOverlay.tsx",
+                lineNumber: 59,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "about-overlay__content",
+                onClick: (e)=>e.stopPropagation(),
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "about-overlay__text",
                     children: paragraphs.map((paragraph, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: paragraph
                         }, index, false, {
                             fileName: "[project]/components/AboutOverlay.tsx",
-                            lineNumber: 71,
+                            lineNumber: 73,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/AboutOverlay.tsx",
-                    lineNumber: 69,
+                    lineNumber: 71,
                     columnNumber: 9
                 }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/components/AboutOverlay.tsx",
-            lineNumber: 57,
-            columnNumber: 7
-        }, this)
-    }, void 0, false, {
+            }, void 0, false, {
+                fileName: "[project]/components/AboutOverlay.tsx",
+                lineNumber: 67,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
         fileName: "[project]/components/AboutOverlay.tsx",
         lineNumber: 49,
         columnNumber: 5

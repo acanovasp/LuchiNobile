@@ -54,18 +54,20 @@ export default function AboutOverlay({
       aria-modal="true"
       aria-label="About"
     >
+      {/* Email positioned relative to overlay (viewport) to match indicator alignment */}
+      {contactEmail && (
+        <a
+          href={`mailto:${contactEmail}`}
+          className="about-overlay__email"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {contactEmail}
+        </a>
+      )}
       <div
         className="about-overlay__content"
         onClick={(e) => e.stopPropagation()}
       >
-        {contactEmail && (
-          <a
-            href={`mailto:${contactEmail}`}
-            className="about-overlay__email"
-          >
-            {contactEmail}
-          </a>
-        )}
         <div className="about-overlay__text">
           {paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>

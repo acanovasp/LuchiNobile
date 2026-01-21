@@ -32,9 +32,9 @@
 .about-overlay__content {
   position: absolute;
   top: var(--gutter);
-  left: calc(var(--gutter) * 3);
-  right: calc(var(--gutter) * 3);
-  bottom: var(--gutter);
+  left: calc(var(--gutter) * 2.5);
+  right: calc(var(--gutter) * 2.5);
+  bottom: calc(var(--gutter) * 2.5);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -70,17 +70,25 @@
 
 .about-overlay__email {
   position: absolute;
-  left: 0;
-  /* Align with indicator position 03 (3/6 of height) */
-  top: calc((3 / 6) * 100%);
+  /* Match content's left edge */
+  left: calc(var(--gutter) * 2.5);
+  /* Align with indicator position 03 using same formula as indicators:
+     gutter + (position/6) * (available height where available = 100% - 2*gutter) */
+  top: calc(var(--gutter) + (3 / 6) * (100% - 2 * var(--gutter)));
   font-family: var(--font-primary);
   font-size: var(--font-size-primary);
   font-weight: 300;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
+  opacity: 0;
   transition: color var(--duration-fast) var(--ease-out),
-              top var(--duration-normal) var(--ease-out);
+              top var(--duration-normal) var(--ease-out),
+              opacity var(--duration-slow) var(--ease-out) 100ms;
+}
+
+.about-overlay--visible .about-overlay__email {
+  opacity: 1;
 }
 
 .about-overlay__email:hover {
@@ -90,28 +98,28 @@
 /* Email jumps to position 02 on narrower viewports (width) */
 @media (max-width: 1200px) {
   .about-overlay__email {
-    top: calc((2 / 6) * 100%);
+    top: calc(var(--gutter) + (2 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
 /* Email jumps to position 01 on even narrower viewports (width) */
 @media (max-width: 900px) {
   .about-overlay__email {
-    top: calc((1 / 6) * 100%);
+    top: calc(var(--gutter) + (1 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
 /* Email jumps to position 02 on shorter viewports (height) */
 @media (max-height: 800px) {
   .about-overlay__email {
-    top: calc((2 / 6) * 100%);
+    top: calc(var(--gutter) + (2 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
 /* Email jumps to position 01 on even shorter viewports (height) */
 @media (max-height: 600px) {
   .about-overlay__email {
-    top: calc((1 / 6) * 100%);
+    top: calc(var(--gutter) + (1 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
@@ -133,7 +141,8 @@
   }
 
   .about-overlay__email {
-    top: calc((1 / 6) * 100%);
+    left: var(--space-8);
+    top: calc(var(--space-3) + (1 / 6) * (100% - 2 * var(--space-3)));
   }
 }
 
@@ -145,6 +154,10 @@
   
   .about-overlay__text {
     font-size: 1.25rem;
+  }
+
+  .about-overlay__email {
+    left: var(--space-4);
   }
 }
 

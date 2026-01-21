@@ -9,6 +9,7 @@
   --color-overlay-bg: rgba(0, 0, 0, 0.7);
   
   /* Spacing */
+  --space-0: 0.125rem;  /* 2px */
   --space-1: 0.25rem;   /* 4px */
   --space-2: 0.5rem;    /* 8px */
   --space-3: 0.75rem;   /* 12px */
@@ -65,7 +66,7 @@ body {
   font-family: var(--font-primary);
   font-size: var(--font-size-primary);
   font-weight: 300;
-  line-height: 1.5;
+  line-height: var(--line-height-primary);
   color: var(--color-text);
   background-color: var(--color-bg);
   text-transform: uppercase;

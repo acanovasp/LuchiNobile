@@ -26,7 +26,7 @@
 }
 
 .splash__logo {
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: 1rem;
   color: var(--color-text);
   white-space: nowrap;
   min-height: 1.2em;

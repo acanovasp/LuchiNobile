@@ -44,7 +44,7 @@
   left: 0;
   right: 0;
   z-index: 10;
-  padding: var(--space-6) var(--gutter);
+  padding: var(--gutter);
   background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
   opacity: 0;
   transition: opacity var(--duration-normal) var(--ease-out);
@@ -65,14 +65,14 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: var(--space-5);
+  gap: var(--space-10);
 }
 
 /* Project Info */
 .video-player__info {
   display: flex;
   flex-direction: row;
-  gap: var(--space-1);
+  gap: var(--gutter);
   min-width: 200px;
 }
 
@@ -100,7 +100,7 @@
 .video-player__buttons {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .video-player__button {
@@ -187,7 +187,7 @@
 }
 
 .video-player__logo {
-  font-size: 1.125rem;
+  font-size: var(--font-size-primary);
   color: var(--color-text);
 }
 

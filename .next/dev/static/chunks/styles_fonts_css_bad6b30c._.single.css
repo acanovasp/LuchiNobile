@@ -20,6 +20,7 @@
   --font-secondary: "Andret", system-ui, -apple-system, sans-serif;
   --font-size-primary: .625rem;
   --font-size-secondary: 2rem;
+  --line-height-primary: 1;
   --line-height-secondary: 1.2;
   --letter-spacing-tight: -.02em;
   --letter-spacing-normal: 0;

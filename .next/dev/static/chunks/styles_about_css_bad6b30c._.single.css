@@ -24,9 +24,9 @@
 
 .about-overlay__content {
   top: var(--gutter);
-  left: calc(var(--gutter) * 3);
-  right: calc(var(--gutter) * 3);
-  bottom: var(--gutter);
+  left: calc(var(--gutter) * 2.5);
+  right: calc(var(--gutter) * 2.5);
+  bottom: calc(var(--gutter) * 2.5);
   text-align: left;
   opacity: 0;
   transition: opacity var(--duration-slow) var(--ease-out) .1s, transform var(--duration-slow) var(--ease-out) .1s;
@@ -61,16 +61,21 @@
 }
 
 .about-overlay__email {
+  left: calc(var(--gutter) * 2.5);
+  top: calc(var(--gutter)  + (3 / 6) * (100% - 2 * var(--gutter)));
   font-family: var(--font-primary);
   font-size: var(--font-size-primary);
   text-transform: uppercase;
   letter-spacing: .1em;
   color: var(--color-text-muted);
-  transition: color var(--duration-fast) var(--ease-out), top var(--duration-normal) var(--ease-out);
+  opacity: 0;
+  transition: color var(--duration-fast) var(--ease-out), top var(--duration-normal) var(--ease-out), opacity var(--duration-slow) var(--ease-out) .1s;
   font-weight: 300;
   position: absolute;
-  top: 50%;
-  left: 0;
+}
+
+.about-overlay--visible .about-overlay__email {
+  opacity: 1;
 }
 
 .about-overlay__email:hover {
@@ -79,25 +84,25 @@
 
 @media (max-width: 1200px) {
   .about-overlay__email {
-    top: 33.3333%;
+    top: calc(var(--gutter)  + (2 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
 @media (max-width: 900px) {
   .about-overlay__email {
-    top: 16.6667%;
+    top: calc(var(--gutter)  + (1 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
 @media (max-height: 800px) {
   .about-overlay__email {
-    top: 33.3333%;
+    top: calc(var(--gutter)  + (2 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
 @media (max-height: 600px) {
   .about-overlay__email {
-    top: 16.6667%;
+    top: calc(var(--gutter)  + (1 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
@@ -118,7 +123,8 @@
   }
 
   .about-overlay__email {
-    top: 16.6667%;
+    left: var(--space-8);
+    top: calc(var(--space-3)  + (1 / 6) * (100% - 2 * var(--space-3)));
   }
 }
 
@@ -130,6 +136,10 @@
 
   .about-overlay__text {
     font-size: 1.25rem;
+  }
+
+  .about-overlay__email {
+    left: var(--space-4);
   }
 }
 

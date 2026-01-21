@@ -26,6 +26,7 @@
   --font-size-secondary: 2rem;    /* 32px */
   
   /* Line heights */
+  --line-height-primary: 1;
   --line-height-secondary: 1.2;
   
   /* Letter spacing */
