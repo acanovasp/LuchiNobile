@@ -32,7 +32,6 @@
   --z-header: 300;
   --z-splash: 1000;
   --z-transition: 9000;
-  --z-header-above-transition: 10000;
 }
 
 *, :before, :after {

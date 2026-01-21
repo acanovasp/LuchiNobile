@@ -64,10 +64,7 @@ export default function AboutOverlay({
           {contactEmail}
         </a>
       )}
-      <div
-        className="about-overlay__content"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="about-overlay__content">
         <div className="about-overlay__text">
           {paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>

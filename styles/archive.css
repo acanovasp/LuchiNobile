@@ -130,14 +130,14 @@
 /* Responsive grid */
 @media (max-width: 1024px) {
   .archive {
-    padding-left: var(--gutter);
-    padding-right: var(--gutter);
+    /* Center the narrower grid */
+    padding-left: 15vw;
+    padding-right: 15vw;
   }
   
   .archive__grid {
     --columns: 2;
-    --padding: var(--gutter);
-    --container-width: calc(100vw - 2 * var(--padding));
+    --container-width: 70vw;
     --col-width: calc((var(--container-width) - var(--gap)) / 2);
     --row-height: calc(var(--col-width) * 9 / 16);
     
@@ -152,9 +152,16 @@
 }
 
 @media (max-width: 640px) {
+  .archive {
+    /* Center the narrower grid */
+    padding-left: 20vw;
+    padding-right: 20vw;
+  }
+  
   .archive__grid {
     --columns: 1;
-    --col-width: calc(100vw - 2 * var(--gutter));
+    --container-width: 60vw;
+    --col-width: 60vw;
     --row-height: calc(var(--col-width) * 9 / 16);
     
     grid-template-columns: 1fr;

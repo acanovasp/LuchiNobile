@@ -195,3 +195,227 @@
 [01:24:43.907] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
 [01:24:44.016] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
 [01:25:46.991] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:27:58.951] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:27:58.951] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:28:11.728] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:28:11.728] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:28:15.729] Server  LOG     ✓ Compiled in 137ms
+[01:28:16.553] Server  LOG     ✓ Compiled in 21ms
+[01:28:22.896] Server  LOG     ✓ Compiled in 24ms
+[01:28:46.389] Server  LOG     ✓ Compiled in 21ms
+[01:28:57.092] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:28:57.092] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:29:48.215] Server  LOG     ✓ Compiled in 34ms
+[01:29:48.414] Server  LOG     ✓ Compiled in 131ms
+[01:32:41.213] Server  LOG     ✓ Compiled in 128ms
+[01:32:41.214] Browser ERROR   uncaughtError: ReferenceError: TransitionLink is not defined
+[01:32:43.369] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:32:43.398] Server  LOG     ✓ Compiled in 5ms
+[01:32:43.599] Browser ERROR   uncaughtError: ReferenceError: TransitionLink is not defined
+[01:32:43.717] Server  ERROR   ⨯ ReferenceError: TransitionLink is not defined
+[01:32:43.868] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:32:43.992] Browser ERROR   uncaughtError: ReferenceError: TransitionLink is not defined
+[01:32:45.882] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:32:46.006] Server  LOG     ✓ Compiled in 30ms
+[01:32:46.171] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:32:56.025] Server  LOG     ✓ Compiled in 58ms
+[01:32:57.953] Server  LOG     ✓ Compiled in 124ms
+[01:32:58.038] Browser ERROR   uncaughtError: ReferenceError: TransitionLink is not defined
+[01:32:58.050] Browser ERROR   uncaughtError: ReferenceError: Can't find variable: TransitionLink
+[01:33:00.131] Server  LOG     ✓ Compiled in 69ms
+[01:33:00.238] Browser ERROR   ./components/ArchiveGrid.tsx:112:11
+Parsing ecmascript source code failed
+  110 |               </div>
+  111 |             </TransitionLink>
+> 112 |           )
+      |           ^
+  113 |         })}
+  114 |       </div>
+  115 |     </section>
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/ArchiveGrid.tsx [Client Component Browser]
+    ./components/MainPageClient.tsx [Client Component Browser]
+    ./components/MainPageClient.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/ArchiveGrid.tsx [Client Component SSR]
+    ./components/MainPageClient.tsx [Client Component SSR]
+    ./components/MainPageClient.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+[01:33:00.238] Browser ERROR   ./components/ArchiveGrid.tsx:112:11
+Parsing ecmascript source code failed
+  110 |               </div>
+  111 |             </TransitionLink>
+> 112 |           )
+      |           ^
+  113 |         })}
+  114 |       </div>
+  115 |     </section>
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/ArchiveGrid.tsx [Client Component Browser]
+    ./components/MainPageClient.tsx [Client Component Browser]
+    ./components/MainPageClient.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/ArchiveGrid.tsx [Client Component SSR]
+    ./components/MainPageClient.tsx [Client Component SSR]
+    ./components/MainPageClient.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+[01:33:00.239] Browser ERROR   ./components/ArchiveGrid.tsx:112:11
+Parsing ecmascript source code failed
+  110 |               </div>
+  111 |             </TransitionLink>
+> 112 |           )
+      |           ^
+  113 |         })}
+  114 |       </div>
+  115 |     </section>
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/ArchiveGrid.tsx [Client Component Browser]
+    ./components/MainPageClient.tsx [Client Component Browser]
+    ./components/MainPageClient.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/ArchiveGrid.tsx [Client Component SSR]
+    ./components/MainPageClient.tsx [Client Component SSR]
+    ./components/MainPageClient.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+[01:33:00.959] Server  LOG     ✓ Compiled in 34ms
+[01:33:00.962] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:33:00.983] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:33:01.936] Browser ERROR   ./components/ArchiveGrid.tsx:112:11
+Parsing ecmascript source code failed
+  110 |               </div>
+  111 |             </TransitionLink>
+> 112 |           )
+      |           ^
+  113 |         })}
+  114 |       </div>
+  115 |     </section>
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/ArchiveGrid.tsx [Client Component Browser]
+    ./components/MainPageClient.tsx [Client Component Browser]
+    ./components/MainPageClient.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/ArchiveGrid.tsx [Client Component SSR]
+    ./components/MainPageClient.tsx [Client Component SSR]
+    ./components/MainPageClient.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+[01:33:02.211] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:33:02.451] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:33:02.537] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:33:02.575] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:33:12.362] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:33:12.362] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:33:12.362] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:33:12.821] Server  LOG     ✓ Compiled in 741ms
+[01:33:13.039] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:33:14.530] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:33:14.530] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:33:14.530] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:33:14.631] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:33:14.987] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:33:15.244] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:33:15.347] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:33:15.347] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:33:15.449] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:33:21.890] Server  LOG     ✓ Compiled in 15ms
+[01:33:24.016] Server  LOG     ✓ Compiled in 6ms
+[01:33:27.506] Browser WARN    Building schema for synchronization took more than 1 second (4380ms)
+[01:33:42.294] Server  LOG     ✓ Compiled in 19ms
+[01:33:43.187] Server  LOG     ✓ Compiled in 13ms
+[01:33:53.675] Server  LOG     ✓ Compiled in 20ms
+[01:33:54.637] Server  LOG     ✓ Compiled in 8ms
+[01:34:03.861] Server  LOG     ✓ Compiled in 19ms
+[01:34:13.465] Server  LOG     ✓ Compiled in 15ms
+[01:35:39.603] Server  LOG     ✓ Compiled in 28ms
+[01:35:39.660] Server  LOG     ✓ Compiled in 57ms
+[01:35:39.785] Server  LOG     ✓ Compiled in 61ms
+[01:35:39.831] Server  LOG     ✓ Compiled in 54ms
+[01:35:41.324] Server  LOG     ✓ Compiled in 1443ms
+[01:35:41.531] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:35:41.531] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:35:41.531] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:35:41.531] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:35:43.083] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:35:43.083] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:35:43.083] Browser ERROR   Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}
+[01:35:43.328] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:35:43.661] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:35:43.909] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:35:43.960] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:35:43.993] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:35:44.086] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:35:58.261] Browser WARN    Building schema for synchronization took more than 1 second (7772ms)
+[01:38:21.026] Server  LOG     ✓ Compiled in 66ms
+[01:38:21.073] Browser ERROR   uncaughtError: ReferenceError: TransitionLink is not defined
+[01:38:21.915] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:38:21.945] Server  LOG     ✓ Compiled in 15ms
+[01:38:22.431] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:38:39.514] Server  LOG     ✓ Compiled in 17ms
+[01:38:40.801] Server  LOG     ✓ Compiled in 6ms
+[01:39:02.081] Server  LOG     ✓ Compiled in 17ms
+[01:39:08.606] Server  LOG     ✓ Compiled in 18ms
+[01:40:36.898] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:40:37.082] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:40:37.185] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:41:16.540] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:41:35.084] Server  LOG     ✓ Compiled in 18ms
+[01:41:36.866] Server  LOG     ✓ Compiled in 26ms
+[01:41:41.172] Server  LOG     ✓ Compiled in 18ms
+[01:41:46.468] Server  LOG     ✓ Compiled in 31ms
+[01:42:11.789] Browser ERROR   uncaughtError: NotFoundError: Failed to execute 'releasePointerCapture' on 'Element': No active pointer with the given id is found.
+[01:42:13.569] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:42:13.569] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:43:50.533] Server  LOG     ✓ Compiled in 20ms
+[01:44:02.443] Server  LOG     ✓ Compiled in 29ms
+[01:44:19.695] Server  LOG     ✓ Compiled in 33ms
+[01:44:40.544] Server  LOG     ✓ Compiled in 29ms
+[01:45:05.379] Server  LOG     ✓ Compiled in 23ms
+[01:45:14.804] Server  LOG     ✓ Compiled in 28ms
+[01:45:21.554] Server  LOG     ✓ Compiled in 11ms
+[01:45:46.744] Server  LOG     ✓ Compiled in 24ms
+[01:45:55.431] Server  LOG     ✓ Compiled in 38ms
+[01:46:05.700] Server  LOG     ✓ Compiled in 20ms
+[01:46:32.583] Server  LOG     ✓ Compiled in 21ms
+[01:47:25.867] Server  LOG     ✓ Compiled in 28ms
+[01:47:33.344] Server  LOG     ✓ Compiled in 22ms
+[01:47:40.918] Server  LOG     ✓ Compiled in 59ms
+[01:49:24.170] Server  LOG     ✓ Compiled in 26ms
+[01:49:54.821] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:49:55.210] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:49:55.428] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:51:02.952] Server  LOG     ✓ Compiled in 23ms
+[01:51:32.581] Server  LOG     ✓ Compiled in 21ms
+[01:52:48.182] Server  LOG     ✓ Compiled in 26ms
+[01:54:41.635] Server  LOG     ✓ Compiled in 45ms
+[01:55:18.345] Server  LOG     ✓ Compiled in 43ms
+[01:55:36.361] Server  LOG     ✓ Compiled in 20ms
+[01:56:21.741] Server  LOG     ✓ Compiled in 23ms
+[01:57:17.264] Server  LOG     ✓ Compiled in 25ms
+[01:57:28.203] Server  LOG     ✓ Compiled in 19ms
+[01:57:34.709] Server  LOG     ✓ Compiled in 24ms
+[01:58:09.813] Server  LOG     ✓ Compiled in 37ms
+[01:59:39.042] Server  LOG     ✓ Compiled in 21ms
+[02:00:28.861] Server  LOG     ✓ Compiled in 23ms

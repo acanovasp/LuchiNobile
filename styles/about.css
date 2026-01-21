@@ -41,6 +41,7 @@
   text-align: left;
   opacity: 0;
   transform: translateY(40px);
+  pointer-events: none;
   transition: opacity var(--duration-slow) var(--ease-out) 100ms,
               transform var(--duration-slow) var(--ease-out) 100ms;
 }
@@ -58,6 +59,7 @@
   text-transform: none;
   letter-spacing: normal;
   color: var(--color-text);
+  pointer-events: auto;
 }
 
 .about-overlay__text p {
@@ -70,6 +72,7 @@
 
 .about-overlay__email {
   position: absolute;
+  z-index: 10;
   /* Match content's left edge */
   left: calc(var(--gutter) * 2.5);
   /* Align with indicator position 03 using same formula as indicators:
@@ -82,6 +85,8 @@
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
   opacity: 0;
+  pointer-events: auto;
+  cursor: pointer;
   transition: color var(--duration-fast) var(--ease-out),
               top var(--duration-normal) var(--ease-out),
               opacity var(--duration-slow) var(--ease-out) 100ms;

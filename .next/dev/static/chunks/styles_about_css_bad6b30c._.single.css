@@ -29,6 +29,7 @@
   bottom: calc(var(--gutter) * 2.5);
   text-align: left;
   opacity: 0;
+  pointer-events: none;
   transition: opacity var(--duration-slow) var(--ease-out) .1s, transform var(--duration-slow) var(--ease-out) .1s;
   flex-direction: column;
   justify-content: flex-end;
@@ -50,6 +51,7 @@
   text-transform: none;
   letter-spacing: normal;
   color: var(--color-text);
+  pointer-events: auto;
 }
 
 .about-overlay__text p {
@@ -61,6 +63,7 @@
 }
 
 .about-overlay__email {
+  z-index: 10;
   left: calc(var(--gutter) * 2.5);
   top: calc(var(--gutter)  + (3 / 6) * (100% - 2 * var(--gutter)));
   font-family: var(--font-primary);
@@ -69,6 +72,8 @@
   letter-spacing: .1em;
   color: var(--color-text-muted);
   opacity: 0;
+  pointer-events: auto;
+  cursor: pointer;
   transition: color var(--duration-fast) var(--ease-out), top var(--duration-normal) var(--ease-out), opacity var(--duration-slow) var(--ease-out) .1s;
   font-weight: 300;
   position: absolute;

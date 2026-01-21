@@ -112,14 +112,13 @@
 
 @media (max-width: 1024px) {
   .archive {
-    padding-left: var(--gutter);
-    padding-right: var(--gutter);
+    padding-left: 15vw;
+    padding-right: 15vw;
   }
 
   .archive__grid {
     --columns: 2;
-    --padding: var(--gutter);
-    --container-width: calc(100vw - 2 * var(--padding));
+    --container-width: 70vw;
     --col-width: calc((var(--container-width)  - var(--gap)) / 2);
     --row-height: calc(var(--col-width) * 9 / 16);
     grid-template-columns: repeat(2, 1fr);
@@ -131,9 +130,15 @@
 }
 
 @media (max-width: 640px) {
+  .archive {
+    padding-left: 20vw;
+    padding-right: 20vw;
+  }
+
   .archive__grid {
     --columns: 1;
-    --col-width: calc(100vw - 2 * var(--gutter));
+    --container-width: 60vw;
+    --col-width: 60vw;
     --row-height: calc(var(--col-width) * 9 / 16);
     grid-template-columns: 1fr;
   }

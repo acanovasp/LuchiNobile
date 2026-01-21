@@ -252,21 +252,36 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navi
 ;
 ;
 // Duration must match CSS --duration-slower (800ms)
-const TRANSITION_DURATION = 800;
-function TransitionLink({ href, children, className, onClick, ...props }) {
+const TRANSITION_DURATION = 400;
+const BLUR_DELAY = 150 // Delay before black overlay starts (lets blur be visible)
+;
+function TransitionLink({ href, children, className, onClick, blurTarget, blurClass, ...props }) {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const handleClick = (e)=>{
         e.preventDefault();
         // Call any additional onClick handler
         onClick?.();
+        // Add blur class to target element if specified
+        if (blurTarget) {
+            const target = e.currentTarget.closest(blurTarget);
+            if (target) {
+                // Use provided blurClass or derive from selector
+                const transitionClass = blurClass || `${blurTarget.replace('.', '')}--transitioning`;
+                target.classList.add(transitionClass);
+            }
+        }
         // Add fade-out class to transition overlay
         const overlay = document.querySelector('.page-transition');
         if (overlay) {
-            overlay.classList.add('page-transition--visible');
-            // Navigate after fade-out completes
+            // If blur is happening, delay the black overlay to let blur be visible
+            const fadeDelay = blurTarget ? BLUR_DELAY : 0;
             setTimeout(()=>{
-                router.push(href);
-            }, TRANSITION_DURATION);
+                overlay.classList.add('page-transition--visible');
+                // Navigate after fade-out completes
+                setTimeout(()=>{
+                    router.push(href);
+                }, TRANSITION_DURATION);
+            }, fadeDelay);
         } else {
             // Fallback if overlay doesn't exist
             router.push(href);
@@ -280,7 +295,7 @@ function TransitionLink({ href, children, className, onClick, ...props }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/components/TransitionLink.tsx",
-        lineNumber: 47,
+        lineNumber: 67,
         columnNumber: 5
     }, this);
 }
@@ -372,11 +387,13 @@ function ProjectSection({ project, index }) {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TransitionLink$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
             href: `/project/${project.slug.current}`,
             onClick: handleClick,
+            blurTarget: ".project-section",
+            blurClass: "project-section--transitioning",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$LocalVideoBackground$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 videoUrl: project.previewVideoUrl
             }, void 0, false, {
                 fileName: "[project]/components/ProjectSection.tsx",
-                lineNumber: 28,
+                lineNumber: 33,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
@@ -864,6 +881,7 @@ function ArchiveGrid({ projects }) {
                     className: `archive__item ${isLarge ? 'archive__item--large' : ''}`,
                     "data-project-id": project._id,
                     onClick: handleClick,
+                    blurTarget: ".archive__item",
                     children: [
                         isVisible && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "archive__thumbnail",
@@ -877,7 +895,7 @@ function ArchiveGrid({ projects }) {
                                 className: "archive__video"
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 80,
+                                lineNumber: 81,
                                 columnNumber: 21
                             }, this) : thumbnailUrl ? // Small items show thumbnail image
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -890,26 +908,26 @@ function ArchiveGrid({ projects }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 90,
+                                lineNumber: 91,
                                 columnNumber: 21
                             }, this) : // Fallback placeholder
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "archive__placeholder"
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 99,
+                                lineNumber: 100,
                                 columnNumber: 21
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 77,
+                            lineNumber: 78,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "archive__item-overlay"
                         }, void 0, false, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 103,
+                            lineNumber: 104,
                             columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -920,7 +938,7 @@ function ArchiveGrid({ projects }) {
                                     children: projectNumber
                                 }, void 0, false, {
                                     fileName: "[project]/components/ArchiveGrid.tsx",
-                                    lineNumber: 105,
+                                    lineNumber: 106,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -931,7 +949,7 @@ function ArchiveGrid({ projects }) {
                                             children: project.title
                                         }, void 0, false, {
                                             fileName: "[project]/components/ArchiveGrid.tsx",
-                                            lineNumber: 107,
+                                            lineNumber: 108,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -939,19 +957,19 @@ function ArchiveGrid({ projects }) {
                                             children: project.client
                                         }, void 0, false, {
                                             fileName: "[project]/components/ArchiveGrid.tsx",
-                                            lineNumber: 108,
+                                            lineNumber: 109,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/ArchiveGrid.tsx",
-                                    lineNumber: 106,
+                                    lineNumber: 107,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 104,
+                            lineNumber: 105,
                             columnNumber: 15
                         }, this)
                     ]

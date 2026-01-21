@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Player from '@vimeo/player'
-import TransitionLink from './TransitionLink'
 import type { Project } from '@/lib/queries'
 
 interface VideoPlayerProps {
@@ -220,17 +219,6 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
           aria-label={isPlaying ? 'Pause video' : 'Play video'}
         />
 
-        {/* Header */}
-        <div className="video-player__header">
-          <TransitionLink 
-            href="/" 
-            className="video-player__logo"
-            onClick={() => sessionStorage.setItem('skipSplash', 'true')}
-          >
-            Luchi Nóbile
-          </TransitionLink>
-        </div>
-
         {/* Controls */}
         <div className="video-player__controls">
           <div className="video-player__controls-inner">
@@ -250,7 +238,7 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
               {/* Buttons */}
               <div className="video-player__buttons">
                 <button
-                  className="video-player__button"
+                  className="video-player__button play"
                   onClick={handlePlayPause}
                 >
                   {isPlaying ? 'Pause' : 'Play'}

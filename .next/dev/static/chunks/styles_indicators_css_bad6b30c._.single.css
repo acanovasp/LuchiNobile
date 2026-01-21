@@ -215,13 +215,13 @@
 
 @media (max-width: 768px) {
   .indicator-left {
-    top: var(--space-3);
-    left: var(--space-3);
-    bottom: var(--space-3);
+    top: var(--space-5);
+    left: var(--space-5);
+    bottom: var(--space-5);
   }
 
   .indicator-left__item {
-    font-size: .5rem;
+    font-size: .625rem;
   }
 
   .indicator-left__project-info {
@@ -229,30 +229,30 @@
   }
 
   .indicator-left__title, .indicator-left__client {
-    font-size: .5rem;
+    font-size: .625rem;
   }
 
   .indicator-right {
-    top: var(--space-3);
-    right: var(--space-3);
-    bottom: var(--space-3);
+    top: var(--space-5);
+    right: var(--space-5);
+    bottom: var(--space-5);
   }
 
   .indicator-right__item {
-    font-size: .5rem;
+    font-size: .625rem;
   }
 
   .indicator-right__marker {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
 
   .header {
-    padding: var(--space-3);
+    padding: var(--space-5);
   }
 
   .header__logo {
-    font-size: .875rem;
+    font-size: .625rem;
   }
 }
 
