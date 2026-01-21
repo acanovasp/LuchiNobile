@@ -67,6 +67,7 @@
 
 .video-player__info {
   gap: var(--gutter);
+  letter-spacing: .5px;
   flex-direction: row;
   display: flex;
 }
@@ -109,6 +110,10 @@
 
 .video-player__button:hover {
   opacity: 1;
+}
+
+.video-player__button--fullscreen {
+  display: none;
 }
 
 .video-player__progress {
@@ -195,6 +200,10 @@
   .video-player__buttons {
     gap: var(--space-3);
     order: 3;
+  }
+
+  .video-player__button--fullscreen {
+    display: block;
   }
 
   .video-player__button {

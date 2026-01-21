@@ -258,7 +258,11 @@
 
 @media (max-width: 480px) {
   .indicator-left__project-info {
-    display: none;
+    left: calc(var(--space-5)  + 13px);
+  }
+
+  .indicator-left__title, .indicator-left__client {
+    font-size: .625rem;
   }
 }
 

@@ -204,6 +204,17 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
     }
   }, [router])
 
+  const handleFullscreen = useCallback(() => {
+    const container = document.querySelector('.video-player-page')
+    if (!container) return
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {})
+    } else {
+      container.requestFullscreen().catch(() => {})
+    }
+  }, [])
+
   return (
     <div className="video-player-page">
       <div
@@ -248,6 +259,12 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
                   onClick={handleMuteToggle}
                 >
                   {isMuted ? 'Unmute' : 'Mute'}
+                </button>
+                <button
+                  className="video-player__button video-player__button--fullscreen"
+                  onClick={handleFullscreen}
+                >
+                  FS
                 </button>
               </div>
             </div>

@@ -419,3 +419,51 @@ Import traces:
 [01:58:09.813] Server  LOG     ✓ Compiled in 37ms
 [01:59:39.042] Server  LOG     ✓ Compiled in 21ms
 [02:00:28.861] Server  LOG     ✓ Compiled in 23ms
+[02:05:19.103] Server  LOG     ✓ Compiled in 155ms
+[02:05:21.729] Server  LOG     ✓ Compiled in 29ms
+[02:05:30.702] Server  LOG     ✓ Compiled in 86ms
+[02:05:40.420] Server  LOG     ✓ Compiled in 20ms
+[02:08:59.493] Server  LOG     ✓ Compiled in 24ms
+[02:09:14.513] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:09:21.146] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[02:10:26.671] Server  LOG     ✓ Compiled in 43ms
+[02:11:20.542] Server  LOG     ✓ Compiled in 24ms
+[02:12:47.058] Server  LOG     ✓ Compiled in 23ms
+[02:13:12.103] Server  LOG     ✓ Compiled in 46ms
+[02:13:23.075] Server  LOG     ✓ Compiled in 21ms
+[02:13:28.678] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[02:15:16.822] Server  LOG     ✓ Compiled in 52ms
+[02:15:29.128] Server  LOG     ✓ Compiled in 27ms
+[02:18:32.201] Server  LOG     ✓ Compiled in 23ms
+[02:18:35.413] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:18:48.562] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[02:19:37.751] Server  LOG     ✓ Compiled in 30ms
+[02:20:21.331] Server  LOG     ✓ Compiled in 30ms
+[02:20:26.029] Server  LOG     ✓ Compiled in 28ms
+[02:20:31.929] Server  LOG     ✓ Compiled in 14ms
+[02:20:41.333] Server  LOG     ✓ Compiled in 26ms
+[02:21:02.798] Server  LOG     ✓ Compiled in 21ms
+[02:21:15.010] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[02:21:15.010] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[02:22:19.661] Server  LOG     ✓ Compiled in 22ms
+[02:22:30.242] Server  LOG     ✓ Compiled in 32ms
+[02:22:46.324] Server  LOG     ✓ Compiled in 34ms
+[02:22:54.299] Server  LOG     ✓ Compiled in 19ms
+[02:23:00.763] Server  LOG     ✓ Compiled in 23ms
+[02:23:08.961] Server  LOG     ✓ Compiled in 26ms
+[02:23:16.403] Server  LOG     ✓ Compiled in 19ms
+[02:23:28.207] Server  LOG     ✓ Compiled in 85ms
+[02:23:34.112] Server  LOG     ✓ Compiled in 31ms
+[02:24:13.478] Server  LOG     ✓ Compiled in 22ms
+[02:24:32.897] Server  LOG     ✓ Compiled in 24ms
+[02:25:04.009] Server  LOG     ✓ Compiled in 31ms
+[02:25:19.344] Server  LOG     ✓ Compiled in 26ms
+[02:25:23.575] Server  LOG     ✓ Compiled in 16ms
+[02:27:26.056] Server  LOG     ✓ Compiled in 34ms
+[02:27:27.490] Server  LOG     ✓ Compiled in 34ms
+[02:28:05.732] Server  LOG     ✓ Compiled in 36ms
+[02:29:26.017] Server  LOG     ✓ Compiled in 27ms
+[02:29:43.022] Server  LOG     ✓ Compiled in 18ms
+[02:29:53.145] Server  LOG     ✓ Compiled in 26ms
+[02:29:56.633] Server  LOG     ✓ Compiled in 28ms
+[02:29:58.843] Server  LOG     ✓ Compiled in 29ms

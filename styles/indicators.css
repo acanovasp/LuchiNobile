@@ -224,6 +224,7 @@
 
   .indicator-right__item {
     font-size: 0.625rem;
+
   }
 
   .indicator-right__marker {
@@ -242,6 +243,12 @@
 
 @media (max-width: 480px) {
   .indicator-left__project-info {
-    display: none;
+    /* Keep project info visible on mobile */
+    left: calc(var(--space-5) + 13px);
+  }
+
+  .indicator-left__title,
+  .indicator-left__client {
+    font-size: 0.625rem;
   }
 }
