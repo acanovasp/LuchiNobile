@@ -29,6 +29,7 @@
   --duration-normal: 300ms;
   --duration-slow: 500ms;
   --duration-slower: 800ms;
+  --duration-slowest: 1200ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   
@@ -39,6 +40,8 @@
   --z-indicators: 200;
   --z-header: 300;
   --z-splash: 1000;
+  --z-transition: 9000;
+  --z-header-above-transition: 10000;
 }
 
 /* Reset */
@@ -127,6 +130,22 @@ iframe {
 ::selection {
   background-color: var(--color-white);
   color: var(--color-black);
+}
+
+/* Page Transition Overlay */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-black);
+  z-index: var(--z-transition);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-slowest) var(--ease-out);
+}
+
+.page-transition--visible {
+  opacity: 1;
+  pointer-events: all;
 }
 
 /* Mobile Adjustments */

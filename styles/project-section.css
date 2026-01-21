@@ -61,6 +61,14 @@
   height: 100%;
   transform: translate(-50%, -50%);
   object-fit: cover;
+  transition: filter var(--duration-slower) var(--ease-out),
+              transform var(--duration-slower) var(--ease-out);
+}
+
+/* Blur effect during page transition */
+.project-section--transitioning .project-section__local-video {
+  filter: blur(40px);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 /* Poster/thumbnail shown while video loads */

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
+import TransitionLink from './TransitionLink'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
 import type { Project } from '@/lib/queries'
@@ -50,9 +50,10 @@ export default function ArchiveGrid({ projects }: ArchiveGridProps) {
   return (
     <section className="section section--archive archive">
       <div ref={gridRef} className="archive__grid">
-        {projects.map((project) => {
+        {projects.map((project, index) => {
           const isVisible = visibleItems.has(project._id)
           const isLarge = project.archiveSize === 'large'
+          const projectNumber = String(index + 1).padStart(2, '0')
           
           // Get thumbnail URL from Sanity
           const thumbnailUrl = project.thumbnail
@@ -65,12 +66,13 @@ export default function ArchiveGrid({ projects }: ArchiveGridProps) {
           }
 
           return (
-            <Link
+            <TransitionLink
               key={project._id}
               href={`/project/${project.slug.current}`}
               className={`archive__item ${isLarge ? 'archive__item--large' : ''}`}
               data-project-id={project._id}
               onClick={handleClick}
+              blurTarget=".archive__item"
             >
               {isVisible && (
                 <div className="archive__thumbnail">
@@ -101,10 +103,13 @@ export default function ArchiveGrid({ projects }: ArchiveGridProps) {
               )}
               <div className="archive__item-overlay" />
               <div className="archive__item-info">
-                <h3 className="archive__item-title">{project.title}</h3>
-                <p className="archive__item-client">{project.client}</p>
+                <span className="archive__item-number">{projectNumber}</span>
+                <div className="archive__item-info-container">
+                  <h3 className="archive__item-title">{project.title}</h3>
+                  <p className="archive__item-client">{project.client}</p>
+                </div>
               </div>
-            </Link>
+            </TransitionLink>
           )
         })}
       </div>

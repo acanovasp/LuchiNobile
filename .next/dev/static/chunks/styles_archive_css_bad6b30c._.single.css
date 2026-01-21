@@ -1,7 +1,9 @@
 /* [project]/styles/archive.css [app-client] (css) */
 .archive {
   min-height: 100dvh;
-  padding: var(--space-10) calc(var(--gutter)  + var(--indicator-width));
+  padding-top: calc(var(--gutter)  + (2 / 6) * (100dvh - 2 * var(--gutter)));
+  padding-left: calc(var(--gutter)  + var(--indicator-width));
+  padding-right: calc(var(--gutter)  + var(--indicator-width));
   padding-bottom: var(--space-12);
   background-color: var(--color-white);
 }
@@ -22,7 +24,7 @@
 
 .archive__item {
   cursor: pointer;
-  border-radius: .375rem;
+  border-radius: .3rem;
   grid-area: span 1 / span 1;
   position: relative;
   overflow: hidden;
@@ -33,7 +35,7 @@
 }
 
 .archive__thumbnail {
-  transition: transform var(--duration-slow) var(--ease-out);
+  transition: transform var(--duration-slow) var(--ease-out), filter var(--duration-slowest) var(--ease-out);
   background-position: center;
   background-size: cover;
   position: absolute;
@@ -61,15 +63,13 @@
 }
 
 .archive__item:hover .archive__thumbnail {
-  transform: scale(1.03);
+  filter: blur(15px);
+  transform: scale(1.05);
 }
 
-.archive__item-overlay {
-  opacity: 0;
-  transition: opacity var(--duration-normal) var(--ease-out);
-  background: linear-gradient(to top, #00000080 0%, #0000 50%);
-  position: absolute;
-  inset: 0;
+.archive__item--transitioning .archive__thumbnail {
+  filter: blur(40px);
+  transform: scale(1.1);
 }
 
 .archive__item:hover .archive__item-overlay {
@@ -77,9 +77,12 @@
 }
 
 .archive__item-info {
-  padding: var(--space-4);
+  gap: var(--space-3);
+  padding: var(--gutter);
   opacity: 0;
   transition: opacity var(--duration-normal) var(--ease-out), transform var(--duration-normal) var(--ease-out);
+  flex-direction: row;
+  display: flex;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -90,6 +93,12 @@
 .archive__item:hover .archive__item-info {
   opacity: 1;
   transform: translateY(0);
+}
+
+.archive__item-number {
+  color: var(--color-white);
+  margin-bottom: var(--space-2);
+  display: block;
 }
 
 .archive__item-title {

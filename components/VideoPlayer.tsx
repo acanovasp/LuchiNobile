@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Player from '@vimeo/player'
-import Link from 'next/link'
+import TransitionLink from './TransitionLink'
 import type { Project } from '@/lib/queries'
 
 interface VideoPlayerProps {
@@ -190,7 +190,19 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
   const handleClose = useCallback(() => {
     // Set flag to skip splash screen when returning to homepage
     sessionStorage.setItem('skipSplash', 'true')
-    router.push('/')
+    
+    // Add fade-out class to transition overlay
+    const overlay = document.querySelector('.page-transition')
+    if (overlay) {
+      overlay.classList.add('page-transition--visible')
+      
+      // Navigate after fade-out completes (800ms)
+      setTimeout(() => {
+        router.push('/')
+      }, 800)
+    } else {
+      router.push('/')
+    }
   }, [router])
 
   return (
@@ -210,13 +222,13 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
 
         {/* Header */}
         <div className="video-player__header">
-          <Link 
+          <TransitionLink 
             href="/" 
             className="video-player__logo"
             onClick={() => sessionStorage.setItem('skipSplash', 'true')}
           >
             Luchi Nóbile
-          </Link>
+          </TransitionLink>
         </div>
 
         {/* Controls */}

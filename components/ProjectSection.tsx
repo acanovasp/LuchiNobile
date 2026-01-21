@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import TransitionLink from './TransitionLink'
 import LocalVideoBackground from './LocalVideoBackground'
 import type { Project } from '@/lib/queries'
 
@@ -24,9 +24,14 @@ export default function ProjectSection({
       data-section-index={index}
       data-project-slug={project.slug.current}
     >
-      <Link href={`/project/${project.slug.current}`} onClick={handleClick}>
+      <TransitionLink 
+        href={`/project/${project.slug.current}`} 
+        onClick={handleClick}
+        blurTarget=".project-section"
+        blurClass="project-section--transitioning"
+      >
         <LocalVideoBackground videoUrl={project.previewVideoUrl} />
-      </Link>
+      </TransitionLink>
     </section>
   )
 }

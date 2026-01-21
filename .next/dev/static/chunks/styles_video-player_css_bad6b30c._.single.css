@@ -68,7 +68,6 @@
 .video-player__info {
   gap: var(--gutter);
   flex-direction: row;
-  min-width: 200px;
   display: flex;
 }
 
@@ -160,11 +159,11 @@
 }
 
 .video-player__header {
-  z-index: 20;
+  z-index: var(--z-header-above-transition);
   padding: var(--gutter);
   opacity: 0;
   transition: opacity var(--duration-normal) var(--ease-out);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);

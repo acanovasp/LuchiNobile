@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import PageTransition from '@/components/PageTransition'
 import '@/styles/fonts.css'
 import '@/styles/globals.css'
 import '@/styles/splash.css'
@@ -31,6 +32,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <PageTransition />
       </body>
     </html>
   )

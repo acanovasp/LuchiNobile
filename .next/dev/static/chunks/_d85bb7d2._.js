@@ -804,9 +804,10 @@ function ArchiveGrid({ projects }) {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             ref: gridRef,
             className: "archive__grid",
-            children: projects.map((project)=>{
+            children: projects.map((project, index)=>{
                 const isVisible = visibleItems.has(project._id);
                 const isLarge = project.archiveSize === 'large';
+                const projectNumber = String(index + 1).padStart(2, '0');
                 // Get thumbnail URL from Sanity
                 const thumbnailUrl = project.thumbnail ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$sanity$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["urlFor"])(project.thumbnail).width(800).height(450).url() : null;
                 const handleClick = ()=>{
@@ -831,7 +832,7 @@ function ArchiveGrid({ projects }) {
                                 className: "archive__video"
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 79,
+                                lineNumber: 80,
                                 columnNumber: 21
                             }, this) : thumbnailUrl ? // Small items show thumbnail image
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -844,57 +845,74 @@ function ArchiveGrid({ projects }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 89,
+                                lineNumber: 90,
                                 columnNumber: 21
                             }, this) : // Fallback placeholder
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "archive__placeholder"
                             }, void 0, false, {
                                 fileName: "[project]/components/ArchiveGrid.tsx",
-                                lineNumber: 98,
+                                lineNumber: 99,
                                 columnNumber: 21
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 76,
+                            lineNumber: 77,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "archive__item-overlay"
                         }, void 0, false, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 102,
+                            lineNumber: 103,
                             columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "archive__item-info",
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                    className: "archive__item-title",
-                                    children: project.title
-                                }, void 0, false, {
-                                    fileName: "[project]/components/ArchiveGrid.tsx",
-                                    lineNumber: 104,
-                                    columnNumber: 17
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "archive__item-client",
-                                    children: project.client
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "archive__item-number",
+                                    children: projectNumber
                                 }, void 0, false, {
                                     fileName: "[project]/components/ArchiveGrid.tsx",
                                     lineNumber: 105,
+                                    columnNumber: 17
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "archive__item-info-container",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                            className: "archive__item-title",
+                                            children: project.title
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/ArchiveGrid.tsx",
+                                            lineNumber: 107,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "archive__item-client",
+                                            children: project.client
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/ArchiveGrid.tsx",
+                                            lineNumber: 108,
+                                            columnNumber: 19
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/ArchiveGrid.tsx",
+                                    lineNumber: 106,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ArchiveGrid.tsx",
-                            lineNumber: 103,
+                            lineNumber: 104,
                             columnNumber: 15
                         }, this)
                     ]
                 }, project._id, true, {
                     fileName: "[project]/components/ArchiveGrid.tsx",
-                    lineNumber: 68,
+                    lineNumber: 69,
                     columnNumber: 13
                 }, this);
             })

@@ -25,3 +25,173 @@
 [00:16:34.991] Server  LOG     ✓ Compiled in 15ms
 [00:16:46.294] Server  LOG     ✓ Compiled in 17ms
 [00:17:06.035] Server  LOG     ✓ Compiled in 19ms
+[00:23:29.229] Server  LOG     ✓ Compiled in 29ms
+[00:27:34.466] Browser ERROR   {}
+[00:32:09.155] Server  LOG     ✓ Compiled in 34ms
+[00:34:55.290] Server  LOG     ✓ Compiled in 185ms
+[00:35:06.087] Server  LOG     ✓ Compiled in 23ms
+[00:36:28.095] Server  LOG     ✓ Compiled in 20ms
+[00:36:28.206] Server  LOG     ✓ Compiled in 10ms
+[00:37:28.401] Server  LOG     ✓ Compiled in 184ms
+[00:37:29.951] Server  LOG     ✓ Compiled in 28ms
+[00:37:34.270] Server  LOG     ✓ Compiled in 19ms
+[00:37:36.212] Server  LOG     ✓ Compiled in 18ms
+[00:40:04.581] Server  LOG     ✓ Compiled in 18ms
+[00:40:30.678] Server  LOG     ✓ Compiled in 14ms
+[00:41:22.798] Server  LOG     ✓ Compiled in 16ms
+[00:41:30.487] Server  LOG     ✓ Compiled in 16ms
+[00:41:44.906] Server  LOG     ✓ Compiled in 14ms
+[00:42:01.315] Server  LOG     ✓ Compiled in 19ms
+[00:42:15.129] Server  LOG     ✓ Compiled in 17ms
+[00:42:34.696] Server  LOG     ✓ Compiled in 15ms
+[00:42:40.554] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[00:44:09.641] Server  LOG     ✓ Compiled in 13ms
+[00:44:31.230] Server  LOG     ✓ Compiled in 15ms
+[00:44:39.953] Server  LOG     ✓ Compiled in 14ms
+[00:44:55.974] Server  LOG     ✓ Compiled in 15ms
+[00:45:14.191] Server  LOG     ✓ Compiled in 16ms
+[00:45:31.260] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[00:45:31.260] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[00:45:55.675] Server  LOG     ✓ Compiled in 14ms
+[00:46:07.840] Server  LOG     ✓ Compiled in 15ms
+[00:46:57.992] Server  LOG     ✓ Compiled in 41ms
+[00:47:18.245] Server  LOG     ✓ Compiled in 13ms
+[00:47:46.888] Server  LOG     ✓ Compiled in 14ms
+[00:47:53.598] Server  LOG     ✓ Compiled in 12ms
+[00:48:31.673] Server  LOG     ✓ Compiled in 19ms
+[00:48:37.720] Server  LOG     ✓ Compiled in 14ms
+[00:48:43.364] Server  LOG     ✓ Compiled in 14ms
+[00:49:17.268] Server  LOG     ✓ Compiled in 12ms
+[00:49:46.611] Server  LOG     ✓ Compiled in 11ms
+[00:49:51.518] Server  LOG     ✓ Compiled in 11ms
+[00:49:56.306] Server  LOG     ✓ Compiled in 15ms
+[00:50:17.241] Server  LOG     ✓ Compiled in 13ms
+[00:50:48.809] Server  LOG     ✓ Compiled in 16ms
+[00:50:55.986] Server  LOG     ✓ Compiled in 16ms
+[00:55:16.429] Server  LOG     ✓ Compiled in 28ms
+[00:55:19.560] Server  LOG     ✓ Compiled in 51ms
+[00:55:29.124] Server  LOG     ✓ Compiled in 334ms
+[00:55:38.774] Server  LOG     ✓ Compiled in 13ms
+[00:55:45.059] Server  LOG     ✓ Compiled in 84ms
+[00:55:50.038] Server  LOG     ✓ Compiled in 10ms
+[00:56:05.030] Server  LOG     ✓ Compiled in 15ms
+[00:56:30.516] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[00:56:30.516] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[00:56:36.531] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[00:56:36.531] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[00:56:44.009] Server  LOG     ✓ Compiled in 18ms
+[00:56:44.109] Server  LOG     ✓ Compiled in 70ms
+[00:58:00.210] Server  LOG     ✓ Compiled in 18ms
+[00:58:09.107] Server  LOG     ✓ Compiled in 136ms
+[00:58:17.492] Server  LOG     ✓ Compiled in 32ms
+[00:58:19.139] Server  LOG     ✓ Compiled in 41ms
+[00:58:19.228] Browser ERROR   uncaughtError: ReferenceError: Link is not defined
+[00:58:25.396] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:58:25.424] Server  LOG     ✓ Compiled in 32ms
+[00:58:25.772] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[00:58:25.895] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:58:25.997] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[00:58:41.264] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[00:58:41.264] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[00:58:45.311] Server  LOG     ✓ Compiled in 14ms
+[00:59:06.143] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[00:59:06.143] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:00:01.711] Server  LOG     ✓ Compiled in 13ms
+[01:00:14.881] Server  LOG     ✓ Compiled in 22ms
+[01:00:41.614] Server  LOG     ✓ Compiled in 13ms
+[01:00:58.437] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:00:58.437] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:02:36.006] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:02:36.111] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:02:41.206] Server  LOG     ✓ Compiled in 16ms
+[01:02:48.207] Server  LOG     ✓ Compiled in 15ms
+[01:02:50.244] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:02:50.392] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:02:50.495] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:02:59.422] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:03:00.976] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:03:01.092] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:03:01.113] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:03:26.604] Browser WARN    Building schema for synchronization took more than 1 second (14758ms)
+[01:03:38.096] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:03:38.096] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:06:54.040] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:06:54.040] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:07:06.305] Server  LOG     ✓ Compiled in 19ms
+[01:07:08.363] Server  LOG     ✓ Compiled in 9ms
+[01:07:09.059] Server  LOG     ✓ Compiled in 21ms
+[01:07:17.823] Server  LOG     ✓ Compiled in 16ms
+[01:07:29.052] Server  LOG     ✓ Compiled in 23ms
+[01:07:40.889] Server  LOG     ✓ Compiled in 21ms
+[01:07:46.054] Server  LOG     ✓ Compiled in 51ms
+[01:08:00.585] Server  LOG     ✓ Compiled in 11ms
+[01:08:09.573] Server  LOG     ✓ Compiled in 24ms
+[01:08:16.542] Server  LOG     ✓ Compiled in 3ms
+[01:08:26.470] Server  LOG     ✓ Compiled in 7ms
+[01:08:27.661] Server  LOG     ✓ Compiled in 15ms
+[01:08:29.944] Server  LOG     ✓ Compiled in 3ms
+[01:08:35.454] Server  LOG     ✓ Compiled in 19ms
+[01:09:36.845] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:09:36.845] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:09:42.500] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:09:42.500] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:09:47.333] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:09:47.333] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:11:57.308] Browser ERROR   {}
+[01:11:57.308] Browser ERROR   {}
+[01:11:57.308] Browser ERROR   {}
+[01:11:57.308] Browser ERROR   {}
+[01:12:23.740] Server  LOG     ✓ Compiled in 30ms
+[01:12:26.760] Server  LOG     ✓ Compiled in 14ms
+[01:12:28.751] Server  LOG     ✓ Compiled in 22ms
+[01:12:53.722] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:12:53.723] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:13:03.938] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:13:03.938] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:13:28.252] Server  LOG     ✓ Compiled in 22ms
+[01:13:32.776] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:13:32.777] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:13:38.017] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:13:38.017] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:13:43.443] Server  LOG     ✓ Compiled in 11ms
+[01:13:47.200] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:13:47.200] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:14:12.365] Server  LOG     ✓ Compiled in 19ms
+[01:14:30.369] Server  LOG     ✓ Compiled in 12ms
+[01:14:36.268] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:14:36.268] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:14:44.608] Server  LOG     ✓ Compiled in 13ms
+[01:14:47.752] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:14:47.752] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:14:52.848] Server  LOG     ✓ Compiled in 10ms
+[01:14:56.533] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:14:56.533] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:16:10.915] Server  LOG     ✓ Compiled in 18ms
+[01:16:15.433] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:16:15.433] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:16:36.817] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:16:36.817] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:16:42.570] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[01:16:42.570] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[01:18:58.259] Server  LOG     ✓ Compiled in 19ms
+[01:19:13.596] Server  LOG     ✓ Compiled in 21ms
+[01:20:32.157] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:20:33.803] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:20:45.061] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:20:57.020] Server  LOG     ✓ Compiled in 147ms
+[01:21:00.897] Server  LOG     ✓ Compiled in 33ms
+[01:21:31.445] Server  LOG     ✓ Compiled in 31ms
+[01:21:31.532] Server  LOG     ✓ Compiled in 42ms
+[01:21:31.779] Server  LOG     ✓ Compiled in 195ms
+[01:21:35.629] Server  WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:21:36.886] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:23:24.642] Server  LOG     ✓ Compiled in 27ms
+[01:23:58.409] Server  LOG     ✓ Compiled in 12ms
+[01:24:00.797] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:24:04.149] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:24:08.428] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:24:35.008] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:24:35.111] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:24:43.907] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:24:44.016] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+[01:25:46.991] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
