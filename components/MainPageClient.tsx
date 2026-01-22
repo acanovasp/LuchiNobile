@@ -17,7 +17,7 @@ interface MainPageClientProps {
 
 interface MainPageContentProps extends MainPageClientProps {
   isAboutVisible: boolean
-  setIsAboutVisible: (visible: boolean) => void
+  setIsAboutVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function MainPageContent({
