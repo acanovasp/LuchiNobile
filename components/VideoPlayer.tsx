@@ -51,6 +51,28 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
   const [controlsVisible, setControlsVisible] = useState(true)
+  const [isVideoReady, setIsVideoReady] = useState(false)
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null)
+
+  // Fetch Vimeo thumbnail immediately on mount
+  useEffect(() => {
+    if (!project.fullVimeoId) return
+
+    fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${project.fullVimeoId}&width=1920`)
+      .then(res => res.json())
+      .then(data => {
+        if (isMountedRef.current && data.thumbnail_url) {
+          // Get higher resolution thumbnail by modifying the URL
+          const highResThumbnail = data.thumbnail_url
+            .replace(/_\d+x\d+/, '_1920x1080')
+            .replace(/\?.*$/, '') // Remove query params for cleaner URL
+          setThumbnailUrl(highResThumbnail)
+        }
+      })
+      .catch(() => {
+        // Failed to fetch thumbnail, video will show when ready
+      })
+  }, [project.fullVimeoId])
 
   // Initialize Vimeo player
   useEffect(() => {
@@ -105,6 +127,13 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
           }
         }
 
+        // Mark video as ready when it starts playing (hide thumbnail)
+        player.on('playing', () => {
+          if (isMountedRef.current) {
+            setIsVideoReady(true)
+            setIsPlaying(true)
+          }
+        })
         player.on('play', () => {
           if (isMountedRef.current) setIsPlaying(true)
         })
@@ -112,7 +141,11 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
           if (isMountedRef.current) setIsPlaying(false)
         })
         player.on('ended', () => {
-          if (isMountedRef.current) setIsPlaying(false)
+          if (isMountedRef.current && playerRef.current) {
+            setIsPlaying(false)
+            // Fallback: seek back to beginning if preemptive check missed
+            playerRef.current.setCurrentTime(0).catch(() => {})
+          }
         })
         player.on('volumechange', (data) => {
           if (isMountedRef.current) setIsMuted(data.volume === 0)
@@ -125,6 +158,7 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
         if (isMountedRef.current) setIsMuted(muted)
 
         // Smooth progress updates using requestAnimationFrame
+        let hasReachedEnd = false // Prevent multiple triggers
         const updateProgress = async () => {
           if (!isMountedRef.current || !playerRef.current) return
           
@@ -133,6 +167,21 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
             const currentDur = await playerRef.current.getDuration()
             if (isMountedRef.current && currentDur > 0) {
               setProgress((currentTime / currentDur) * 100)
+              
+              // Preemptively jump to beginning when very close to end
+              // This prevents Vimeo's end screen from ever appearing
+              const timeRemaining = currentDur - currentTime
+              if (timeRemaining < 0.5 && timeRemaining > 0 && !hasReachedEnd) {
+                hasReachedEnd = true
+                await playerRef.current.pause()
+                await playerRef.current.setCurrentTime(0)
+                if (isMountedRef.current) {
+                  setIsPlaying(false)
+                  setProgress(0)
+                }
+                // Reset flag after a short delay to allow replaying
+                setTimeout(() => { hasReachedEnd = false }, 1000)
+              }
             }
           } catch {
             // Player was destroyed, stop the loop
@@ -166,11 +215,9 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
 
   // Handle resize events to recalculate video dimensions
   useEffect(() => {
-    const container = playerContainerRef.current
-    if (!container) return
-
     const handleResize = () => {
-      if (!isMountedRef.current) return
+      const container = playerContainerRef.current
+      if (!isMountedRef.current || !container) return
 
       const iframe = container.querySelector('iframe')
       if (!iframe) return
@@ -336,6 +383,14 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
       <div
         className={`video-player ${controlsVisible ? 'video-player--controls-visible' : ''}`}
       >
+        {/* Thumbnail placeholder - shows while Vimeo loads */}
+        {thumbnailUrl && (
+          <div 
+            className={`video-player__poster ${isVideoReady ? 'video-player__poster--hidden' : ''}`}
+            style={{ backgroundImage: `url(${thumbnailUrl})` }}
+          />
+        )}
+
         {/* Video Container */}
         <div ref={playerContainerRef} className="video-player__container" />
         

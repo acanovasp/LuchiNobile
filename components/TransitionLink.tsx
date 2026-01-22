@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ReactNode, MouseEvent, HTMLAttributes } from 'react'
+import { ReactNode, MouseEvent, HTMLAttributes, useCallback } from 'react'
 
 interface TransitionLinkProps extends Omit<HTMLAttributes<HTMLAnchorElement>, 'onClick'> {
   href: string
@@ -26,6 +26,11 @@ export default function TransitionLink({
   ...props
 }: TransitionLinkProps) {
   const router = useRouter()
+
+  // Prefetch page on hover for faster navigation
+  const handleMouseEnter = useCallback(() => {
+    router.prefetch(href)
+  }, [router, href])
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
@@ -64,7 +69,14 @@ export default function TransitionLink({
   }
 
   return (
-    <Link href={href} className={className} onClick={handleClick} {...props}>
+    <Link 
+      href={href} 
+      className={className} 
+      onClick={handleClick} 
+      onMouseEnter={handleMouseEnter}
+      prefetch={true}
+      {...props}
+    >
       {children}
     </Link>
   )

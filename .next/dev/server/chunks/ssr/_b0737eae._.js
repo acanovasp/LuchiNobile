@@ -50,6 +50,24 @@ function VideoPlayer({ project }) {
     const [progress, setProgress] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const [duration, setDuration] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const [controlsVisible, setControlsVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [isVideoReady, setIsVideoReady] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [thumbnailUrl, setThumbnailUrl] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    // Fetch Vimeo thumbnail immediately on mount
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (!project.fullVimeoId) return;
+        fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${project.fullVimeoId}&width=1920`).then((res)=>res.json()).then((data)=>{
+            if (isMountedRef.current && data.thumbnail_url) {
+                // Get higher resolution thumbnail by modifying the URL
+                const highResThumbnail = data.thumbnail_url.replace(/_\d+x\d+/, '_1920x1080').replace(/\?.*$/, '') // Remove query params for cleaner URL
+                ;
+                setThumbnailUrl(highResThumbnail);
+            }
+        }).catch(()=>{
+        // Failed to fetch thumbnail, video will show when ready
+        });
+    }, [
+        project.fullVimeoId
+    ]);
     // Initialize Vimeo player
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const container = playerContainerRef.current;
@@ -93,6 +111,13 @@ function VideoPlayer({ project }) {
                         container.style.setProperty('--video-aspect-ratio', String(videoAspect));
                     }
                 }
+                // Mark video as ready when it starts playing (hide thumbnail)
+                player.on('playing', ()=>{
+                    if (isMountedRef.current) {
+                        setIsVideoReady(true);
+                        setIsPlaying(true);
+                    }
+                });
                 player.on('play', ()=>{
                     if (isMountedRef.current) setIsPlaying(true);
                 });
@@ -100,7 +125,11 @@ function VideoPlayer({ project }) {
                     if (isMountedRef.current) setIsPlaying(false);
                 });
                 player.on('ended', ()=>{
-                    if (isMountedRef.current) setIsPlaying(false);
+                    if (isMountedRef.current && playerRef.current) {
+                        setIsPlaying(false);
+                        // Fallback: seek back to beginning if preemptive check missed
+                        playerRef.current.setCurrentTime(0).catch(()=>{});
+                    }
                 });
                 player.on('volumechange', (data)=>{
                     if (isMountedRef.current) setIsMuted(data.volume === 0);
@@ -110,6 +139,8 @@ function VideoPlayer({ project }) {
                 const muted = await player.getMuted();
                 if (isMountedRef.current) setIsMuted(muted);
                 // Smooth progress updates using requestAnimationFrame
+                let hasReachedEnd = false // Prevent multiple triggers
+                ;
                 const updateProgress = async ()=>{
                     if (!isMountedRef.current || !playerRef.current) return;
                     try {
@@ -117,6 +148,22 @@ function VideoPlayer({ project }) {
                         const currentDur = await playerRef.current.getDuration();
                         if (isMountedRef.current && currentDur > 0) {
                             setProgress(currentTime / currentDur * 100);
+                            // Preemptively jump to beginning when very close to end
+                            // This prevents Vimeo's end screen from ever appearing
+                            const timeRemaining = currentDur - currentTime;
+                            if (timeRemaining < 0.5 && timeRemaining > 0 && !hasReachedEnd) {
+                                hasReachedEnd = true;
+                                await playerRef.current.pause();
+                                await playerRef.current.setCurrentTime(0);
+                                if (isMountedRef.current) {
+                                    setIsPlaying(false);
+                                    setProgress(0);
+                                }
+                                // Reset flag after a short delay to allow replaying
+                                setTimeout(()=>{
+                                    hasReachedEnd = false;
+                                }, 1000);
+                            }
                         }
                     } catch  {
                         // Player was destroyed, stop the loop
@@ -147,10 +194,9 @@ function VideoPlayer({ project }) {
     ]);
     // Handle resize events to recalculate video dimensions
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        const container = playerContainerRef.current;
-        if (!container) return;
         const handleResize = ()=>{
-            if (!isMountedRef.current) return;
+            const container = playerContainerRef.current;
+            if (!isMountedRef.current || !container) return;
             const iframe = container.querySelector('iframe');
             if (!iframe) return;
             if (!isMobileDevice()) {
@@ -283,12 +329,22 @@ function VideoPlayer({ project }) {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: `video-player ${controlsVisible ? 'video-player--controls-visible' : ''}`,
             children: [
+                thumbnailUrl && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: `video-player__poster ${isVideoReady ? 'video-player__poster--hidden' : ''}`,
+                    style: {
+                        backgroundImage: `url(${thumbnailUrl})`
+                    }
+                }, void 0, false, {
+                    fileName: "[project]/components/VideoPlayer.tsx",
+                    lineNumber: 388,
+                    columnNumber: 11
+                }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     ref: playerContainerRef,
                     className: "video-player__container"
                 }, void 0, false, {
                     fileName: "[project]/components/VideoPlayer.tsx",
-                    lineNumber: 340,
+                    lineNumber: 395,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -297,7 +353,7 @@ function VideoPlayer({ project }) {
                     "aria-label": isPlaying ? 'Pause video' : 'Play video'
                 }, void 0, false, {
                     fileName: "[project]/components/VideoPlayer.tsx",
-                    lineNumber: 343,
+                    lineNumber: 398,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -316,7 +372,7 @@ function VideoPlayer({ project }) {
                                                 children: String(project.order || 1).padStart(2, '0')
                                             }, void 0, false, {
                                                 fileName: "[project]/components/VideoPlayer.tsx",
-                                                lineNumber: 356,
+                                                lineNumber: 411,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -327,7 +383,7 @@ function VideoPlayer({ project }) {
                                                         children: project.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/VideoPlayer.tsx",
-                                                        lineNumber: 360,
+                                                        lineNumber: 415,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -335,19 +391,19 @@ function VideoPlayer({ project }) {
                                                         children: project.client
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/VideoPlayer.tsx",
-                                                        lineNumber: 361,
+                                                        lineNumber: 416,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/VideoPlayer.tsx",
-                                                lineNumber: 359,
+                                                lineNumber: 414,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/VideoPlayer.tsx",
-                                        lineNumber: 354,
+                                        lineNumber: 409,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -359,7 +415,7 @@ function VideoPlayer({ project }) {
                                                 children: isPlaying ? 'Pause' : 'Play'
                                             }, void 0, false, {
                                                 fileName: "[project]/components/VideoPlayer.tsx",
-                                                lineNumber: 367,
+                                                lineNumber: 422,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -368,7 +424,7 @@ function VideoPlayer({ project }) {
                                                 children: isMuted ? 'Unmute' : 'Mute'
                                             }, void 0, false, {
                                                 fileName: "[project]/components/VideoPlayer.tsx",
-                                                lineNumber: 373,
+                                                lineNumber: 428,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -377,19 +433,19 @@ function VideoPlayer({ project }) {
                                                 children: "FS"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/VideoPlayer.tsx",
-                                                lineNumber: 379,
+                                                lineNumber: 434,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/VideoPlayer.tsx",
-                                        lineNumber: 366,
+                                        lineNumber: 421,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/VideoPlayer.tsx",
-                                lineNumber: 352,
+                                lineNumber: 407,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -398,18 +454,18 @@ function VideoPlayer({ project }) {
                                 children: "Close"
                             }, void 0, false, {
                                 fileName: "[project]/components/VideoPlayer.tsx",
-                                lineNumber: 388,
+                                lineNumber: 443,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/VideoPlayer.tsx",
-                        lineNumber: 351,
+                        lineNumber: 406,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/VideoPlayer.tsx",
-                    lineNumber: 350,
+                    lineNumber: 405,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -424,28 +480,28 @@ function VideoPlayer({ project }) {
                             }
                         }, void 0, false, {
                             fileName: "[project]/components/VideoPlayer.tsx",
-                            lineNumber: 400,
+                            lineNumber: 455,
                             columnNumber: 17
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/VideoPlayer.tsx",
-                        lineNumber: 396,
+                        lineNumber: 451,
                         columnNumber: 15
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/VideoPlayer.tsx",
-                    lineNumber: 395,
+                    lineNumber: 450,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/VideoPlayer.tsx",
-            lineNumber: 336,
+            lineNumber: 383,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/VideoPlayer.tsx",
-        lineNumber: 335,
+        lineNumber: 382,
         columnNumber: 5
     }, this);
 }

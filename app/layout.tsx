@@ -24,11 +24,19 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <link rel="preconnect" href="https://player.vimeo.com" />
-        <link rel="preconnect" href="https://i.vimeocdn.com" />
-        <link rel="preconnect" href="https://f.vimeocdn.com" />
+        {/* Preload Vimeo Player SDK for faster initialization */}
+        <link rel="preload" href="https://player.vimeo.com/api/player.js" as="script" crossOrigin="anonymous" />
+        
+        {/* Preconnect to Vimeo domains for faster video loading */}
+        <link rel="preconnect" href="https://player.vimeo.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://i.vimeocdn.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://f.vimeocdn.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://vod-progressive.akamaized.net" crossOrigin="anonymous" />
+        
+        {/* DNS prefetch as fallback for older browsers */}
         <link rel="dns-prefetch" href="https://player.vimeo.com" />
         <link rel="dns-prefetch" href="https://i.vimeocdn.com" />
+        <link rel="dns-prefetch" href="https://vod-progressive.akamaized.net" />
       </head>
       <body>
         {children}

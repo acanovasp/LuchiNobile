@@ -28,6 +28,22 @@
   /* Dimensions are set dynamically via JS based on video aspect ratio */
 }
 
+/* Thumbnail placeholder - shows while Vimeo loads */
+.video-player__poster {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.video-player__poster--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Clickable overlay for play/pause */
 .video-player__click-area {
   position: absolute;

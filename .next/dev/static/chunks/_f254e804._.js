@@ -290,9 +290,11 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
+;
 ;
 ;
 // Duration must match CSS --duration-slower (800ms)
@@ -302,6 +304,15 @@ const BLUR_DELAY = 150 // Delay before black overlay starts (lets blur be visibl
 function TransitionLink({ href, children, className, onClick, blurTarget, blurClass, ...props }) {
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    // Prefetch page on hover for faster navigation
+    const handleMouseEnter = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "TransitionLink.useCallback[handleMouseEnter]": ()=>{
+            router.prefetch(href);
+        }
+    }["TransitionLink.useCallback[handleMouseEnter]"], [
+        router,
+        href
+    ]);
     const handleClick = (e)=>{
         e.preventDefault();
         // Call any additional onClick handler
@@ -336,15 +347,17 @@ function TransitionLink({ href, children, className, onClick, blurTarget, blurCl
         href: href,
         className: className,
         onClick: handleClick,
+        onMouseEnter: handleMouseEnter,
+        prefetch: true,
         ...props,
         children: children
     }, void 0, false, {
         fileName: "[project]/components/TransitionLink.tsx",
-        lineNumber: 67,
+        lineNumber: 72,
         columnNumber: 5
     }, this);
 }
-_s(TransitionLink, "fN7XvhJ+p5oE6+Xlo0NJmXpxjC8=", false, function() {
+_s(TransitionLink, "luWVn20k8Z7eJk8wqj/+iGjgTMU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
