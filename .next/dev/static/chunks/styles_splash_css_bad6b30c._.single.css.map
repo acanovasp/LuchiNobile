@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/styles/splash.css"],"sourcesContent":["/* Splash Screen Styles */\n.splash {\n  position: fixed;\n  inset: 0;\n  z-index: var(--z-splash);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  \n  /* 10% black background so blur effect is visible */\n  background-color: rgba(0, 0, 0, 0.1);\n  -webkit-backdrop-filter: blur(30px);\n  backdrop-filter: blur(30px);\n  \n  /* Background fade transition (1.2s) */\n  opacity: 1;\n  transition: opacity 1200ms var(--ease-out),\n              backdrop-filter 1200ms var(--ease-out),\n              -webkit-backdrop-filter 1200ms var(--ease-out);\n}\n\n.splash--fading {\n  opacity: 0;\n  backdrop-filter: blur(0px);\n  -webkit-backdrop-filter: blur(0px);\n}\n\n.splash__logo {\n  font-size: 1rem;\n  color: var(--color-text);\n  white-space: nowrap;\n  min-height: 1.2em;\n  \n  /* Logo fade transition (0.8s) */\n  opacity: 1;\n  transition: opacity 800ms var(--ease-out);\n}\n\n.splash__logo--fading {\n  opacity: 0;\n}\n\n"],"names":[],"mappings":"AACA;;;;;;;;;;;;;;AAoBA;;;;;AAMA;;;;;;;;;AAWA"}}]
-}

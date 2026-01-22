@@ -2,6 +2,9 @@ import { getProjectBySlug, getAllProjects } from '@/lib/queries'
 import { notFound } from 'next/navigation'
 import VideoPlayer from '@/components/VideoPlayer'
 
+// Sample video URL for fallback
+const sampleVideoUrl = 'https://videos.pexels.com/video-files/5752729/5752729-hd_1920_1080_30fps.mp4'
+
 // Default projects for when Sanity is not configured
 const defaultProjects = [
   {
@@ -11,7 +14,8 @@ const defaultProjects = [
     slug: { current: 'hands-that-make-champions' },
     order: 1,
     isFeatured: true,
-    previewVimeoId: '824804225',
+    previewVideoUrl: sampleVideoUrl,
+    archiveSize: 'large' as const,
     fullVimeoId: '824804225',
     thumbnail: null as unknown as { asset: { _ref: string } },
   },
@@ -22,7 +26,8 @@ const defaultProjects = [
     slug: { current: 'el-mon-ens-mira' },
     order: 2,
     isFeatured: true,
-    previewVimeoId: '1086761824',
+    previewVideoUrl: sampleVideoUrl,
+    archiveSize: 'small' as const,
     fullVimeoId: '1086761824',
     thumbnail: null as unknown as { asset: { _ref: string } },
   },
@@ -33,7 +38,8 @@ const defaultProjects = [
     slug: { current: 'a-new-way-to-win' },
     order: 3,
     isFeatured: true,
-    previewVimeoId: '824804225',
+    previewVideoUrl: sampleVideoUrl,
+    archiveSize: 'small' as const,
     fullVimeoId: '824804225',
     thumbnail: null as unknown as { asset: { _ref: string } },
   },
@@ -44,7 +50,8 @@ const defaultProjects = [
     slug: { current: 'i-embrace-who-i-am' },
     order: 4,
     isFeatured: true,
-    previewVimeoId: '824804225',
+    previewVideoUrl: sampleVideoUrl,
+    archiveSize: 'large' as const,
     fullVimeoId: '824804225',
     thumbnail: null as unknown as { asset: { _ref: string } },
   },
@@ -55,7 +62,8 @@ const defaultProjects = [
     slug: { current: 'dani-is-calling' },
     order: 5,
     isFeatured: true,
-    previewVimeoId: '824804225',
+    previewVideoUrl: sampleVideoUrl,
+    archiveSize: 'small' as const,
     fullVimeoId: '824804225',
     thumbnail: null as unknown as { asset: { _ref: string } },
   },
