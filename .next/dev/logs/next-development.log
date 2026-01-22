@@ -9,3 +9,8 @@
 [00:01:09.389] Browser WARN    The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
 [00:03:56.257] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
 [00:03:56.257] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.
+[00:21:07.971] Server  LOG     ✓ Compiled in 44ms
+[00:21:19.347] Server  LOG     ✓ Compiled in 22ms
+[00:21:56.480] Server  LOG     ✓ Compiled in 56ms
+[00:27:50.888] Browser ERROR   There was an error getting video Id: Error: Unknown player. Probably unloaded.
+[00:27:50.888] Browser ERROR   unhandledRejection: Error: Unknown player. Probably unloaded.

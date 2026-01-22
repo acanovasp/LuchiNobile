@@ -15,6 +15,17 @@
 .video-player__container {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+}
+
+/* Desktop: Cover behavior - target Vimeo-generated iframe */
+.video-player__container iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  /* Dimensions are set dynamically via JS based on video aspect ratio */
 }
 
 /* Clickable overlay for play/pause */
@@ -23,18 +34,6 @@
   inset: 0;
   z-index: 5;
   cursor: pointer;
-}
-
-.video-player__iframe {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 177.78vh;
-  height: 100vh;
-  min-width: 100vw;
-  min-height: 56.25vw;
-  transform: translate(-50%, -50%);
-  border: none;
 }
 
 /* Controls Overlay */
@@ -176,6 +175,23 @@
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+  /* Mobile: Contained behavior - video fits within viewport */
+  .video-player__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-player__container iframe {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: var(--video-aspect-ratio, 16/9);
+  }
+
   .video-player__controls {
     padding: var(--space-6) var(--space-5);
   }

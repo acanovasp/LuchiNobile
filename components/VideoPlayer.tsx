@@ -9,11 +9,42 @@ interface VideoPlayerProps {
   project: Project
 }
 
+// Helper to check if device is mobile
+const isMobileDevice = () => {
+  if (typeof window === 'undefined') return false
+  return window.innerWidth <= 768 || 'ontouchstart' in window
+}
+
+// Helper to apply cover sizing for desktop
+const applyCoverSizing = (
+  iframe: HTMLIFrameElement,
+  videoAspect: number,
+  container: HTMLElement
+) => {
+  const viewportWidth = window.innerWidth
+  const viewportHeight = window.innerHeight
+  const viewportAspect = viewportWidth / viewportHeight
+
+  if (videoAspect > viewportAspect) {
+    // Video is wider than viewport - fit height, overflow width
+    iframe.style.height = '100vh'
+    iframe.style.width = `${(videoAspect / viewportAspect) * 100}vh`
+  } else {
+    // Video is taller than viewport - fit width, overflow height
+    iframe.style.width = '100vw'
+    iframe.style.height = `${(viewportAspect / videoAspect) * 100}vw`
+  }
+
+  // Set CSS variable for mobile aspect ratio
+  container.style.setProperty('--video-aspect-ratio', String(videoAspect))
+}
+
 export default function VideoPlayer({ project }: VideoPlayerProps) {
   const router = useRouter()
   const playerContainerRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<Player | null>(null)
   const isMountedRef = useRef(true)
+  const videoAspectRef = useRef<number>(16 / 9) // Default to 16:9
   
   const [isPlaying, setIsPlaying] = useState(true)
   const [isMuted, setIsMuted] = useState(false)
@@ -34,13 +65,11 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
       try {
         player = new Player(container, {
           id: parseInt(project.fullVimeoId, 10),
-          width: window.innerWidth,
-          height: window.innerHeight,
           autoplay: true,
           muted: false,
           loop: false,
           controls: false,
-          responsive: true,
+          responsive: false, // Disable to control sizing manually
         })
 
         // Wait for player to be ready
@@ -52,6 +81,29 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
         }
 
         playerRef.current = player
+
+        // Get video dimensions and apply sizing
+        const [videoWidth, videoHeight] = await Promise.all([
+          player.getVideoWidth(),
+          player.getVideoHeight(),
+        ])
+
+        if (!isMountedRef.current) return
+
+        const videoAspect = videoWidth / videoHeight
+        videoAspectRef.current = videoAspect
+
+        // Apply sizing based on device type
+        const iframe = container.querySelector('iframe')
+        if (iframe) {
+          if (!isMobileDevice()) {
+            // Desktop: Apply cover sizing
+            applyCoverSizing(iframe, videoAspect, container)
+          } else {
+            // Mobile: Set aspect ratio CSS variable for contained view
+            container.style.setProperty('--video-aspect-ratio', String(videoAspect))
+          }
+        }
 
         player.on('play', () => {
           if (isMountedRef.current) setIsPlaying(true)
@@ -111,6 +163,70 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
       }
     }
   }, [project.fullVimeoId])
+
+  // Handle resize events to recalculate video dimensions
+  useEffect(() => {
+    const container = playerContainerRef.current
+    if (!container) return
+
+    const handleResize = () => {
+      if (!isMountedRef.current) return
+
+      const iframe = container.querySelector('iframe')
+      if (!iframe) return
+
+      if (!isMobileDevice()) {
+        // Desktop: Recalculate cover sizing
+        applyCoverSizing(iframe, videoAspectRef.current, container)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Handle orientation change for mobile auto-fullscreen
+  useEffect(() => {
+    const handleOrientationChange = () => {
+      if (!isMountedRef.current) return
+
+      const isLandscape = window.matchMedia('(orientation: landscape)').matches
+      const isMobile = isMobileDevice()
+
+      if (isLandscape && isMobile) {
+        // Request fullscreen on the iframe when rotating to landscape
+        const iframe = playerContainerRef.current?.querySelector('iframe')
+        if (iframe) {
+          // Try different fullscreen methods for cross-browser support
+          const requestFS = iframe.requestFullscreen 
+            || (iframe as HTMLIFrameElement & { webkitRequestFullscreen?: () => Promise<void> }).webkitRequestFullscreen
+            || (iframe as HTMLIFrameElement & { mozRequestFullScreen?: () => Promise<void> }).mozRequestFullScreen
+            || (iframe as HTMLIFrameElement & { msRequestFullscreen?: () => Promise<void> }).msRequestFullscreen
+
+          if (requestFS) {
+            requestFS.call(iframe).catch(() => {
+              // Fullscreen request failed, possibly user gesture required
+            })
+          }
+        }
+      }
+    }
+
+    // Listen for orientation changes
+    window.addEventListener('orientationchange', handleOrientationChange)
+    
+    // Also use Screen Orientation API if available
+    if (screen.orientation) {
+      screen.orientation.addEventListener('change', handleOrientationChange)
+    }
+
+    return () => {
+      window.removeEventListener('orientationchange', handleOrientationChange)
+      if (screen.orientation) {
+        screen.orientation.removeEventListener('change', handleOrientationChange)
+      }
+    }
+  }, [])
 
   // Hide controls after inactivity
   useEffect(() => {
