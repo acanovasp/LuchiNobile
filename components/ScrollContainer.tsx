@@ -65,7 +65,7 @@ export default function ScrollContainer({
     }
   }, [initialSection])
 
-  // Detect current section based on scroll position
+  // Detect current section based on scroll position and toggle snap behavior for archive
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -92,6 +92,18 @@ export default function ScrollContainer({
       if (activeIndex !== currentSection) {
         setCurrentSection(activeIndex)
         onSectionChange?.(activeIndex)
+      }
+
+      // Toggle scroll snap for archive section
+      // Disable snapping when scrolled past the archive start to allow free scrolling
+      // This fixes Firefox micro-snapping and Safari snap-back issues
+      const archiveSection = container.querySelector('.section--archive') as HTMLElement
+      if (archiveSection) {
+        const archiveTop = archiveSection.offsetTop
+        const threshold = 50 // Pixels past archive start before disabling snap
+        const isScrolledPastArchiveStart = scrollTop > archiveTop + threshold
+        
+        container.classList.toggle('scroll-container--no-snap', isScrolledPastArchiveStart)
       }
     }
 

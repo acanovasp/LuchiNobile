@@ -235,6 +235,10 @@ img, video, iframe {
   min-height: 100dvh;
 }
 
+.scroll-container--no-snap {
+  scroll-snap-type: none;
+}
+
 /* [project]/styles/about.css [app-client] (css) */
 .about-overlay {
   z-index: var(--z-overlay);
@@ -747,8 +751,8 @@ img, video, iframe {
   padding-top: calc(var(--gutter)  + (2 / 6) * (100dvh - 2 * var(--gutter)));
   padding-left: calc(var(--gutter)  + var(--indicator-width));
   padding-right: calc(var(--gutter)  + var(--indicator-width));
-  padding-bottom: var(--space-12);
   background-color: var(--color-white);
+  padding-bottom: 300px;
 }
 
 .archive__grid {

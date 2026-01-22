@@ -31,3 +31,8 @@
   height: auto;
 }
 
+/* Disable snapping when scrolled inside archive section */
+.scroll-container--no-snap {
+  scroll-snap-type: none;
+}
+

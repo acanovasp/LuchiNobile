@@ -29,4 +29,8 @@
   min-height: 100dvh;
 }
 
+.scroll-container--no-snap {
+  scroll-snap-type: none;
+}
+
 /*# sourceMappingURL=styles_scroll-container_css_bad6b30c._.single.css.map*/

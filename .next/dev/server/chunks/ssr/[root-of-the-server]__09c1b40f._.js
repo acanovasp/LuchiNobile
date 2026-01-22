@@ -129,7 +129,7 @@ function ScrollContainer({ children, initialSection = 0, onSectionChange }) {
     }, [
         initialSection
     ]);
-    // Detect current section based on scroll position
+    // Detect current section based on scroll position and toggle snap behavior for archive
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const container = containerRef.current;
         if (!container) return;
@@ -151,6 +151,17 @@ function ScrollContainer({ children, initialSection = 0, onSectionChange }) {
             if (activeIndex !== currentSection) {
                 setCurrentSection(activeIndex);
                 onSectionChange?.(activeIndex);
+            }
+            // Toggle scroll snap for archive section
+            // Disable snapping when scrolled past the archive start to allow free scrolling
+            // This fixes Firefox micro-snapping and Safari snap-back issues
+            const archiveSection = container.querySelector('.section--archive');
+            if (archiveSection) {
+                const archiveTop = archiveSection.offsetTop;
+                const threshold = 50 // Pixels past archive start before disabling snap
+                ;
+                const isScrolledPastArchiveStart = scrollTop > archiveTop + threshold;
+                container.classList.toggle('scroll-container--no-snap', isScrolledPastArchiveStart);
             }
         };
         container.addEventListener('scroll', handleScroll, {
@@ -203,12 +214,12 @@ function ScrollContainer({ children, initialSection = 0, onSectionChange }) {
             children: children
         }, void 0, false, {
             fileName: "[project]/components/ScrollContainer.tsx",
-            lineNumber: 143,
+            lineNumber: 155,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/ScrollContainer.tsx",
-        lineNumber: 142,
+        lineNumber: 154,
         columnNumber: 5
     }, this);
 }
