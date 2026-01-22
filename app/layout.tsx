@@ -10,10 +10,130 @@ import '@/styles/indicators.css'
 import '@/styles/archive.css'
 import '@/styles/video-player.css'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://luchinobile.com'
+
 export const metadata: Metadata = {
-  title: 'Luchi Nóbile - Director & Creative',
-  description: 'Director, creativo y guionista argentino con base en Barcelona.',
-  keywords: ['videographer', 'director', 'creative', 'barcelona', 'argentina'],
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Luchi Nóbile | Director, Creativo & Guionista',
+    template: '%s | Luchi Nóbile',
+  },
+  description:
+    'Director, creativo y guionista argentino con base en Barcelona. Mirada sensible y honesta sobre la experiencia humana a través de composiciones minimalistas y universos realistas.',
+  keywords: [
+    'Luchi Nóbile',
+    'director',
+    'creativo',
+    'guionista',
+    'filmmaker',
+    'screenwriter',
+    'Barcelona',
+    'Argentina',
+    'videógrafo',
+    'director de cine',
+    'publicidad',
+    'comerciales',
+    'branded content',
+    'minimalismo',
+    'cine documental',
+    'storytelling visual',
+  ],
+  authors: [{ name: 'Luchi Nóbile' }],
+  creator: 'Luchi Nóbile',
+  publisher: 'Luchi Nóbile',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'es_ES',
+    alternateLocale: 'en_US',
+    url: siteUrl,
+    siteName: 'Luchi Nóbile',
+    title: 'Luchi Nóbile | Director, Creativo & Guionista',
+    description:
+      'Director, creativo y guionista argentino con base en Barcelona. Mirada sensible y honesta sobre la experiencia humana a través de composiciones minimalistas y universos realistas.',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Luchi Nóbile - Director, Creativo & Guionista',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Luchi Nóbile | Director, Creativo & Guionista',
+    description:
+      'Director, creativo y guionista argentino con base en Barcelona. Mirada sensible y honesta sobre la experiencia humana.',
+    images: ['/og-image.jpg'],
+    creator: '@luchinobile',
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
+  category: 'Film & Video Production',
+  verification: {
+    // Add your verification codes here when you have them
+    // google: 'your-google-verification-code',
+  },
+}
+
+// JSON-LD structured data for SEO
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Luchi Nóbile',
+  jobTitle: 'Director, Creativo & Guionista',
+  description:
+    'Director, creativo y guionista argentino con base en Barcelona. Su obra ofrece una mirada sensible, cuidada y honesta sobre la experiencia humana.',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://luchinobile.com',
+  image: '/og-image.jpg',
+  sameAs: [
+    'https://vimeo.com/luchinobile',
+    'https://www.instagram.com/luchinobile',
+    // Add more social profiles as needed
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Barcelona',
+    addressCountry: 'ES',
+  },
+  nationality: {
+    '@type': 'Country',
+    name: 'Argentina',
+  },
+  knowsAbout: [
+    'Film Direction',
+    'Screenwriting',
+    'Creative Direction',
+    'Video Production',
+    'Branded Content',
+    'Commercial Films',
+    'Documentary',
+    'Storytelling',
+  ],
+  alumniOf: [
+    {
+      '@type': 'EducationalOrganization',
+      name: 'La Escuelita',
+      address: { '@type': 'PostalAddress', addressLocality: 'Buenos Aires' },
+    },
+    {
+      '@type': 'EducationalOrganization',
+      name: 'Guionarte',
+      address: { '@type': 'PostalAddress', addressLocality: 'Buenos Aires' },
+    },
+  ],
 }
 
 export default function RootLayout({
@@ -24,6 +144,12 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
+        {/* Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        
         {/* Preload Vimeo Player SDK for faster initialization */}
         <link rel="preload" href="https://player.vimeo.com/api/player.js" as="script" crossOrigin="anonymous" />
         

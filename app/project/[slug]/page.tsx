@@ -1,5 +1,6 @@
 import { getProjectBySlug, getAllProjects } from '@/lib/queries'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import VideoPlayer from '@/components/VideoPlayer'
 
 // Sample video URL for fallback
@@ -71,6 +72,59 @@ const defaultProjects = [
 
 interface PageProps {
   params: Promise<{ slug: string }>
+}
+
+// Generate dynamic metadata for each project
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  
+  let project = null
+  
+  if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+    try {
+      project = await getProjectBySlug(slug)
+    } catch {
+      // Fall through to default projects
+    }
+  }
+  
+  if (!project) {
+    project = defaultProjects.find((p) => p.slug.current === slug)
+  }
+  
+  if (!project) {
+    return {
+      title: 'Project Not Found',
+    }
+  }
+  
+  const title = `${project.title} - ${project.client}`
+  const description = `${project.title} para ${project.client}. Proyecto dirigido por Luchi Nóbile, director y creativo argentino con base en Barcelona.`
+  
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'video.other',
+      url: `/project/${slug}`,
+      images: [
+        {
+          url: `https://vumbnail.com/${project.fullVimeoId}.jpg`,
+          width: 1280,
+          height: 720,
+          alt: `${project.title} - ${project.client}`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`https://vumbnail.com/${project.fullVimeoId}.jpg`],
+    },
+  }
 }
 
 export async function generateStaticParams() {
