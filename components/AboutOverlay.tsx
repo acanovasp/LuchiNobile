@@ -65,6 +65,16 @@ export default function AboutOverlay({
         </a>
       )}
       <div className="about-overlay__content">
+        {/* Mobile email - positioned above text, hidden on desktop */}
+        {contactEmail && (
+          <a
+            href={`mailto:${contactEmail}`}
+            className="about-overlay__email-mobile"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {contactEmail}
+          </a>
+        )}
         <div className="about-overlay__text">
           {paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>

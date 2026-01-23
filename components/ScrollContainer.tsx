@@ -23,22 +23,23 @@ const ScrollContext = createContext<ScrollContextValue | null>(null)
 export function useScrollContext() {
   const context = useContext(ScrollContext)
   if (!context) {
-    throw new Error('useScrollContext must be used within ScrollContainer')
+    throw new Error('useScrollContext must be used within ScrollProvider')
   }
   return context
 }
 
-interface ScrollContainerProps {
+interface ScrollProviderProps {
   children: React.ReactNode
   initialSection?: number
   onSectionChange?: (section: number) => void
 }
 
-export default function ScrollContainer({
+// ScrollProvider: Provides the scroll context (state, refs, callbacks)
+export function ScrollProvider({
   children,
   initialSection = 0,
   onSectionChange,
-}: ScrollContainerProps) {
+}: ScrollProviderProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [currentSection, setCurrentSection] = useState(initialSection)
   const [isAtTop, setIsAtTop] = useState(false)
@@ -152,10 +153,25 @@ export default function ScrollContainer({
 
   return (
     <ScrollContext.Provider value={contextValue}>
-      <div ref={containerRef} className="scroll-container">
-        {children}
-      </div>
+      {children}
     </ScrollContext.Provider>
   )
 }
 
+interface ScrollContainerProps {
+  children: React.ReactNode
+}
+
+// ScrollContainer: Just the scrollable div that consumes the context
+export function ScrollContainer({ children }: ScrollContainerProps) {
+  const { containerRef } = useScrollContext()
+  
+  return (
+    <div ref={containerRef} className="scroll-container">
+      {children}
+    </div>
+  )
+}
+
+// Default export for backwards compatibility
+export default ScrollContainer

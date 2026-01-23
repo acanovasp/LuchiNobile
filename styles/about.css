@@ -100,6 +100,11 @@
   color: var(--color-text);
 }
 
+/* Mobile email - hidden by default on desktop */
+.about-overlay__email-mobile {
+  display: none;
+}
+
 /* Email jumps to position 02 on narrower viewports (width) */
 @media (max-width: 1200px) {
   .about-overlay__email {
@@ -133,8 +138,8 @@
   .about-overlay__content {
     left: var(--space-8);
     right: var(--space-8);
-    top: var(--space-3);
-    bottom: var(--space-3);
+    top: var(--space-5);
+    bottom: var(--space-5);
   }
 
   .about-overlay__text {
@@ -145,24 +150,39 @@
     margin-bottom: var(--space-4);
   }
 
+  /* Hide desktop email on mobile */
   .about-overlay__email {
-    left: var(--space-8);
-    top: calc(var(--space-3) + (1 / 6) * (100% - 2 * var(--space-3)));
+    display: none;
+  }
+
+  /* Show and style mobile email */
+  .about-overlay__email-mobile {
+    display: block;
+    margin-bottom: 20px;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-primary);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    pointer-events: auto;
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .about-overlay__email-mobile:hover {
+    color: var(--color-text);
   }
 }
 
 @media (max-width: 480px) {
   .about-overlay__content {
-    left: var(--space-4);
-    right: var(--space-4);
+    left: var(--space-5);
+    right: var(--space-5);
   }
   
   .about-overlay__text {
     font-size: 1.25rem;
-  }
-
-  .about-overlay__email {
-    left: var(--space-4);
   }
 }
 

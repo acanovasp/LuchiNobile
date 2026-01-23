@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react'
 import SplashScreen from './SplashScreen'
-import ScrollContainer, { useScrollContext } from './ScrollContainer'
+import { ScrollProvider, ScrollContainer, useScrollContext } from './ScrollContainer'
 import ProjectSection from './ProjectSection'
 import AboutOverlay from './AboutOverlay'
 import ScrollIndicator from './ScrollIndicator'
@@ -15,19 +15,21 @@ interface MainPageClientProps {
   siteSettings: SiteSettings
 }
 
-interface MainPageContentProps extends MainPageClientProps {
+interface MainPageContentProps {
+  featuredProjects: Project[]
+  allProjects: Project[]
   isAboutVisible: boolean
   setIsAboutVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+// Content inside the scrollable container (just projects + archive)
 function MainPageContent({
   featuredProjects,
   allProjects,
-  siteSettings,
   isAboutVisible,
   setIsAboutVisible,
 }: MainPageContentProps) {
-  const { currentSection, scrollToSection, containerRef } = useScrollContext()
+  const { currentSection, containerRef } = useScrollContext()
   const wheelAccumulator = useRef(0)
   const lastWheelTime = useRef(0)
 
@@ -80,12 +82,42 @@ function MainPageContent({
     return () => container.removeEventListener('wheel', handleWheel)
   }, [containerRef, currentSection, isAboutVisible])
 
+  return (
+    <>
+      {/* Featured Project Sections */}
+      {featuredProjects.map((project, index) => (
+        <ProjectSection
+          key={project._id}
+          project={project}
+          index={index}
+        />
+      ))}
+
+      {/* Archive Section */}
+      <ArchiveGrid projects={allProjects} />
+    </>
+  )
+}
+
+// Indicators component that lives outside ScrollContainer but inside ScrollProvider
+interface IndicatorsWrapperProps {
+  featuredProjects: Project[]
+  isAboutVisible: boolean
+  setIsAboutVisible: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function IndicatorsWrapper({
+  featuredProjects,
+  isAboutVisible,
+  setIsAboutVisible,
+}: IndicatorsWrapperProps) {
+  const { currentSection, scrollToSection } = useScrollContext()
+
   const handleAboutClick = useCallback(() => {
     setIsAboutVisible((prev) => !prev)
   }, [])
 
   const handleArchiveClick = useCallback(() => {
-    // Scroll to archive section (last section, index = featuredProjects.length)
     scrollToSection(featuredProjects.length)
     setIsAboutVisible(false)
   }, [scrollToSection, featuredProjects.length])
@@ -101,30 +133,15 @@ function MainPageContent({
   const isArchiveActive = currentSection >= featuredProjects.length
 
   return (
-    <>
-      {/* Featured Project Sections */}
-      {featuredProjects.map((project, index) => (
-        <ProjectSection
-          key={project._id}
-          project={project}
-          index={index}
-        />
-      ))}
-
-      {/* Archive Section */}
-      <ArchiveGrid projects={allProjects} />
-
-      {/* Scroll Indicators */}
-      <ScrollIndicator
-        projects={featuredProjects}
-        currentSection={currentSection}
-        isAboutVisible={isAboutVisible}
-        isArchiveActive={isArchiveActive}
-        onAboutClick={handleAboutClick}
-        onArchiveClick={handleArchiveClick}
-        onProjectClick={handleProjectClick}
-      />
-    </>
+    <ScrollIndicator
+      projects={featuredProjects}
+      currentSection={currentSection}
+      isAboutVisible={isAboutVisible}
+      isArchiveActive={isArchiveActive}
+      onAboutClick={handleAboutClick}
+      onArchiveClick={handleArchiveClick}
+      onProjectClick={handleProjectClick}
+    />
   )
 }
 
@@ -175,18 +192,28 @@ export default function MainPageClient({
 
   return (
     <>
-      {/* Main content renders immediately so videos start loading */}
-      <ScrollContainer initialSection={initialState.initialSection}>
-        <MainPageContent
+      {/* ScrollProvider wraps everything that needs scroll context */}
+      <ScrollProvider initialSection={initialState.initialSection}>
+        {/* ScrollContainer is just the scrollable div */}
+        <ScrollContainer>
+          <MainPageContent
+            featuredProjects={featuredProjects}
+            allProjects={allProjects}
+            isAboutVisible={isAboutVisible}
+            setIsAboutVisible={setIsAboutVisible}
+          />
+        </ScrollContainer>
+
+        {/* Scroll Indicators - OUTSIDE ScrollContainer but INSIDE ScrollProvider */}
+        {/* This ensures proper z-index stacking on mobile */}
+        <IndicatorsWrapper
           featuredProjects={featuredProjects}
-          allProjects={allProjects}
-          siteSettings={siteSettings}
           isAboutVisible={isAboutVisible}
           setIsAboutVisible={setIsAboutVisible}
         />
-      </ScrollContainer>
+      </ScrollProvider>
 
-      {/* About Overlay - outside ScrollContainer for better backdrop-filter support */}
+      {/* About Overlay - outside ScrollProvider for better backdrop-filter support */}
       <AboutOverlay
         isVisible={isAboutVisible}
         aboutText={siteSettings.aboutText}
@@ -204,4 +231,3 @@ export default function MainPageClient({
     </>
   )
 }
-
