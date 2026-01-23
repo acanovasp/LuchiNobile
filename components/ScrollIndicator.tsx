@@ -43,11 +43,11 @@ export default function ScrollIndicator({
   return (
     <>
       {/* Left Indicator */}
-      <div className={`indicator-left ${isArchiveActive ? 'indicator--dark' : ''}`}>
+      <div className={`indicator-left ${isArchiveActive ? 'indicator--dark' : ''} ${isAboutVisible ? 'indicator--about-visible' : ''}`}>
         <div className="indicator-left__items">
           {/* About */}
           <button
-            className={`indicator-left__item ${isAboutVisible ? 'indicator-left__item--active' : ''}`}
+            className={`indicator-left__item indicator-left__item--about ${isAboutVisible ? 'indicator-left__item--active' : ''}`}
             onClick={onAboutClick}
           >
             About
@@ -57,7 +57,7 @@ export default function ScrollIndicator({
           {projects.map((project, index) => (
             <button
               key={project._id}
-              className={`indicator-left__item ${
+              className={`indicator-left__item indicator-left__item--number ${
                 currentSection === index && !isArchiveActive && !isAboutVisible
                   ? 'indicator-left__item--active'
                   : ''
@@ -70,7 +70,7 @@ export default function ScrollIndicator({
 
           {/* Archive */}
           <button
-            className={`indicator-left__item ${isArchiveActive ? 'indicator-left__item--active' : ''}`}
+            className={`indicator-left__item indicator-left__item--archive ${isArchiveActive ? 'indicator-left__item--active' : ''}`}
             onClick={onArchiveClick}
           >
             Archive
@@ -94,7 +94,7 @@ export default function ScrollIndicator({
       </div>
 
       {/* Right Indicator */}
-      <div className={`indicator-right ${isArchiveActive ? 'indicator--dark' : ''}`}>
+      <div className={`indicator-right ${isArchiveActive ? 'indicator--dark' : ''} ${isAboutVisible ? 'indicator--about-visible' : ''}`}>
         <div className="indicator-right__items">
           {/* All 7 positions: About (0), Projects 1-5, Archive (6) */}
           {[0, 1, 2, 3, 4, 5, 6].map((position) => (
@@ -102,7 +102,7 @@ export default function ScrollIndicator({
               key={position}
               className={`indicator-right__item ${
                 activePosition === position ? 'indicator-right__item--active' : ''
-              }`}
+              } ${position >= 1 && position <= 5 ? 'indicator-right__item--number' : ''} ${position === 6 ? 'indicator-right__item--archive' : ''}`}
               onClick={() => {
                 if (position === 0) onAboutClick()
                 else if (position === 6) onArchiveClick()

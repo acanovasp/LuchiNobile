@@ -239,6 +239,15 @@
   .header__logo {
     font-size: 0.625rem;
   }
+
+  /* Hide numbers and archive on mobile when About is visible */
+  .indicator--about-visible .indicator-left__item--number,
+  .indicator--about-visible .indicator-left__item--archive,
+  .indicator--about-visible .indicator-right__item--number,
+  .indicator--about-visible .indicator-right__item--archive {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 @media (max-width: 480px) {
