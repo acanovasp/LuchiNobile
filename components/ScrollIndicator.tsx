@@ -43,7 +43,7 @@ export default function ScrollIndicator({
   return (
     <>
       {/* Left Indicator */}
-      <div className={`indicator-left ${isArchiveActive ? 'indicator--dark' : ''}`}>
+      <div className={`indicator-left ${isArchiveActive ? 'indicator--dark' : ''} ${isAboutVisible ? 'indicator--about-visible' : ''}`}>
         <div className="indicator-left__items">
           {/* About */}
           <button
@@ -94,7 +94,7 @@ export default function ScrollIndicator({
       </div>
 
       {/* Right Indicator */}
-      <div className={`indicator-right ${isArchiveActive ? 'indicator--dark' : ''}`}>
+      <div className={`indicator-right ${isArchiveActive ? 'indicator--dark' : ''} ${isAboutVisible ? 'indicator--about-visible' : ''}`}>
         <div className="indicator-right__items">
           {/* All 7 positions: About (0), Projects 1-5, Archive (6) */}
           {[0, 1, 2, 3, 4, 5, 6].map((position) => (

@@ -71,13 +71,6 @@
 }
 
 .about-overlay__email {
-  position: absolute;
-  z-index: 10;
-  /* Match content's left edge */
-  left: calc(var(--gutter) * 2.5);
-  /* Align with indicator position 03 using same formula as indicators:
-     gutter + (position/6) * (available height where available = 100% - 2*gutter) */
-  top: calc(var(--gutter) + (3 / 6) * (100% - 2 * var(--gutter)));
   font-family: var(--font-primary);
   font-size: var(--font-size-primary);
   font-weight: 300;
@@ -92,6 +85,22 @@
               opacity var(--duration-slow) var(--ease-out) 100ms;
 }
 
+/* Desktop email - positioned absolutely relative to viewport */
+.about-overlay__email--desktop {
+  position: absolute;
+  z-index: 10;
+  /* Match content's left edge */
+  left: calc(var(--gutter) * 2.5);
+  /* Align with indicator position 03 using same formula as indicators:
+     gutter + (position/6) * (available height where available = 100% - 2*gutter) */
+  top: calc(var(--gutter) + (3 / 6) * (100% - 2 * var(--gutter)));
+}
+
+/* Mobile email - hidden on desktop */
+.about-overlay__email--mobile {
+  display: none;
+}
+
 .about-overlay--visible .about-overlay__email {
   opacity: 1;
 }
@@ -102,28 +111,28 @@
 
 /* Email jumps to position 02 on narrower viewports (width) */
 @media (max-width: 1200px) {
-  .about-overlay__email {
+  .about-overlay__email--desktop {
     top: calc(var(--gutter) + (2 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
 /* Email jumps to position 01 on even narrower viewports (width) */
 @media (max-width: 900px) {
-  .about-overlay__email {
+  .about-overlay__email--desktop {
     top: calc(var(--gutter) + (1 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
 /* Email jumps to position 02 on shorter viewports (height) */
 @media (max-height: 800px) {
-  .about-overlay__email {
+  .about-overlay__email--desktop {
     top: calc(var(--gutter) + (2 / 6) * (100% - 2 * var(--gutter)));
   }
 }
 
 /* Email jumps to position 01 on even shorter viewports (height) */
 @media (max-height: 600px) {
-  .about-overlay__email {
+  .about-overlay__email--desktop {
     top: calc(var(--gutter) + (1 / 6) * (100% - 2 * var(--gutter)));
   }
 }
@@ -135,6 +144,7 @@
     right: var(--space-8);
     top: var(--space-3);
     bottom: var(--space-3);
+    justify-content: flex-end;
   }
 
   .about-overlay__text {
@@ -145,9 +155,16 @@
     margin-bottom: var(--space-4);
   }
 
-  .about-overlay__email {
-    left: var(--space-8);
-    top: calc(var(--space-3) + (1 / 6) * (100% - 2 * var(--space-3)));
+  /* Hide desktop email on mobile */
+  .about-overlay__email--desktop {
+    display: none;
+  }
+
+  /* Show mobile email above text */
+  .about-overlay__email--mobile {
+    display: block;
+    position: relative;
+    margin-bottom: 20px;
   }
 }
 
@@ -159,10 +176,6 @@
   
   .about-overlay__text {
     font-size: 1.25rem;
-  }
-
-  .about-overlay__email {
-    left: var(--space-4);
   }
 }
 

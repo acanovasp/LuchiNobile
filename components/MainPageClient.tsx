@@ -30,8 +30,10 @@ function MainPageContent({
   const { currentSection, scrollToSection, containerRef } = useScrollContext()
   const wheelAccumulator = useRef(0)
   const lastWheelTime = useRef(0)
+  const touchStartY = useRef(0)
+  const touchAccumulator = useRef(0)
 
-  // Handle wheel events for opening/closing About
+  // Handle wheel events for opening/closing About (desktop)
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -79,6 +81,50 @@ function MainPageContent({
     container.addEventListener('wheel', handleWheel, { passive: true })
     return () => container.removeEventListener('wheel', handleWheel)
   }, [containerRef, currentSection, isAboutVisible])
+
+  // Handle touch events for opening/closing About (mobile)
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY
+      touchAccumulator.current = 0
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touchY = e.touches[0].clientY
+      const deltaY = touchStartY.current - touchY // Positive = swipe up, Negative = swipe down
+      
+      if (isAboutVisible) {
+        // Close About by swiping down (negative deltaY means finger moved down)
+        if (deltaY < -30) {
+          setIsAboutVisible(false)
+          touchAccumulator.current = 0
+        }
+      } else {
+        // Open About by swiping up while at project 1
+        if (currentSection !== 0 || container.scrollTop > 10) {
+          touchAccumulator.current = 0
+          return
+        }
+
+        // Swipe up detected (positive deltaY means finger moved up)
+        if (deltaY > 50) {
+          setIsAboutVisible(true)
+          touchAccumulator.current = 0
+        }
+      }
+    }
+
+    container.addEventListener('touchstart', handleTouchStart, { passive: true })
+    container.addEventListener('touchmove', handleTouchMove, { passive: true })
+    
+    return () => {
+      container.removeEventListener('touchstart', handleTouchStart)
+      container.removeEventListener('touchmove', handleTouchMove)
+    }
+  }, [containerRef, currentSection, isAboutVisible, setIsAboutVisible])
 
   const handleAboutClick = useCallback(() => {
     setIsAboutVisible((prev) => !prev)
