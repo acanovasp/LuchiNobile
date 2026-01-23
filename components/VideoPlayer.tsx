@@ -147,53 +147,98 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
             playerRef.current.setCurrentTime(0).catch(() => {})
           }
         })
-        player.on('volumechange', (data) => {
-          if (isMountedRef.current) setIsMuted(data.volume === 0)
+        // Listen for volume changes - check actual muted state, not just volume
+        player.on('volumechange', async () => {
+          if (isMountedRef.current && playerRef.current) {
+            try {
+              const mutedState = await playerRef.current.getMuted()
+              if (isMountedRef.current) setIsMuted(mutedState)
+            } catch {
+              // Player destroyed
+            }
+          }
         })
 
         const dur = await player.getDuration()
         if (isMountedRef.current) setDuration(dur)
         
+        // Get initial muted state
         const muted = await player.getMuted()
         if (isMountedRef.current) setIsMuted(muted)
-
-        // Smooth progress updates using requestAnimationFrame
-        let hasReachedEnd = false // Prevent multiple triggers
-        const updateProgress = async () => {
-          if (!isMountedRef.current || !playerRef.current) return
-          
-          try {
-            const currentTime = await playerRef.current.getCurrentTime()
-            const currentDur = await playerRef.current.getDuration()
-            if (isMountedRef.current && currentDur > 0) {
-              setProgress((currentTime / currentDur) * 100)
-              
-              // Preemptively jump to beginning when very close to end
-              // This prevents Vimeo's end screen from ever appearing
-              const timeRemaining = currentDur - currentTime
-              if (timeRemaining < 0.5 && timeRemaining > 0 && !hasReachedEnd) {
-                hasReachedEnd = true
-                await playerRef.current.pause()
-                await playerRef.current.setCurrentTime(0)
-                if (isMountedRef.current) {
-                  setIsPlaying(false)
-                  setProgress(0)
-                }
-                // Reset flag after a short delay to allow replaying
-                setTimeout(() => { hasReachedEnd = false }, 1000)
-              }
-            }
-          } catch {
-            // Player was destroyed, stop the loop
-            return
-          }
-          
-          if (isMountedRef.current) {
-            rafId = requestAnimationFrame(updateProgress)
-          }
-        }
         
-        rafId = requestAnimationFrame(updateProgress)
+        // On mobile, browsers may force mute for autoplay - try to unmute after user interaction
+        if (isMobileDevice() && muted) {
+          const tryUnmute = async () => {
+            if (!isMountedRef.current || !playerRef.current) return
+            try {
+              await playerRef.current.setMuted(false)
+              const stillMuted = await playerRef.current.getMuted()
+              if (isMountedRef.current) setIsMuted(stillMuted)
+            } catch {
+              // Unmute failed
+            }
+            // Remove listeners after first attempt
+            document.removeEventListener('touchstart', tryUnmute)
+            document.removeEventListener('click', tryUnmute)
+          }
+          // Try to unmute on first user interaction
+          document.addEventListener('touchstart', tryUnmute, { once: true })
+          document.addEventListener('click', tryUnmute, { once: true })
+        }
+
+        // Progress updates - use timeupdate event for reliable mobile updates
+        let hasReachedEnd = false // Prevent multiple triggers
+        
+        // Use Vimeo's timeupdate event which fires reliably on mobile
+        player.on('timeupdate', (data: { seconds: number; percent: number; duration: number }) => {
+          if (!isMountedRef.current) return
+          
+          // Update progress using the percent provided by Vimeo (more reliable)
+          setProgress(data.percent * 100)
+          
+          // Preemptively jump to beginning when very close to end
+          // This prevents Vimeo's end screen from ever appearing
+          const timeRemaining = data.duration - data.seconds
+          if (timeRemaining < 0.5 && timeRemaining > 0 && !hasReachedEnd && playerRef.current) {
+            hasReachedEnd = true
+            playerRef.current.pause().then(() => {
+              if (playerRef.current) {
+                return playerRef.current.setCurrentTime(0)
+              }
+            }).then(() => {
+              if (isMountedRef.current) {
+                setIsPlaying(false)
+                setProgress(0)
+              }
+              // Reset flag after a short delay to allow replaying
+              setTimeout(() => { hasReachedEnd = false }, 1000)
+            }).catch(() => {})
+          }
+        })
+        
+        // Also use RAF for smoother desktop updates (timeupdate fires less frequently)
+        if (!isMobileDevice()) {
+          const updateProgress = async () => {
+            if (!isMountedRef.current || !playerRef.current) return
+            
+            try {
+              const currentTime = await playerRef.current.getCurrentTime()
+              const currentDur = await playerRef.current.getDuration()
+              if (isMountedRef.current && currentDur > 0) {
+                setProgress((currentTime / currentDur) * 100)
+              }
+            } catch {
+              // Player was destroyed, stop the loop
+              return
+            }
+            
+            if (isMountedRef.current) {
+              rafId = requestAnimationFrame(updateProgress)
+            }
+          }
+          
+          rafId = requestAnimationFrame(updateProgress)
+        }
       } catch {
         // Player initialization failed (component unmounted during init)
       }
@@ -367,14 +412,42 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
     }
   }, [router])
 
-  const handleFullscreen = useCallback(() => {
+  const handleFullscreen = useCallback(async () => {
+    const player = playerRef.current
+    
+    // On mobile, use Vimeo player's fullscreen method which handles iOS/Android properly
+    if (isMobileDevice() && player) {
+      try {
+        // Vimeo player has a requestFullscreen method that works better on mobile
+        await player.requestFullscreen()
+        return
+      } catch {
+        // Fallback to manual fullscreen if Vimeo method fails
+      }
+    }
+    
+    // Desktop fallback or if Vimeo method failed
     const container = document.querySelector('.video-player-page')
     if (!container) return
 
     if (document.fullscreenElement) {
       document.exitFullscreen().catch(() => {})
     } else {
-      container.requestFullscreen().catch(() => {})
+      // Try container first, then iframe
+      try {
+        await container.requestFullscreen()
+      } catch {
+        // Try the iframe directly (may work better on some mobile browsers)
+        const iframe = playerContainerRef.current?.querySelector('iframe')
+        if (iframe) {
+          const requestFS = iframe.requestFullscreen 
+            || (iframe as HTMLIFrameElement & { webkitRequestFullscreen?: () => Promise<void> }).webkitRequestFullscreen
+            || (iframe as HTMLIFrameElement & { webkitEnterFullscreen?: () => Promise<void> }).webkitEnterFullscreen
+          if (requestFS) {
+            requestFS.call(iframe).catch(() => {})
+          }
+        }
+      }
     }
   }, [])
 

@@ -164,7 +164,7 @@
   left: 0;
   height: 100%;
   background-color: var(--color-white);
-  transition: width 300ms ease-in-out;
+  transition: width 100ms linear;
 }
 
 
@@ -261,6 +261,11 @@
   .video-player__progress {
     order: 2;
     width: 100%;
+  }
+
+  .video-player__progress-fill {
+    /* Faster/no transition on mobile for more responsive progress updates */
+    transition: width 50ms linear;
   }
 
   .video-player__close {

@@ -30,9 +30,8 @@ function MainPageContent({
   const { currentSection, scrollToSection, containerRef } = useScrollContext()
   const wheelAccumulator = useRef(0)
   const lastWheelTime = useRef(0)
-  const touchStartY = useRef(0)
 
-  // Handle wheel events for opening/closing About (desktop)
+  // Handle wheel events for opening/closing About
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -80,43 +79,6 @@ function MainPageContent({
     container.addEventListener('wheel', handleWheel, { passive: true })
     return () => container.removeEventListener('wheel', handleWheel)
   }, [containerRef, currentSection, isAboutVisible])
-
-  // Handle touch events for opening/closing About (mobile)
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY.current = e.touches[0].clientY
-    }
-
-    const handleTouchMove = (e: TouchEvent) => {
-      const currentY = e.touches[0].clientY
-      const deltaY = touchStartY.current - currentY // positive = swipe up, negative = swipe down
-
-      if (isAboutVisible) {
-        // Close About by swiping down
-        if (deltaY < -60) {
-          setIsAboutVisible(false)
-          touchStartY.current = currentY // Reset to prevent re-triggering
-        }
-      } else {
-        // Open About by swiping up while at first project
-        if (currentSection === 0 && container.scrollTop < 10 && deltaY > 80) {
-          setIsAboutVisible(true)
-          touchStartY.current = currentY // Reset to prevent re-triggering
-        }
-      }
-    }
-
-    container.addEventListener('touchstart', handleTouchStart, { passive: true })
-    container.addEventListener('touchmove', handleTouchMove, { passive: true })
-    
-    return () => {
-      container.removeEventListener('touchstart', handleTouchStart)
-      container.removeEventListener('touchmove', handleTouchMove)
-    }
-  }, [containerRef, currentSection, isAboutVisible, setIsAboutVisible])
 
   const handleAboutClick = useCallback(() => {
     setIsAboutVisible((prev) => !prev)
