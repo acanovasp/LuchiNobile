@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 interface SplashScreenProps {
   onComplete: () => void
@@ -21,6 +21,32 @@ export default function SplashScreen({
   const [isLogoFading, setIsLogoFading] = useState(false)
   const [isBgFading, setIsBgFading] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
+  const isSkippingRef = useRef(false)
+
+  // Function to trigger the fade-out sequence
+  const triggerFadeOut = useCallback(() => {
+    if (isSkippingRef.current) return // Prevent multiple triggers
+    isSkippingRef.current = true
+
+    // Start logo fade first
+    setIsLogoFading(true)
+
+    // Start background fade shortly after
+    setTimeout(() => {
+      setIsBgFading(true)
+    }, LOGO_HEAD_START)
+
+    // Hide and complete after background fade finishes
+    setTimeout(() => {
+      setIsHidden(true)
+      onComplete()
+    }, LOGO_HEAD_START + BG_FADE_DURATION)
+  }, [onComplete])
+
+  // Click to skip
+  const handleClick = useCallback(() => {
+    triggerFadeOut()
+  }, [triggerFadeOut])
 
   // Typing animation
   useEffect(() => {
@@ -41,8 +67,6 @@ export default function SplashScreen({
 
   // Main sequence - wait for minimum duration then fade out
   useEffect(() => {
-    const startTime = Date.now()
-
     const runSequence = async () => {
       // Wait for minimum duration (typing + hold)
       const totalAnimationTime = TYPING_DURATION + HOLD_DURATION
@@ -50,28 +74,23 @@ export default function SplashScreen({
       
       await new Promise(resolve => setTimeout(resolve, waitTime))
 
-      // Start logo fade first
-      setIsLogoFading(true)
-
-      // Start background fade 1 second later
-      setTimeout(() => {
-        setIsBgFading(true)
-      }, LOGO_HEAD_START)
-
-      // Hide and complete after background fade finishes
-      setTimeout(() => {
-        setIsHidden(true)
-        onComplete()
-      }, LOGO_HEAD_START + BG_FADE_DURATION)
+      // Only trigger if not already skipped
+      if (!isSkippingRef.current) {
+        triggerFadeOut()
+      }
     }
 
     runSequence()
-  }, [minDuration, onComplete])
+  }, [minDuration, triggerFadeOut])
 
   if (isHidden) return null
 
   return (
-    <div className={`splash ${isBgFading ? 'splash--fading' : ''}`}>
+    <div 
+      className={`splash ${isBgFading ? 'splash--fading' : ''}`}
+      onClick={handleClick}
+      style={{ cursor: 'pointer' }}
+    >
       <h1 className={`splash__logo ${isLogoFading ? 'splash__logo--fading' : ''}`}>
         {displayedText}
       </h1>
