@@ -31,7 +31,6 @@ function MainPageContent({
   const wheelAccumulator = useRef(0)
   const lastWheelTime = useRef(0)
   const touchStartY = useRef(0)
-  const touchAccumulator = useRef(0)
 
   // Handle wheel events for opening/closing About (desktop)
   useEffect(() => {
@@ -89,30 +88,23 @@ function MainPageContent({
 
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY.current = e.touches[0].clientY
-      touchAccumulator.current = 0
     }
 
     const handleTouchMove = (e: TouchEvent) => {
-      const touchY = e.touches[0].clientY
-      const deltaY = touchStartY.current - touchY // Positive = swipe up, Negative = swipe down
-      
+      const currentY = e.touches[0].clientY
+      const deltaY = touchStartY.current - currentY // positive = swipe up, negative = swipe down
+
       if (isAboutVisible) {
-        // Close About by swiping down (negative deltaY means finger moved down)
-        if (deltaY < -30) {
+        // Close About by swiping down
+        if (deltaY < -60) {
           setIsAboutVisible(false)
-          touchAccumulator.current = 0
+          touchStartY.current = currentY // Reset to prevent re-triggering
         }
       } else {
-        // Open About by swiping up while at project 1
-        if (currentSection !== 0 || container.scrollTop > 10) {
-          touchAccumulator.current = 0
-          return
-        }
-
-        // Swipe up detected (positive deltaY means finger moved up)
-        if (deltaY > 50) {
+        // Open About by swiping up while at first project
+        if (currentSection === 0 && container.scrollTop < 10 && deltaY > 80) {
           setIsAboutVisible(true)
-          touchAccumulator.current = 0
+          touchStartY.current = currentY // Reset to prevent re-triggering
         }
       }
     }

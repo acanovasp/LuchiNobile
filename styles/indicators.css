@@ -252,22 +252,3 @@
     font-size: 0.625rem;
   }
 }
-
-/* About overlay visible state on mobile - hide left indicator items and project info, keep header and right marker */
-@media (max-width: 768px) {
-  .indicator-left.indicator--about-visible .indicator-left__item,
-  .indicator-left.indicator--about-visible .indicator-left__project-info {
-    opacity: 0 !important;
-    pointer-events: none;
-  }
-
-  .indicator-right.indicator--about-visible .indicator-right__item {
-    opacity: 0 !important;
-    pointer-events: none;
-  }
-
-  /* Keep the marker visible */
-  .indicator-right.indicator--about-visible .indicator-right__marker {
-    opacity: 1;
-  }
-}
