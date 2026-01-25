@@ -43,7 +43,7 @@
   transform: translateY(40px);
   pointer-events: none;
   transition: opacity var(--duration-slow) var(--ease-out) 100ms,
-              transform var(--duration-slow) var(--ease-out) 100ms;
+              transform var(--duration-slowest) var(--ease-out) 100ms;
 }
 
 .about-overlay--visible .about-overlay__content {

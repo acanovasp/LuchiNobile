@@ -15,11 +15,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://luchinobile.com'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Luchi Nóbile | Director, Creativo & Guionista',
+    default: 'Luchi Nóbile | Director',
     template: '%s | Luchi Nóbile',
   },
   description:
-    'Director, creativo y guionista argentino con base en Barcelona. Mirada sensible y honesta sobre la experiencia humana a través de composiciones minimalistas y universos realistas.',
+    'Director argentino con base en Barcelona.',
   keywords: [
     'Luchi Nóbile',
     'director',
@@ -58,23 +58,23 @@ export const metadata: Metadata = {
     alternateLocale: 'en_US',
     url: siteUrl,
     siteName: 'Luchi Nóbile',
-    title: 'Luchi Nóbile | Director, Creativo & Guionista',
+    title: 'Luchi Nóbile | Director',
     description:
-      'Director, creativo y guionista argentino con base en Barcelona. Mirada sensible y honesta sobre la experiencia humana a través de composiciones minimalistas y universos realistas.',
+      'Director argentino con base en Barcelona.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Luchi Nóbile - Director, Creativo & Guionista',
+        alt: 'Luchi Nóbile - Director',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Luchi Nóbile | Director, Creativo & Guionista',
+    title: 'Luchi Nóbile | Director',
     description:
-      'Director, creativo y guionista argentino con base en Barcelona. Mirada sensible y honesta sobre la experiencia humana.',
+      'Director argentino con base en Barcelona.',
     images: ['/og-image.jpg'],
     creator: '@luchinobile',
   },
@@ -93,9 +93,9 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Luchi Nóbile',
-  jobTitle: 'Director, Creativo & Guionista',
+  jobTitle: 'Director',
   description:
-    'Director, creativo y guionista argentino con base en Barcelona. Su obra ofrece una mirada sensible, cuidada y honesta sobre la experiencia humana.',
+    'Director argentino con base en Barcelona.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://luchinobile.com',
   image: '/og-image.jpg',
   sameAs: [
