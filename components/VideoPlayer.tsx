@@ -53,6 +53,7 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
   const [controlsVisible, setControlsVisible] = useState(true)
   const [isVideoReady, setIsVideoReady] = useState(false)
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null)
+  const [loadingPercent, setLoadingPercent] = useState(0)
 
   // Fetch Vimeo thumbnail immediately on mount
   useEffect(() => {
@@ -73,6 +74,30 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
         // Failed to fetch thumbnail, video will show when ready
       })
   }, [project.fullVimeoId])
+
+  // Simulate loading percentage that progresses until video is ready
+  useEffect(() => {
+    if (isVideoReady) {
+      // Video is ready, jump to 100%
+      setLoadingPercent(100)
+      return
+    }
+
+    // Simulate loading progress - starts fast, slows down as it approaches 90%
+    const interval = setInterval(() => {
+      setLoadingPercent(prev => {
+        if (prev >= 90) {
+          // Slow down significantly near 90% to wait for actual video ready
+          return Math.min(prev + 0.5, 95)
+        }
+        // Progress faster initially
+        const increment = Math.max(1, (90 - prev) / 10)
+        return Math.min(prev + increment, 90)
+      })
+    }, 100)
+
+    return () => clearInterval(interval)
+  }, [isVideoReady])
 
   // Initialize Vimeo player
   useEffect(() => {
@@ -337,13 +362,13 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
         setControlsVisible(false)
         hasHiddenOnce = true
       }
-    }, 5000)
+    }, 8000)
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!hasHiddenOnce) return // Don't interfere with initial 5 second timer
       
       const viewportHeight = window.innerHeight
-      const bottomThreshold = viewportHeight * 0.85 // Top 85% = bottom 15% starts here
+      const bottomThreshold = viewportHeight * 0.80 // Top 80% = bottom 20% starts here
       
       if (e.clientY >= bottomThreshold) {
         // Cursor is in bottom 15% - show controls
@@ -492,6 +517,13 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
             style={{ backgroundImage: `url(${thumbnailUrl})` }}
           />
         )}
+
+        {/* Loading percentage indicator */}
+        <div 
+          className={`video-player__loading ${isVideoReady ? 'video-player__loading--hidden' : ''}`}
+        >
+          {Math.round(loadingPercent)}%
+        </div>
 
         {/* Video Container */}
         <div ref={playerContainerRef} className="video-player__container" />
