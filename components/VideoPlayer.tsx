@@ -320,28 +320,45 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
     }
   }, [])
 
-  // Hide controls after inactivity
+  // Hide controls after 5 seconds on desktop, show when cursor in bottom 15%
   useEffect(() => {
-    let timeout: NodeJS.Timeout
-
-    const showControls = () => {
+    // On mobile, always show controls
+    if (isMobileDevice()) {
       setControlsVisible(true)
-      clearTimeout(timeout)
-      timeout = setTimeout(() => setControlsVisible(false), 3000)
+      return
     }
 
-    const handleMouseMove = () => showControls()
-    const handleClick = () => showControls()
+    let initialTimeout: NodeJS.Timeout
+    let hasHiddenOnce = false
+
+    // Hide controls after 5 seconds from video start
+    initialTimeout = setTimeout(() => {
+      if (isMountedRef.current) {
+        setControlsVisible(false)
+        hasHiddenOnce = true
+      }
+    }, 5000)
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!hasHiddenOnce) return // Don't interfere with initial 5 second timer
+      
+      const viewportHeight = window.innerHeight
+      const bottomThreshold = viewportHeight * 0.85 // Top 85% = bottom 15% starts here
+      
+      if (e.clientY >= bottomThreshold) {
+        // Cursor is in bottom 15% - show controls
+        setControlsVisible(true)
+      } else {
+        // Cursor is outside bottom 15% - hide controls
+        setControlsVisible(false)
+      }
+    }
 
     document.addEventListener('mousemove', handleMouseMove)
-    document.addEventListener('click', handleClick)
-
-    showControls()
 
     return () => {
-      clearTimeout(timeout)
+      clearTimeout(initialTimeout)
       document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('click', handleClick)
     }
   }, [])
 
@@ -411,6 +428,18 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
       router.push('/')
     }
   }, [router])
+
+  // Handle ESC key to close player
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClose()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [handleClose])
 
   const handleFullscreen = useCallback(async () => {
     const player = playerRef.current

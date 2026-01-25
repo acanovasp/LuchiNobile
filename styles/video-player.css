@@ -60,14 +60,15 @@
   right: 0;
   z-index: 10;
   padding: var(--gutter);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
   opacity: 0;
-  transition: opacity var(--duration-normal) var(--ease-out);
+  pointer-events: none;
+  transition: opacity 800ms var(--ease-out);
 }
 
-.video-player:hover .video-player__controls,
+/* Controls visibility controlled by JS state only */
 .video-player--controls-visible .video-player__controls {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .video-player__controls-inner {
@@ -148,6 +149,15 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 800ms var(--ease-out);
+}
+
+/* Progress bar visibility controlled by JS state only */
+.video-player--controls-visible .video-player__progress {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .video-player__progress-bar {
@@ -173,19 +183,21 @@
 .video-player__close {
   color: var(--color-text);
   opacity: 0;
-  transition: opacity var(--duration-normal) var(--ease-out);
+  pointer-events: none;
+  transition: opacity 800ms var(--ease-out);
   cursor: pointer;
   background: none;
   border: none;
   padding: 0;
 }
 
-.video-player:hover .video-player__close,
+/* Close button visibility controlled by JS state only */
 .video-player--controls-visible .video-player__close {
   opacity: 0.8;
+  pointer-events: auto;
 }
 
-.video-player__close:hover {
+.video-player--controls-visible .video-player__close:hover {
   opacity: 1;
 }
 
