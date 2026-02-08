@@ -57,6 +57,16 @@ export default function SplashScreen({
     triggerFadeOut()
   }, [triggerFadeOut])
 
+  // Scroll/wheel to skip
+  useEffect(() => {
+    const handleWheel = () => {
+      triggerFadeOut()
+    }
+
+    window.addEventListener('wheel', handleWheel, { passive: true })
+    return () => window.removeEventListener('wheel', handleWheel)
+  }, [triggerFadeOut])
+
   // Main sequence - wait for minimum duration then fade out
   useEffect(() => {
     const runSequence = async () => {
