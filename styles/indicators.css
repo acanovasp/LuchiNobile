@@ -30,14 +30,15 @@
   text-align: left;
 }
 
-/* Position each item at i/6 of container height */
-.indicator-left__item:nth-child(1) { top: calc((0 / 6) * 100%); }
-.indicator-left__item:nth-child(2) { top: calc((1 / 6) * 100%); }
-.indicator-left__item:nth-child(3) { top: calc((2 / 6) * 100%); }
-.indicator-left__item:nth-child(4) { top: calc((3 / 6) * 100%); }
-.indicator-left__item:nth-child(5) { top: calc((4 / 6) * 100%); }
-.indicator-left__item:nth-child(6) { top: calc((5 / 6) * 100%); }
-.indicator-left__item:nth-child(7) { top: calc((6 / 6) * 100%); transform: translateY(-100%); }
+/* Position each item at i/7 of container height (8 positions: About, 01-06, Archive) */
+.indicator-left__item:nth-child(1) { top: calc((0 / 7) * 100%); }
+.indicator-left__item:nth-child(2) { top: calc((1 / 7) * 100%); }
+.indicator-left__item:nth-child(3) { top: calc((2 / 7) * 100%); }
+.indicator-left__item:nth-child(4) { top: calc((3 / 7) * 100%); }
+.indicator-left__item:nth-child(5) { top: calc((4 / 7) * 100%); }
+.indicator-left__item:nth-child(6) { top: calc((5 / 7) * 100%); }
+.indicator-left__item:nth-child(7) { top: calc((6 / 7) * 100%); }
+.indicator-left__item:nth-child(8) { top: calc((7 / 7) * 100%); transform: translateY(-100%); }
 
 .indicator-left__item:hover {
   opacity: 0.8;
@@ -57,7 +58,7 @@
   pointer-events: none;
   
   /* Same positioning formula as items */
-  top: calc((var(--marker-position) / 6) * 100%);
+  top: calc((var(--marker-position) / 7) * 100%);
   transition: top var(--duration-normal) var(--ease-out);
 }
 
@@ -104,14 +105,15 @@
   text-align: right;
 }
 
-/* Position each item at i/6 of container height */
-.indicator-right__item:nth-child(1) { top: calc((0 / 6) * 100%); }
-.indicator-right__item:nth-child(2) { top: calc((1 / 6) * 100%); }
-.indicator-right__item:nth-child(3) { top: calc((2 / 6) * 100%); }
-.indicator-right__item:nth-child(4) { top: calc((3 / 6) * 100%); }
-.indicator-right__item:nth-child(5) { top: calc((4 / 6) * 100%); }
-.indicator-right__item:nth-child(6) { top: calc((5 / 6) * 100%); }
-.indicator-right__item:nth-child(7) { top: calc((6 / 6) * 100%); transform: translateY(-100%); }
+/* Position each item at i/7 of container height (8 positions: About, 01-06, Archive) */
+.indicator-right__item:nth-child(1) { top: calc((0 / 7) * 100%); }
+.indicator-right__item:nth-child(2) { top: calc((1 / 7) * 100%); }
+.indicator-right__item:nth-child(3) { top: calc((2 / 7) * 100%); }
+.indicator-right__item:nth-child(4) { top: calc((3 / 7) * 100%); }
+.indicator-right__item:nth-child(5) { top: calc((4 / 7) * 100%); }
+.indicator-right__item:nth-child(6) { top: calc((5 / 7) * 100%); }
+.indicator-right__item:nth-child(7) { top: calc((6 / 7) * 100%); }
+.indicator-right__item:nth-child(8) { top: calc((7 / 7) * 100%); transform: translateY(-100%); }
 
 .indicator-right__item:hover {
   opacity: 0.8;
@@ -129,14 +131,14 @@
   height: 8px;
   background-color: var(--color-white);
   
-  /* Same positioning as items: (position / 6) * 100% */
-  top: calc((var(--marker-position) / 6) * 100%);
+  /* Same positioning as items: (position / 7) * 100% */
+  top: calc((var(--marker-position) / 7) * 100%);
   transition: top var(--duration-normal) var(--ease-out),
               background-color var(--duration-normal) var(--ease-out);
 }
 
 /* Last position needs offset to not go below container */
-.indicator-right__marker[style*="--marker-position: 6"] {
+.indicator-right__marker[style*="--marker-position: 7"] {
   transform: translateY(-100%);
 }
 

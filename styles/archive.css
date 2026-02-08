@@ -1,11 +1,11 @@
 /* Archive Grid Styles */
 .archive {
   min-height: 100dvh;
-  /* Align grid top with indicator position 01: gutter + (1/6) * (viewport - 2*gutter) */
-  padding-top: calc(var(--gutter) + (1 / 6) * (100dvh - 2 * var(--gutter)));
+  /* Align grid top with indicator position 01: gutter + (1/7) * (viewport - 2*gutter) */
+  padding-top: calc(var(--gutter) + (1 / 7) * (100dvh - 2 * var(--gutter)));
   padding-left: calc(var(--gutter) + var(--indicator-width));
   padding-right: calc(var(--gutter) + var(--indicator-width));
-  padding-bottom: calc(var(--gutter) + (1 / 6) * (100dvh - 2 * var(--gutter)));
+  padding-bottom: calc(var(--gutter) + (1 / 7) * (100dvh - 2 * var(--gutter)));
   background-color: var(--color-white);
 }
 

@@ -30,11 +30,11 @@ export default function ScrollIndicator({
     return null
   }, [currentSection, projects])
 
-  // Calculate which of the 7 positions we're at (0=about, 1-5=projects, 6=archive)
+  // Calculate which of the 8 positions we're at (0=about, 1-6=projects, 7=archive)
   const activePosition = useMemo(() => {
     if (isAboutVisible) return 0
-    if (isArchiveActive) return 6
-    return currentSection + 1 // 1-5 for projects
+    if (isArchiveActive) return 7
+    return currentSection + 1 // 1-6 for projects
   }, [isAboutVisible, isArchiveActive, currentSection])
 
   // Show project info only for project sections (not About or Archive)
@@ -53,7 +53,7 @@ export default function ScrollIndicator({
             About
           </button>
 
-          {/* Project Numbers 01-05 */}
+          {/* Project Numbers 01-06 */}
           {projects.map((project, index) => (
             <button
               key={project._id}
@@ -96,20 +96,20 @@ export default function ScrollIndicator({
       {/* Right Indicator */}
       <div className={`indicator-right ${isArchiveActive ? 'indicator--dark' : ''} ${isAboutVisible ? 'indicator--about-visible' : ''}`}>
         <div className="indicator-right__items">
-          {/* All 7 positions: About (0), Projects 1-5, Archive (6) */}
-          {[0, 1, 2, 3, 4, 5, 6].map((position) => (
+          {/* All 8 positions: About (0), Projects 1-6, Archive (7) */}
+          {[0, 1, 2, 3, 4, 5, 6, 7].map((position) => (
             <button
               key={position}
               className={`indicator-right__item ${
                 activePosition === position ? 'indicator-right__item--active' : ''
-              } ${position >= 1 && position <= 5 ? 'indicator-right__item--number' : ''} ${position === 6 ? 'indicator-right__item--archive' : ''}`}
+              } ${position >= 1 && position <= 6 ? 'indicator-right__item--number' : ''} ${position === 7 ? 'indicator-right__item--archive' : ''}`}
               onClick={() => {
                 if (position === 0) onAboutClick()
-                else if (position === 6) onArchiveClick()
+                else if (position === 7) onArchiveClick()
                 else onProjectClick(position - 1)
               }}
             >
-              {position >= 1 && position <= 5 && String(position).padStart(2, '0')}
+              {position >= 1 && position <= 6 && String(position).padStart(2, '0')}
             </button>
           ))}
 
