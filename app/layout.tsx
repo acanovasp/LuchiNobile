@@ -20,6 +20,15 @@ export const metadata: Metadata = {
   },
   description:
     'Director argentino con base en Barcelona.',
+  icons: {
+    icon: [
+      { url: '/favicon/favicon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/favicon/favicon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/favicon/favicon.png',
+  },
   keywords: [
     'Luchi Nóbile',
     'director',
