@@ -14,9 +14,9 @@
   
   /* Background fade transition (1.2s) */
   opacity: 1;
-  transition: opacity 1200ms var(--ease-out),
-              backdrop-filter 1200ms var(--ease-out),
-              -webkit-backdrop-filter 1200ms var(--ease-out);
+  transition: opacity 1600ms var(--ease-out),
+              backdrop-filter 1600ms var(--ease-out),
+              -webkit-backdrop-filter 1600ms var(--ease-out);
 }
 
 .splash--fading {
@@ -30,13 +30,35 @@
   color: var(--color-text);
   white-space: nowrap;
   min-height: 1.2em;
+  position: relative;
   
-  /* Logo fade transition (0.8s) */
+  /* Allow blur to spread beyond text bounds */
+  overflow: visible;
+  
+  /* Logo fade out transition */
   opacity: 1;
-  transition: opacity 800ms var(--ease-out);
+  transition: opacity 1600ms var(--ease-out);
 }
 
 .splash__logo--fading {
   opacity: 0;
 }
 
+/* Individual character styling */
+.splash__char {
+  display: inline-block;
+  opacity: 0;
+}
+
+.splash__char--revealing {
+  animation: charReveal 0.5s ease-out forwards;
+}
+
+@keyframes charReveal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

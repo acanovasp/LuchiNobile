@@ -8,20 +8,29 @@ interface SplashScreenProps {
 }
 
 const LOGO_TEXT = 'Luchi Nóbile'
-const TYPING_DURATION = 1200 // 1.2s for typing
-const HOLD_DURATION = 1500 // 2.5s hold after typing (increased by 1s)
-const LOGO_HEAD_START = 250 // background starts fading 1s after logo starts
+const REVEAL_DURATION = 1000 // 1.5s for blur-fade reveal
+const HOLD_DURATION = 500 // Hold after reveal
+const LOGO_HEAD_START = 600 // background starts fading after logo starts
 const BG_FADE_DURATION = 1200 // background fades in 1.2s
 
 export default function SplashScreen({
   onComplete,
-  minDuration = 3500,
+  minDuration = 1500,
 }: SplashScreenProps) {
-  const [displayedText, setDisplayedText] = useState('')
+  const [isRevealing, setIsRevealing] = useState(false)
   const [isLogoFading, setIsLogoFading] = useState(false)
   const [isBgFading, setIsBgFading] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
   const isSkippingRef = useRef(false)
+
+  // Start reveal animation on mount
+  useEffect(() => {
+    // Small delay to ensure CSS is ready
+    const timer = setTimeout(() => {
+      setIsRevealing(true)
+    }, 100)
+    return () => clearTimeout(timer)
+  }, [])
 
   // Function to trigger the fade-out sequence
   const triggerFadeOut = useCallback(() => {
@@ -48,28 +57,11 @@ export default function SplashScreen({
     triggerFadeOut()
   }, [triggerFadeOut])
 
-  // Typing animation
-  useEffect(() => {
-    let currentIndex = 0
-    const charDelay = TYPING_DURATION / LOGO_TEXT.length
-
-    const typeInterval = setInterval(() => {
-      currentIndex++
-      setDisplayedText(LOGO_TEXT.slice(0, currentIndex))
-      
-      if (currentIndex >= LOGO_TEXT.length) {
-        clearInterval(typeInterval)
-      }
-    }, charDelay)
-
-    return () => clearInterval(typeInterval)
-  }, [])
-
   // Main sequence - wait for minimum duration then fade out
   useEffect(() => {
     const runSequence = async () => {
-      // Wait for minimum duration (typing + hold)
-      const totalAnimationTime = TYPING_DURATION + HOLD_DURATION
+      // Wait for minimum duration (reveal + hold)
+      const totalAnimationTime = REVEAL_DURATION + HOLD_DURATION
       const waitTime = Math.max(minDuration, totalAnimationTime)
       
       await new Promise(resolve => setTimeout(resolve, waitTime))
@@ -85,6 +77,11 @@ export default function SplashScreen({
 
   if (isHidden) return null
 
+  // Split text into individual characters for staggered animation
+  const characters = LOGO_TEXT.split('')
+  const totalChars = characters.length
+  const animationDuration = 1.5 // 1.5 seconds total
+
   return (
     <div 
       className={`splash ${isBgFading ? 'splash--fading' : ''}`}
@@ -92,9 +89,25 @@ export default function SplashScreen({
       style={{ cursor: 'pointer' }}
     >
       <h1 className={`splash__logo ${isLogoFading ? 'splash__logo--fading' : ''}`}>
-        {displayedText}
+        {characters.map((char, index) => {
+          // Calculate delay for each character (staggered from left to right)
+          const delay = (index / totalChars) * (animationDuration * 0.7) // 70% of duration for stagger
+          
+          return (
+            <span
+              key={index}
+              className={`splash__char ${isRevealing ? 'splash__char--revealing' : ''}`}
+              style={{ 
+                animationDelay: `${delay}s`,
+                // Preserve spaces
+                ...(char === ' ' ? { width: '0.3em', display: 'inline-block' } : {})
+              }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          )
+        })}
       </h1>
     </div>
   )
 }
-
