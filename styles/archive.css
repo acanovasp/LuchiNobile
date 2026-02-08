@@ -5,7 +5,7 @@
   padding-top: calc(var(--gutter) + (1 / 6) * (100dvh - 2 * var(--gutter)));
   padding-left: calc(var(--gutter) + var(--indicator-width));
   padding-right: calc(var(--gutter) + var(--indicator-width));
-  padding-bottom: 300px;
+  padding-bottom: calc(var(--gutter) + (1 / 6) * (100dvh - 2 * var(--gutter)));
   background-color: var(--color-white);
 }
 
