@@ -76,8 +76,8 @@
   /* Match content's left edge */
   left: calc(var(--gutter) * 2.5);
   /* Align with indicator position 03 using same formula as indicators:
-     gutter + (position/6) * (available height where available = 100% - 2*gutter) */
-  top: calc(var(--gutter) + (3 / 6) * (100% - 2 * var(--gutter)));
+     gutter + (position/7) * (available height where available = 100% - 2*gutter) */
+  top: calc(var(--gutter) + (3 / 7) * (100% - 2 * var(--gutter)));
   font-family: var(--font-primary);
   font-size: var(--font-size-primary);
   font-weight: 300;
@@ -108,28 +108,28 @@
 /* Email jumps to position 02 on narrower viewports (width) */
 @media (max-width: 1200px) {
   .about-overlay__email {
-    top: calc(var(--gutter) + (2 / 6) * (100% - 2 * var(--gutter)));
+    top: calc(var(--gutter) + (2 / 7) * (100% - 2 * var(--gutter)));
   }
 }
 
 /* Email jumps to position 01 on even narrower viewports (width) */
 @media (max-width: 900px) {
   .about-overlay__email {
-    top: calc(var(--gutter) + (1 / 6) * (100% - 2 * var(--gutter)));
+    top: calc(var(--gutter) + (1 / 7) * (100% - 2 * var(--gutter)));
   }
 }
 
 /* Email jumps to position 02 on shorter viewports (height) */
 @media (max-height: 800px) {
   .about-overlay__email {
-    top: calc(var(--gutter) + (2 / 6) * (100% - 2 * var(--gutter)));
+    top: calc(var(--gutter) + (2 / 7) * (100% - 2 * var(--gutter)));
   }
 }
 
 /* Email jumps to position 01 on even shorter viewports (height) */
 @media (max-height: 600px) {
   .about-overlay__email {
-    top: calc(var(--gutter) + (1 / 6) * (100% - 2 * var(--gutter)));
+    top: calc(var(--gutter) + (1 / 7) * (100% - 2 * var(--gutter)));
   }
 }
 

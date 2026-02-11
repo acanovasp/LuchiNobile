@@ -225,7 +225,7 @@ export default function MainPageClient({
       {showSplash && (
         <SplashScreen
           onComplete={handleSplashComplete}
-          minDuration={3500}
+          minDuration={1500}
         />
       )}
     </>
