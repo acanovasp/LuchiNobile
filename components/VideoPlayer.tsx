@@ -514,7 +514,7 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
         {thumbnailUrl && (
           <div 
             className={`video-player__poster ${isVideoReady ? 'video-player__poster--hidden' : ''}`}
-            style={{ backgroundImage: `url(${thumbnailUrl})` }}
+            style={{ '--poster-image': `url(${thumbnailUrl})` } as React.CSSProperties}
           />
         )}
 

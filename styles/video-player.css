@@ -32,26 +32,23 @@
 .video-player__poster {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
   z-index: 2;
   opacity: 1;
   transition: opacity 0.5s ease-out;
-  /* Blur effect like About overlay */
-  -webkit-backdrop-filter: blur(40px);
-  backdrop-filter: blur(40px);
+  overflow: hidden;
 }
 
-/* Apply blur to the image itself since backdrop-filter blurs what's behind */
+/* Apply blur to the image via pseudo-element */
 .video-player__poster::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: inherit;
+  /* Extend beyond container to prevent blur edges from showing */
+  inset: -50px;
+  /* Background image is set via CSS variable from inline style */
+  background-image: var(--poster-image);
   background-size: cover;
   background-position: center;
   filter: blur(40px);
-  transform: scale(1.1); /* Prevent blur edges from showing */
 }
 
 .video-player__poster--hidden {

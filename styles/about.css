@@ -13,8 +13,8 @@
   
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--duration-slow) var(--ease-out),
-              visibility var(--duration-slow) var(--ease-out);
+  transition: opacity 1000ms var(--ease-out),
+              visibility 1000ms var(--ease-out);
 }
 
 /* When backdrop-filter is supported, use lighter background */
@@ -42,13 +42,17 @@
   opacity: 0;
   transform: translateY(40px);
   pointer-events: none;
-  transition: opacity var(--duration-slow) var(--ease-out) 100ms,
-              transform var(--duration-slowest) var(--ease-out) 100ms;
+  /* Closing transition: no delay, starts immediately */
+  transition: opacity 1200ms var(--ease-out),
+              transform 1400ms var(--ease-out);
 }
 
 .about-overlay--visible .about-overlay__content {
   opacity: 1;
   transform: translateY(0);
+  /* Opening transition: with delay so content appears after overlay */
+  transition: opacity 1200ms var(--ease-out) 150ms,
+              transform 1400ms var(--ease-out) 150ms;
 }
 
 .about-overlay__text {
@@ -87,13 +91,18 @@
   opacity: 0;
   pointer-events: auto;
   cursor: pointer;
+  /* Closing transition: no delay */
   transition: color var(--duration-fast) var(--ease-out),
               top var(--duration-normal) var(--ease-out),
-              opacity var(--duration-slow) var(--ease-out) 100ms;
+              opacity 600ms var(--ease-out);
 }
 
 .about-overlay--visible .about-overlay__email {
   opacity: 1;
+  /* Opening transition: with delay */
+  transition: color var(--duration-fast) var(--ease-out),
+              top var(--duration-normal) var(--ease-out),
+              opacity 600ms var(--ease-out) 150ms;
 }
 
 .about-overlay__email:hover {
