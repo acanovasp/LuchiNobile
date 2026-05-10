@@ -15,8 +15,8 @@ const isMobileDevice = () => {
   return window.innerWidth <= 768 || 'ontouchstart' in window
 }
 
-// Helper to apply cover sizing for desktop
-const applyCoverSizing = (
+// Helper to apply contain sizing for desktop (video fully visible, no cropping)
+const applyContainSizing = (
   iframe: HTMLIFrameElement,
   videoAspect: number,
   container: HTMLElement
@@ -26,13 +26,13 @@ const applyCoverSizing = (
   const viewportAspect = viewportWidth / viewportHeight
 
   if (videoAspect > viewportAspect) {
-    // Video is wider than viewport - fit height, overflow width
-    iframe.style.height = '100vh'
-    iframe.style.width = `${(videoAspect / viewportAspect) * 100}vh`
-  } else {
-    // Video is taller than viewport - fit width, overflow height
+    // Video is wider than viewport - fit width, height will be smaller
     iframe.style.width = '100vw'
-    iframe.style.height = `${(viewportAspect / videoAspect) * 100}vw`
+    iframe.style.height = `${(1 / videoAspect) * 100}vw`
+  } else {
+    // Video is taller than viewport - fit height, width will be smaller
+    iframe.style.height = '100vh'
+    iframe.style.width = `${videoAspect * 100}vh`
   }
 
   // Set CSS variable for mobile aspect ratio
@@ -144,8 +144,8 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
         const iframe = container.querySelector('iframe')
         if (iframe) {
           if (!isMobileDevice()) {
-            // Desktop: Apply cover sizing
-            applyCoverSizing(iframe, videoAspect, container)
+            // Desktop: Apply contain sizing (video fully visible)
+            applyContainSizing(iframe, videoAspect, container)
           } else {
             // Mobile: Set aspect ratio CSS variable for contained view
             container.style.setProperty('--video-aspect-ratio', String(videoAspect))
@@ -293,8 +293,8 @@ export default function VideoPlayer({ project }: VideoPlayerProps) {
       if (!iframe) return
 
       if (!isMobileDevice()) {
-        // Desktop: Recalculate cover sizing
-        applyCoverSizing(iframe, videoAspectRef.current, container)
+        // Desktop: Recalculate contain sizing
+        applyContainSizing(iframe, videoAspectRef.current, container)
       }
     }
 
